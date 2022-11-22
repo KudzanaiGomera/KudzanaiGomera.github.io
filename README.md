@@ -3,7 +3,7 @@ Perfect Portfolio Template to start.
 
 ## Part 1
 
-![Portfolio Image](./first part.png)
+![Portfolio Image](./first.png)
 
 ## Part 2
 

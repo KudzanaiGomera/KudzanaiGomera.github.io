@@ -25,7 +25,7 @@ const Portfolio = function() {
             text: "Angular 2+",
             weight: 14
         }, {
-            text: "C/C++",
+            text: "C",
             weight: 7
         }];
         return words;
@@ -55,7 +55,7 @@ const Portfolio = function() {
     function typeAnimation() {
         Typed.new("#writing-text", {
             strings: [
-                "am a Software Engineer | Cyber Security Engineer"
+                "am a Associate Systems Engineer"
             ],
             // Optionally use an HTML element to grab strings from (must wrap each string in a <p>)
             stringsElement: null,

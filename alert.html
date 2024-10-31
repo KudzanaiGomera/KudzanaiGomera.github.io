@@ -87,30 +87,25 @@
         </div>
         <div class="col-12 col-sm-6 col-md-8">
             <h1 id="page-title" class="page__title"></h1>
-            <h3 class="archive__subtitle">Alert Triage</h3>
-            <!-- <a href="resources/Software Developer RoadMap.pdf" class="post-blog-card" download="software_developer_roadMap.pdf">
-                <div class="post-meta">
-                    <div class="post-ribbon">
-                        <span class="post-ribbon4">Resource</span>
-                    </div>
-                </div>
-
-                <div class="post-description">
-                    <h1>Software Developer Guide</h1>
-                    <p>Click to download the road map</p>
-
-                    <p class="post-date page__meta">24 Apr 2024</p>
-
-                    <p class="post-time page__meta">
-                        <svg class="svg-inline--fa fa-clock fa-w-16" aria-hidden="true" focusable="false"
-                            data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 512 512" data-fa-i2svg="">
-                        </svg><i class="far fa-clock" aria-hidden="true"></i>
-
-                        10 minute read
-                    </p>
-                </div>
-            </a> -->
+            <h3 class="archive__subtitle">SOC Alert Triage</h3>
+            <p>The alert triage is the basis of the SOC team. The first response to any alert is to perform the triage. The triage is focused on analyzing the specific alert. This determines the severity of the alert and helps us prioritize it. The alert triage is all about answering the 5 Ws. What are these 5 Ws?</p>
+            <p>Scenario: <b>Alert -</b> Malware detected on Host: Kudzanai's PC</p>
+            <ul>
+                <li>What? : A malicious file was detected on one of the hosts inside the organization’s network.</li>
+                <li>When? : The file was detected at 13:24 on October 31, 2024.</li>
+                <li>Where?: The file was detected in the directory of the host: "Kudzanai's PC".</li>
+                <li>Who?  : The file was detected for the user Kudzanai.</li>
+                <li>Why?  : After the investigation, it was found that the file was downloaded from a pirated software-selling website. The investigation with the user revealed that they downloaded the file as they wanted to use a software for free.</li>
+            </ul>
+            <h3 class="archive__subtitle">Alert Investigation</h3>
+            <p>When monitoring SIEM, analysts spend most of their time on dashboards as it displays various key details about the network in a very summarized way. Once an alert is triggered, the events/flows associated with the alert are examined, and the rule is checked to see which conditions are met. Based on the investigation, the analyst determines if it's a True or False positive. Some of the actions that are performed after the analysis are:</p>
+            <ul>
+                <li>Alert is False Alarm. It may require tuning the rule to avoid similar False positives from occurring again.</li>
+                <li>Alert is True Positive. Perform further investigation.</li>
+                <li>Contact the asset owner to inquire about the activity.</li>
+                <li>Suspicious activity is confirmed. Isolate the infected host.</li>
+                <li>Block the suspicious IP.</li>
+            </ul>
         </div>
     </div>
     <script src="script.js"></script>

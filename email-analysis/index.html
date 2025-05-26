@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kudzanai Gomera | SOC Alert Triage</title>
+    <title>Kudzanai Gomera | Email Analysis</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="../css/style.css" />
@@ -20,7 +20,7 @@
         border-bottom: 1px solid #494c51;
       ">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="/home/">Kudzanai Gomera</a>
+            <a class="navbar-brand fw-bold" href="index.html">Kudzanai Gomera</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/home/">General</a>
+                        <a class="nav-link active" aria-current="page" href="index.html">General</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/certificate/">Certificates</a>
@@ -96,24 +96,92 @@
         </div>
         <div class="col-12 col-sm-6 col-md-8">
             <h1 id="page-title" class="page__title"></h1>
-            <h3 class="archive__subtitle">SOC Alert Triage</h3>
-            <p>The alert triage is the basis of the SOC team. The first response to any alert is to perform the triage. The triage is focused on analyzing the specific alert. This determines the severity of the alert and helps us prioritize it. The alert triage is all about answering the 5 Ws. What are these 5 Ws?</p>
-            <p>Scenario: <b>Alert -</b> Malware detected on Host: Kudzanai's PC</p>
+            <h3 class="archive__subtitle">Email Phishing Analysis:</h3>
+            <p>
+                When a suspicious email is reported to the security team, what analysis will you perform as a SOC Analyst: 
+            </p>
+            <h3 class="archive__subtitle">1. Sender and Domain Analysis</h3>
             <ul>
-                <li>What? : A malicious file was detected on one of the hosts inside the organization’s network.</li>
-                <li>When? : The file was detected at 13:24 on October 31, 2024.</li>
-                <li>Where?: The file was detected in the directory of the host: "Kudzanai's PC".</li>
-                <li>Who?  : The file was detected for the user Kudzanai.</li>
-                <li>Why?  : After the investigation, it was found that the file was downloaded from a pirated software-selling website. The investigation with the user revealed that they downloaded the file as they wanted to use a software for free.</li>
+                <li>Verify the Sender’s Email ID and Domain.</li>
+                <li>Check the domain reputation using tools like:</li>
+                <ul>
+                    <li>VirusTotal</li>
+                    <li>MXToolbox</li>
+                    <li>IPVoid</li>
+                </ul>
+                <li>Analyze domain details:</li>
+                <ul>
+                    <li>Registration date</li>
+                    <li>Owner information </li>
+                </ul>
             </ul>
-            <h3 class="archive__subtitle">Alert Investigation</h3>
-            <p>When monitoring SIEM, analysts spend most of their time on dashboards as it displays various key details about the network in a very summarized way. Once an alert is triggered, the events/flows associated with the alert are examined, and the rule is checked to see which conditions are met. Based on the investigation, the analyst determines if it's a True or False positive. Some of the actions that are performed after the analysis are:</p>
+            <h3 class="archive__subtitle">2. Subject Line Analysis</h3>
             <ul>
-                <li>Alert is False Alarm. It may require tuning the rule to avoid similar False positives from occurring again.</li>
-                <li>Alert is True Positive. Perform further investigation.</li>
-                <li>Contact the asset owner to inquire about the activity.</li>
-                <li>Suspicious activity is confirmed. Isolate the infected host.</li>
-                <li>Block the suspicious IP.</li>
+                <li>Examine the subject line to determine the intent of the email:</li>
+                <ul>
+                    <li>Phishing</li>
+                    <li>Social engineering</li>
+                    <li>Promotional content</li>
+                </ul>
+            </ul>
+            <h3 class="archive__subtitle">3. Email Body Analysis</h3>
+            <ul>
+                <li>Look for Indicators of Compromise (IOCs), such as:</li>
+                <ul>
+                    <li>Urgency Tactics: Example: "Reset your account within an hour, or it will be disabled."</li>
+                    <li>Phishing URLs: Embedded URLs (e.g., within an “unsubscribe” button) designed to mislead users.</li>
+                </ul>
+                <li>Check the reputation of such URLs using trusted tools.</li>
+                    <ul>
+                        <li>Attachments:</li>
+                        <li>Analyze suspicious attachments in a sandbox to detect malicious behavior.</li>
+                        <li>Avoid uploading attachments to public repositories like VirusTotal to prevent attackers from detecting the investigation and potentially bypassing detection mechanisms.</li>
+                    </ul>
+            </ul>
+            <h3 class="archive__subtitle">4. Email Header Analysis</h3>
+            <ul>
+                <li>Obtain the email header from the email properties.</li>
+                <li>Perform header analysis:</li>
+                <li>Use MXToolbox: </li>
+                <ul>
+                    <li>Select “Header Analysis.”</li>
+                    <li>Paste the header and submit for a detailed report.</li>
+                    <li>Verify SPF, DKIM, and DMARC statuses.</li>
+                </ul>
+            </ul>
+            <h3 class="archive__subtitle">5. SPF, DKIM, and DMARC Verification/Pass</h3>
+            <ul>
+                <li>SPF (Sender Policy Framework)</li>
+                <li>Authentication protocol specifying which IP addresses are authorized to send emails for a domain.</li>
+                <li>SPF Alignment**: If the "From" field matches the "Return-Path" field, SPF alignment passes; otherwise, it fails.</li>
+                <li>SPF Authentication: If the sender’s IP is authorized to send on behalf of the domain, SPF authentication passes; otherwise, it fails. 
+                </li>
+            </ul>
+            <h3 class="archive__subtitle">6. Mail Gateway Analysis</h3>
+            <ul>
+                <li>Review fields like: </li>
+                <ul>
+                    <li>From</li>
+                    <li>To</li>
+                    <li>Return-Path</li>
+                    <li>Subject Line</li>
+                    <li>Message ID</li>
+                    <li>Verify how many users received the email from the same domain/email ID.</li>
+                    <li>Export email details for documentation.</li>
+                </ul>
+            </ul>
+            <h3 class="archive__subtitle">7. Reporting and Mitigation</h3>
+            <ul>
+                <li>Document: </li>
+                <ul>
+                    <li>Analysis details</li>
+                    <li>Findings</li>
+                    <li>IOCs (Indicators of Compromise)</li>
+                    <li>GTI (Global Threat Intelligence) details</li>
+                    <li>Share the findings with relevant teams.</li>
+                    <li>Coordinate with Network/IT/Admin teams to: </li>
+                    <li>Block the malicious email, domain, IP, and hash.</li>
+                </ul>
             </ul>
         </div>
     </div>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="refresh" content="5; url=/home/" />
     <title>Welcome ...</title>
     <style>
       body {
@@ -39,6 +38,11 @@
         dots = (dots + 1) % 4;
         document.getElementById('loading').textContent = 'Loading' + '.'.repeat(dots);
       }, 500);
+
+      // Redirect after 5 seconds
+      setTimeout(() => {
+        window.location.href = "/home/";
+      }, 5000);
     </script>
   </head>
   <body>

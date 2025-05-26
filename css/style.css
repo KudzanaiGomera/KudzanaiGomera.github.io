@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding-right: 2rem; /* Add right padding */
+  /* padding-right: 2rem; Add right padding */
   padding-bottom: 3rem; /* Prevents footer overlap */
   color: #eaeaea;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;

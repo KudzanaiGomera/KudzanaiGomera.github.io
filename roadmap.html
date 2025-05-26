@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kudzanai Gomera | Email Analysis</title>
+    <title>Kudzanai Gomera | SOC Analyst Roadmap</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -27,7 +27,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="index.html">General</a>
                     </li>
@@ -96,96 +96,62 @@
         </div>
         <div class="col-12 col-sm-6 col-md-8">
             <h1 id="page-title" class="page__title"></h1>
-            <h3 class="archive__subtitle">Email Phishing Analysis:</h3>
-            <p>
-                When a suspicious email is reported to the security team, what analysis will you perform as a SOC Analyst: 
-            </p>
-            <h3 class="archive__subtitle">1. Sender and Domain Analysis</h3>
-            <ul>
-                <li>Verify the Sender’s Email ID and Domain.</li>
-                <li>Check the domain reputation using tools like:</li>
+            <img src="./images/roadmap.png" alt="Roadmap Image" class="roadmap__image" />
+            <section class="soc-intro mb-4">
+                <h2>Introduction</h2>
+                <p>
+                    Want to fight cybercrime and protect companies from hackers? SOC analysts are the front-line defenders in today’s digital world. Here’s your roadmap to becoming one of these cybersecurity heroes.
+                </p>
+            </section>
+            <section class="soc-roadmap mb-4">
+                <h3>Understanding the Basics</h3>
+                <p>
+                    A SOC analyst is a cybersecurity professional responsible for monitoring, detecting, and responding to security incidents. They act as the first line of defense, ensuring the organization's digital assets remain secure.
+                </p>
+                <h3>Key Skills and Attributes</h3>
+                <p>
+                    The role of a SOC analyst demands a unique set of skills. Attention to detail, critical thinking, and problem-solving abilities are paramount. As the cybersecurity landscape evolves, continuous learning and adaptability become indispensable traits.
+                </p>
+                <h3>Educational Paths</h3>
                 <ul>
-                    <li>VirusTotal</li>
-                    <li>MXToolbox</li>
-                    <li>IPVoid</li>
+                    <li>
+                        <strong>Bachelor's Degree vs. No Degree:</strong> While a bachelor's degree in cybersecurity or a related field is advantageous, it's not the only path to a successful career as a SOC analyst. Certifications, boot camps, and self-learning offer alternatives for those without a formal degree.
+                    </li>
+                    <li>
+                        <strong>Relevant Certifications:</strong> Acquiring industry-recognized certifications is a crucial step. Certifications such as Practical SOC Analyst Associate(PSAA), CompTIA Security+, and BLT Level 1validate your expertise and enhance employability.
+                    </li>
                 </ul>
-                <li>Analyze domain details:</li>
+                <h3>Building Technical Skills</h3>
                 <ul>
-                    <li>Registration date</li>
-                    <li>Owner information </li>
+                    <li>
+                        <strong>Networking and System Knowledge:</strong> Understanding networking protocols and system architecture is fundamental. Hands-on experience through virtual and home labs is invaluable for gaining practical insights.
+                    </li>
+                    <li>
+                        <strong>Security Tools and Technologies:</strong> Familiarity with security tools like Security Information and Event Management (SIEM), Intrusion Detection and Prevention Systems (IDS/IPS), and firewalls is essential. Online resources and tutorials can aid in mastering these tools.
+                    </li>
                 </ul>
-            </ul>
-            <h3 class="archive__subtitle">2. Subject Line Analysis</h3>
-            <ul>
-                <li>Examine the subject line to determine the intent of the email:</li>
+                <h3>Gaining Practical Experience</h3>
                 <ul>
-                    <li>Phishing</li>
-                    <li>Social engineering</li>
-                    <li>Promotional content</li>
+                    <li>
+                        <strong>Internships and Entry-Level Positions:</strong> Practical experience gained through internships or entry-level positions significantly boosts your candidacy. Crafting a compelling resume that highlights relevant skills and projects is crucial for landing these roles.
+                    </li>
+                    <li>
+                        <strong>Personal Projects and Home Labs:</strong> Building personal projects and setting up home labs allows for hands-on experience. Experimenting with different tools and technologies in a controlled environment demonstrates initiative and practical knowledge.
+                    </li>
+                    <li>
+                        <strong>Communication and Collaboration:</strong> Effective communication within a SOC team is essential. Developing strong collaboration skills through group projects, online communities, and real-world scenarios enhances your ability to work seamlessly within a team.
+                    </li>
+                    <li>
+                        <strong>Continuous Learning:</strong> Staying abreast of industry trends and emerging threats is non-negotiable. Engage in continuous learning through blogs, podcasts, and online courses to remain a well-informed and dynamic SOC analyst.
+                    </li>
                 </ul>
-            </ul>
-            <h3 class="archive__subtitle">3. Email Body Analysis</h3>
-            <ul>
-                <li>Look for Indicators of Compromise (IOCs), such as:</li>
-                <ul>
-                    <li>Urgency Tactics: Example: "Reset your account within an hour, or it will be disabled."</li>
-                    <li>Phishing URLs: Embedded URLs (e.g., within an “unsubscribe” button) designed to mislead users.</li>
-                </ul>
-                <li>Check the reputation of such URLs using trusted tools.</li>
-                    <ul>
-                        <li>Attachments:</li>
-                        <li>Analyze suspicious attachments in a sandbox to detect malicious behavior.</li>
-                        <li>Avoid uploading attachments to public repositories like VirusTotal to prevent attackers from detecting the investigation and potentially bypassing detection mechanisms.</li>
-                    </ul>
-            </ul>
-            <h3 class="archive__subtitle">4. Email Header Analysis</h3>
-            <ul>
-                <li>Obtain the email header from the email properties.</li>
-                <li>Perform header analysis:</li>
-                <li>Use MXToolbox: </li>
-                <ul>
-                    <li>Select “Header Analysis.”</li>
-                    <li>Paste the header and submit for a detailed report.</li>
-                    <li>Verify SPF, DKIM, and DMARC statuses.</li>
-                </ul>
-            </ul>
-            <h3 class="archive__subtitle">5. SPF, DKIM, and DMARC Verification/Pass</h3>
-            <ul>
-                <li>SPF (Sender Policy Framework)</li>
-                <li>Authentication protocol specifying which IP addresses are authorized to send emails for a domain.</li>
-                <li>SPF Alignment**: If the "From" field matches the "Return-Path" field, SPF alignment passes; otherwise, it fails.</li>
-                <li>SPF Authentication: If the sender’s IP is authorized to send on behalf of the domain, SPF authentication passes; otherwise, it fails. 
-                </li>
-            </ul>
-            <h3 class="archive__subtitle">6. Mail Gateway Analysis</h3>
-            <ul>
-                <li>Review fields like: </li>
-                <ul>
-                    <li>From</li>
-                    <li>To</li>
-                    <li>Return-Path</li>
-                    <li>Subject Line</li>
-                    <li>Message ID</li>
-                    <li>Verify how many users received the email from the same domain/email ID.</li>
-                    <li>Export email details for documentation.</li>
-                </ul>
-            </ul>
-            <h3 class="archive__subtitle">7. Reporting and Mitigation</h3>
-            <ul>
-                <li>Document: </li>
-                <ul>
-                    <li>Analysis details</li>
-                    <li>Findings</li>
-                    <li>IOCs (Indicators of Compromise)</li>
-                    <li>GTI (Global Threat Intelligence) details</li>
-                    <li>Share the findings with relevant teams.</li>
-                    <li>Coordinate with Network/IT/Admin teams to: </li>
-                    <li>Block the malicious email, domain, IP, and hash.</li>
-                </ul>
-            </ul>
+                <h3>Conclusion</h3>
+                <p>
+                   In short, becoming a SOC analyst takes learning, certifications, hands-on skills, and experience. Follow the right steps and keep learning, and you'll build a strong, lasting career in cybersecurity.
+                </p>
+            </section>
         </div>
     </div>
-    <script src="script.js"></script>
     <footer class="site-footer">
   &copy; 2025 Kudzanai Gomera
 </footer>

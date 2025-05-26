@@ -1,10 +1,16 @@
 body {
   margin: 0;
-  padding: 0;
+  padding-right: 2rem; /* Add right padding */
+  padding-bottom: 3rem; /* Prevents footer overlap */
   color: #eaeaea;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   line-height: 1.5;
   background-color: #1b1f26;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+.navbar {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 .navbar-nav .nav-link {
   color: #fff;
@@ -210,7 +216,6 @@ a {
   background: var(--ribbon);
   width: 35px;
   top: -0.75rem;
-  border-radius: 3px
 }
 
 .post-blog-card .post-description {
@@ -350,3 +355,29 @@ a {
 
 /* certificate page */
 
+/*image*/
+.roadmap__image {
+  width: 100%;
+  height: auto;
+  max-height: 450px; /* limits height but keeps quality */
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+/* footer */
+.site-footer {
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  color: #ccc;
+  background: #1b1f26; /* Match navbar background */
+  font-size: 1rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+html, body {
+  margin: 0 !important;
+}

@@ -14,6 +14,8 @@ body {
 }
 .navbar-nav .nav-link {
   color: #fff;
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
 }
 .dropend .dropdown-toggle {
   color: salmon;

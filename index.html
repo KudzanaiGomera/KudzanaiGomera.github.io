@@ -1,57 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Welcome ...</title>
-    <style>
-      body {
-        /* Match background with other pages: cyber gradient example */
-        background: linear-gradient(135deg, #232526 0%, #414345 100%);
-        color: #fff; /* White text for visibility */
-        font-family: 'Courier New', Courier, monospace;
-        text-align: center;
-        margin-top: 10%;
-      }
-      .cyber {
-        font-size: 2em;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px #00fff7, 0 0 20px #0ff;
-      }
-      a {
-        color: #00fff7;
-        text-decoration: underline;
-      }
-      #loading {
-        font-size: 1.2em;
-        margin-top: 20px;
-        letter-spacing: 3px;
-        animation: blink 1s steps(5, start) infinite;
-      }
-      @keyframes blink {
-        to {
-          visibility: hidden;
-        }
-      }
-    </style>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
     <script>
-      // Animate loading dots
-      let dots = 0;
-      setInterval(() => {
-        dots = (dots + 1) % 4;
-        document.getElementById('loading').textContent = 'Loading' + '.'.repeat(dots);
-      }, 500);
-
-      // Redirect after 5 seconds
-      setTimeout(() => {
-        window.location.href = "/home/";
-      }, 5000);
+      window.location.replace("/home/");
     </script>
   </head>
   <body>
-    <div class="cyber">
-      <p>🔒 Welcome, Cyber Explorer!</p>
-      <p>Access Granted.<br>Redirecting you to the secure zone...</p>
-      <div id="loading">Loading</div>
-      <p style="font-size:0.7em;">If you are not redirected, <a href="/home/">click here</a>.</p>
-    </div>
   </body>
 </html>

@@ -21,10 +21,6 @@ body {
   color: salmon;
   margin-left: 1em;
 }
-.dropdown-item:hover {
-  background-color: lightsalmon;
-  color: #fff;
-}
 
 /* 
   The following CSS block makes dropdown menus appear on hover, 

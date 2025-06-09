@@ -45,6 +45,59 @@ body {
   }
 }
 
+/* Modern dark dropdown styles */
+.dropdown-menu {
+  background-color: #232733 !important;
+  border: 1px solid #33384a;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  padding: 0.5rem 0;
+  min-width: 180px;
+  margin-top: 0.5rem !important;
+}
+
+.dropdown-item {
+  color: #eaeaea !important;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 4px;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  background-color: #313543 !important;
+  color: #00adb5 !important;
+}
+
+.dropdown-divider {
+  border-top: 1px solid #444857;
+  margin: 0.3rem 0;
+}
+
+/* Remove default Bootstrap arrow and use a modern look */
+.navbar .dropdown-toggle::after {
+  border-top: 0.4em solid #00adb5;
+  border-right: 0.4em solid transparent;
+  border-left: 0.4em solid transparent;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
+/* Optional: Add a subtle hover effect to the dropdown toggle */
+.navbar .dropdown-toggle:hover, .navbar .dropdown-toggle:focus {
+  color: #00adb5 !important;
+  background: transparent !important;
+}
+
+/* Responsive fix for dropdown on mobile */
+@media (max-width: 991.98px) {
+  .dropdown-menu {
+    box-shadow: none;
+    border-radius: 0;
+    margin-top: 0 !important;
+  }
+}
+
 /* Sidebar container */
 .sidebar {
   width: 250px;

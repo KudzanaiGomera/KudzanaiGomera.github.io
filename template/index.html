@@ -38,6 +38,13 @@
       border-radius: 8px;
       margin: 20px 0;
     }
+    .artifact-panel {
+      background: #fff8e1;
+      border-left: 6px solid #ff8f00;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
     .code {
       background-color: #eceff1;
       font-family: Consolas, monospace;
@@ -57,11 +64,39 @@
     a:hover {
       text-decoration: underline;
     }
+    .artifact-item {
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Security Operations Center - Elite Investigation Report</h2>
+
+    <div class="section artifact-panel">
+      <h3>Critical Artifacts Checklist (DO NOT FORGET TO COLLECT)</h3>
+      <div class="artifact-item"><strong>Hostname (FQDN):</strong> JD-MKT-001.domain.local</div>
+      <div class="artifact-item"><strong>Devicename:</strong> JD-MKT-001</div>
+      <div class="artifact-item"><strong>Account Domain:</strong> CORP\jdoe</div>
+      <div class="artifact-item"><strong>EID:</strong> jdoe</div>
+      <div class="artifact-item"><strong>Email ID:</strong> john.doe@company.com</div>
+      <div class="artifact-item"><strong>Filename:</strong> notepadplus_setup.exe</div>
+      <div class="artifact-item"><strong>File Hashes:</strong>
+        <div>SHA256: e4f6c9...f2d3</div>
+        <div>SHA1: [to be collected]</div>
+        <div>MD5: [to be collected]</div>
+      </div>
+      <div class="artifact-item"><strong>File Source:</strong> http://freefiles.download/notepadplus_setup.exe</div>
+      <div class="artifact-item"><strong>File Path:</strong> C:\Users\jdoe\Downloads\notepadplus_setup.exe</div>
+      <div class="artifact-item"><strong>Command Line:</strong> powershell.exe -nop -w hidden -enc SQBtAHAAbwBy...==</div>
+      <div class="artifact-item"><strong>Parent Process Path:</strong> C:\Windows\System32\cmd.exe</div>
+      <div class="artifact-item"><strong>User Location:</strong> Cape Town, ZA</div>
+      <div class="artifact-item"><strong>Communication Evidence:</strong> 
+        <div>- Attach email conversation if user was reached by email</div>
+        <div>- Attach screenshots if communication was via Teams</div>
+        <div>Example: Screenshot of user justification for Notepad++ installation</div>
+      </div>
+    </div>
 
     <div class="section panel">
       <h3>Executive Summary</h3>

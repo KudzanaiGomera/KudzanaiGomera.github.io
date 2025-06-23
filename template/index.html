@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elite SOC Investigation Report</title>
+  <title>SOC Investigation Report</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -71,12 +71,13 @@
 </head>
 <body>
   <div class="container">
-    <h2>Security Operations Center - Elite Investigation Report</h2>
+    <h2>Rule_Monitoring Suspicious Execution of Autorun Registry Keys</h2>
 
     <div class="section artifact-panel">
       <h3>Critical Artifacts Checklist (DO NOT FORGET TO COLLECT)</h3>
       <div class="artifact-item"><strong>Hostname (FQDN):</strong> JD-MKT-001.domain.local</div>
       <div class="artifact-item"><strong>Devicename:</strong> JD-MKT-001</div>
+      <div class="artifact-item"><strong>Source IP:</strong> 192.01.16.10</div>
       <div class="artifact-item"><strong>Account Domain:</strong> CORP\jdoe</div>
       <div class="artifact-item"><strong>EID:</strong> jdoe</div>
       <div class="artifact-item"><strong>Email ID:</strong> john.doe@company.com</div>
@@ -88,108 +89,102 @@
       </div>
       <div class="artifact-item"><strong>File Source:</strong> http://freefiles.download/notepadplus_setup.exe</div>
       <div class="artifact-item"><strong>File Path:</strong> C:\Users\jdoe\Downloads\notepadplus_setup.exe</div>
-      <div class="artifact-item"><strong>Command Line:</strong> powershell.exe -nop -w hidden -enc SQBtAHAAbwBy...==</div>
-      <div class="artifact-item"><strong>Parent Process Path:</strong> C:\Windows\System32\cmd.exe</div>
+      <div class="artifact-item"><strong>Command Line:</strong> N/A</div>
+      <div class="artifact-item"><strong>Parent Process Path:</strong> N/A</div>
       <div class="artifact-item"><strong>User Location:</strong> Cape Town, ZA</div>
       <div class="artifact-item"><strong>Communication Evidence:</strong> 
-        <div>- Attach email conversation if user was reached by email</div>
-        <div>- Attach screenshots if communication was via Teams</div>
-        <div>Example: Screenshot of user justification for Notepad++ installation</div>
+        <div>- Email or Teams screenshots documenting user justification</div>
+        <div>- Example: Screenshot provided showing user explanation for Notepad++ installation</div>
       </div>
     </div>
 
     <div class="section panel">
       <h3>Executive Summary</h3>
-      <p>This investigation was initiated following the detection of an obfuscated PowerShell command, indicative of a potentially unauthorized software installation attempt. Leveraging advanced triage methodology and cross-validation from threat intelligence feeds, the activity was attributed to a user-initiated download that bypassed standard deployment procedures. No malicious persistence or lateral movement was identified. Case resolved and closed as <strong>Resolved</strong>. (Location: Cape Town, ZA)</p>
+      <p>
+        This investigation was triggered by the detection of suspicious AutoRun registry key modifications, suggesting unauthorized software execution or persistence behavior. Further analysis confirmed the activity originated from a direct download initiated by the user outside the organization's sanctioned software deployment process. Upon engagement, the user explained they encountered issues with the Adobe version available in Software Center and opted to install Notepad++ from the internet. This behavior, while not malicious, is considered a policy violation. The software was flagged as grayware (PUP), and a removal request was submitted. The user was informed of proper procedures for software installation. This alert is classified as <strong>Resolved | Bad BAU</strong>. (Location: Corp – South Africa)
+      </p>
     </div>
 
     <div class="section">
       <h3>Alert Details</h3>
-      <p><span class="label">Trigger Cause:</span><br>
-      A Splunk rule flagged base64-encoded PowerShell activity originating from CMD, suggesting encoded execution and potential evasion.</p>
-      <p><span class="label">Relevant Artifacts:</span><br>
-      Raw command line string observed:<br>
-      <span class="code">powershell.exe -nop -w hidden -enc SQBtAHAAbwBy...==</span></p>
+      <p>This detection aims to identify suspicious modifications to Autorun registry keys via Microsoft Defender for Endpoint (MDE), commonly used for persistence mechanisms by threat actors or unauthorized tools.</p>
+      <p>A binary executed on the device modified registry keys associated with automatic execution at startup.</p>
+      <p>Raw command line string observed:<br>
+        <span class="code">N/A</span>
+      </p>
     </div>
 
     <div class="section">
       <h3>Initial Enrichment</h3>
       <ul>
-        <li><strong>User Account:</strong> jdoe (John Doe) – Marketing Analyst – Marketing Dept – Cape Town</li>
-        <li><strong>Endpoint:</strong> JD-MKT-001.domain.local – IP: 192.168.10.45 – OS: Windows 10 Enterprise – AV Status: 1 PUP Alert (Quarantined)</li>
-        <li><strong>Location:</strong> Cape Town, ZA</li>
+        <li><strong>User Account:</strong> CORP\jdoe – John Doe – Marketing Analyst – Marketing Department – Cape Town</li>
+        <li><strong>Endpoint:</strong> JD-MKT-001.domain.local – IP: 192.168.10.45 – OS: Windows 10 Enterprise – AV Status: 1 alert in MDE</li>
       </ul>
     </div>
 
     <div class="section">
-      <h3>Endpoint & Network Analysis</h3>
-      <p><strong>Splunk + MDE Insights:</strong></p>
+      <h3>Endpoint & Network Analysis (Splunk + MDE Insights)</h3>
       <ul>
-        <li>Obfuscated PS script launched by CMD.</li>
-        <li>Connection to <code>103.231.89.44</code>, flagged as malware host in AbuseIPDB (Score: 90/100).</li>
-        <li>Downloaded binary: <code>notepadplus_setup.exe</code> (SHA256: e4f6c9...f2d3), flagged as PUP/Grayware.</li>
-        <li>No abnormal child process spawns or persistence observed in timeline post-download.</li>
+        <li>No abnormal login or process behavior detected in the past 24 hours.</li>
+        <li>Process Tree: <code>explorer.exe > chrome.exe > notepadplus_setup.exe</code></li>
+        <li>Chain of execution confirms user-initiated download via browser (Chrome).</li>
+        <li>Download Source: <code>http://freefiles.download/notepadplus_setup.exe</code></li>
+        <li>Registry Set:
+          <ul>
+            <li><strong>Key Hive:</strong> HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</li>
+            <li><strong>Value Name:</strong> NotepadPlus</li>
+            <li><strong>Set Data:</strong> C:\Users\jdoe\AppData\Roaming\NotepadPlus\notepad++.exe</li>
+            <li><strong>Original Value:</strong> [None]</li>
+          </ul>
+        </li>
+        <li>Binary: <code>notepadplus_setup.exe</code> (SHA256: e4f6c9...f2d3) — flagged as PUP/Grayware.</li>
+        <li>No suspicious child processes, lateral movement, or persistence artifacts post-installation.</li>
+        <li>Based on current findings and user response, this is categorized as bad BAU, pending further exception or exemption approval.</li>
       </ul>
     </div>
 
     <div class="section">
       <h3>IOC & Threat Intelligence</h3>
       <ul>
-        <li><strong>VirusTotal:</strong> SHA256 hash flagged by 7 vendors as PUP. No C2 communication observed.</li>
-        <li><strong>urlscan.io:</strong> Domain <code>freefiles.download</code> blacklisted for malware distribution.</li>
-        <li><strong>AbuseIPDB:</strong> IP linked to spam and malicious download campaigns.</li>
-        <li><strong>Shodan:</strong> IP running outdated Nginx server, port 80 open to public.</li>
+        <li><strong>VirusTotal:</strong> SHA256 hash flagged by 7 vendors as potentially unwanted (PUP)</li>
+        <li><strong>VirusTotal Analysis:</strong> <a href="https://www.virustotal.com/gui/file/e4f6c9...f2d3/detection" target="_blank">View on VirusTotal</a></li>
+        <li><strong>urlscan.io:</strong> Domain <code>freefiles.download</code> is blacklisted and associated with malware distribution campaigns.</li>
+        <li><strong>AbuseIPDB:</strong> N/A</li>
+        <li><strong>Joe Sandbox:</strong> No suspicious or malicious indicators observed in the behavioral analysis.</li>
       </ul>
     </div>
 
     <div class="section">
       <h3>Documentation & Business Justification</h3>
       <ul>
-        <li>User requested Notepad++ for editing configuration files.</li>
-        <li>No SCCM deployment request or internal ticket observed.</li>
-        <li>Confirmed that only pre-approved software is permitted; user violated install policy unknowingly.</li>
-        <li>User retrained; incident documented in internal Confluence for recurring audit purposes.</li>
+        <li>Notepad++ is approved and available via Software Center and Coupa under normal procedures.</li>
+        <li>No ticket was logged in Remedy for this installation.</li>
+        <li>User acknowledged that they bypassed policy due to software access issues and were unaware of the implications.</li>
+        <li>Work order submitted for software removal: <code>WO0026738637388</code> (example)</li>
       </ul>
     </div>
 
     <div class="section">
-      <h3>Resolution & Action Items</h3>
+      <h3>Resolution</h3>
       <ul>
-        <li><strong>Resolution:</strong> Resolved</li>
-        <li><strong>Remediation Plan:</strong>
-          <ul>
-            <li>Removed unauthorized binary</li>
-            <li>Ran full AV and EDR scans</li>
-            <li>Reset user credentials as precaution</li>
-            <li>Ticket added for policy violation</li>
-          </ul>
+        <li><strong>Status:</strong> Resolved | Bad BAU</li>
+        <li>Advised user on policy-compliant software installation paths.</li>
+        <li>Confirmed software removal request was initiated.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>Conclusion</h3>
+      <ul>
+        <li>
+          Investigation determined the activity was user-driven, involving unauthorized software download and execution from a suspicious domain. While no immediate post-execution compromise or persistence was identified, this represents a policy violation and unnecessary exposure. Appropriate user education and remediation were applied. Case closed as Resolved | Bad BAU.
         </li>
-        <li><strong>Escalation:</strong> Not required; no persistence, no lateral movement</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h3>Recommended Remediation Steps</h3>
-      <ul>
-        <li>Immediate software removal</li>
-        <li>Policy reinforcement via training</li>
-        <li>Enhanced Splunk alert tuning to detect variants</li>
-        <li>Implement application whitelisting for endpoint tier</li>
       </ul>
     </div>
 
     <div class="section">
       <h3>Screenshots (If Applicable)</h3>
-      <p>Not included in this version. Placeholder available for alert visuals or VT analysis.</p>
-    </div>
-
-    <div class="section">
-      <h3>References</h3>
-      <ul>
-        <li><a href="https://urlscan.io/">urlscan.io</a></li>
-        <li><a href="https://www.virustotal.com">VirusTotal</a></li>
-        <li><a href="https://tusoar.soar.splunkcloud.com/mission/236007/analyst/evidence">Splunk Mission - Evidence</a></li>
-      </ul>
+      <p>Not included in this version. Reserved for communication logs or visual analysis support.</p>
     </div>
   </div>
 </body>

@@ -1,78 +1,94 @@
+
 <!DOCTYPE html>
-<html lang="en">
+
+<html data-theme="light" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SOC Investigation Report</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>SOC Investigation Report</title>
+<style>
+    :root {
+      --bg-color: #f4f6f8;
+      --text-color: #2e2e2e;
+      --container-bg: #ffffff;
+      --panel-bg: #e3f2fd;
+      --artifact-bg: #fff8e1;
+      --code-bg: #eceff1;
+      --link-color: #0d47a1;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --container-bg: #1e1e1e;
+      --panel-bg: #263238;
+      --artifact-bg: #3e2723;
+      --code-bg: #37474f;
+      --link-color: #90caf9;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #2e2e2e;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       margin: 0;
       padding: 40px 20px;
+      transition: background-color 0.3s, color 0.3s;
     }
+
     .container {
       max-width: 960px;
       margin: auto;
-      background: #ffffff;
+      background: var(--container-bg);
       padding: 40px;
       border-radius: 12px;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
+
     h2, h3 {
       color: #1a237e;
       margin-bottom: 10px;
     }
-    .section {
-      margin-bottom: 40px;
-    }
-    .label {
-      font-weight: 600;
-      color: #37474f;
-    }
+
     .panel {
-      background: #e3f2fd;
+      background: var(--panel-bg);
       border-left: 6px solid #1565c0;
       padding: 16px 20px;
       border-radius: 8px;
       margin: 20px 0;
     }
+
     .artifact-panel {
-      background: #fff8e1;
+      background: var(--artifact-bg);
       border-left: 6px solid #ff8f00;
       padding: 16px 20px;
       border-radius: 8px;
       margin: 20px 0;
     }
+
     .code {
-      background-color: #eceff1;
+      background-color: var(--code-bg);
       font-family: Consolas, monospace;
       padding: 10px;
       border-radius: 6px;
       display: block;
       overflow-x: auto;
     }
+
     ul {
       padding-left: 20px;
       list-style-type: disc;
     }
+
     a {
-      color: #0d47a1;
+      color: var(--link-color);
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
     }
-    .artifact-item {
-      margin-bottom: 8px;
-    }
-    img.screenshot {
-      max-width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
+
     .pdf-button {
       display: inline-block;
       background-color: #1565c0;
@@ -84,136 +100,110 @@
       font-weight: bold;
       transition: background-color 0.3s ease;
     }
+
     .pdf-button:hover {
       background-color: #0d47a1;
     }
-  </style>
+
+    .theme-toggle {
+      float: right;
+      margin-bottom: 20px;
+    }
+
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    details {
+      margin-bottom: 20px;
+    }
+  
+    [data-theme="dark"] h2 {
+        color: white;
+    }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Rule_Monitoring Suspicious Execution of Autorun Registry Keys</h2>
-
-    <div class="section artifact-panel">
-      <h3>Critical Artifacts Checklist (DO NOT FORGET TO COLLECT)</h3>
-      <div class="artifact-item"><strong>Hostname (FQDN):</strong> JD-MKT-001.domain.local</div>
-      <div class="artifact-item"><strong>Devicename:</strong> JD-MKT-001</div>
-      <div class="artifact-item"><strong>Source IP:</strong> 192.01.16.10</div>
-      <div class="artifact-item"><strong>Account Domain:</strong> CORP\jdoe</div>
-      <div class="artifact-item"><strong>EID:</strong> jdoe</div>
-      <div class="artifact-item"><strong>Email ID:</strong> john.doe@company.com</div>
-      <div class="artifact-item"><strong>Filename:</strong> notepadplus_setup.exe</div>
-      <div class="artifact-item"><strong>File Hashes:</strong>
-        <div>SHA256: e4f6c9...f2d3</div>
-        <div>SHA1: [to be collected]</div>
-        <div>MD5: [to be collected]</div>
-      </div>
-      <div class="artifact-item"><strong>File Source:</strong> http://freefiles.download/notepadplus_setup.exe</div>
-      <div class="artifact-item"><strong>File Path:</strong> C:\Users\jdoe\Downloads\notepadplus_setup.exe</div>
-      <div class="artifact-item"><strong>Command Line:</strong> N/A</div>
-      <div class="artifact-item"><strong>Parent Process Path:</strong> N/A</div>
-      <div class="artifact-item"><strong>User Location:</strong> Cape Town, ZA</div>
-      <div class="artifact-item"><strong>Communication Evidence:</strong> 
-        <div>- Email or Teams screenshots documenting user justification</div>
-        <div>- Example: Screenshot provided showing user explanation for Notepad++ installation</div>
-      </div>
-    </div>
-
-    <div class="section panel">
-      <h3>Executive Summary</h3>
-      <p>
-        This investigation was triggered by the detection of suspicious AutoRun registry key modifications, suggesting unauthorized software execution or persistence behavior. Further analysis confirmed the activity originated from a direct download initiated by the user outside the organization's sanctioned software deployment process. Upon engagement, the user explained they encountered issues with the version of Notepad++ available in Software Center and Coupa, and opted to install it from the internet. This behavior, while not malicious, is considered a policy violation. The software was flagged as grayware (PUP), and a removal request was submitted. The user was informed of proper procedures for software installation. This alert is classified as <strong>Resolved | Bad BAU</strong>. (Location: Corp – South Africa)
-      </p>
-    </div>
-
-    <div class="section">
-      <h3>Alert Details</h3>
-      <p>This detection aims to identify suspicious modifications to Autorun registry keys via Microsoft Defender for Endpoint (MDE), commonly used for persistence mechanisms by threat actors or unauthorized tools.</p>
-      <p>A binary executed on the device modified registry keys associated with automatic execution at startup.</p>
-      <p>Raw command line string observed:<br>
-        <span class="code">N/A</span>
-      </p>
-    </div>
-
-    <div class="section">
-      <h3>Initial Enrichment</h3>
-      <ul>
-        <li><strong>User Account:</strong> CORP\jdoe – John Doe – Marketing Analyst – Marketing Department – Cape Town</li>
-        <li><strong>Endpoint:</strong> JD-MKT-001.domain.local – IP: 192.168.10.45 – OS: Windows 10 Enterprise – AV Status: 1 alert in MDE</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h3>Endpoint & Network Analysis (Splunk + MDE Insights)</h3>
-      <ul>
-        <li>No abnormal login or process behavior detected in the past 24 hours.</li>
-        <li>Process Tree: <code>explorer.exe > chrome.exe > notepadplus_setup.exe</code></li>
-        <li>Chain of execution confirms user-initiated download via browser (Chrome).</li>
-        <li>Download Source: <code>http://freefiles.download/notepadplus_setup.exe</code></li>
-        <li>Registry Set:
+<div class="container">
+<button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+<h2>Intel: Rule_Monitoring Suspicious Execution of Autorun Registry Keys</h2>
+<details open="">
+<summary>Executive Summary</summary>
+<div class="panel">
+<p>This investigation was initiated following the detection of suspicious modifications to AutoRun registry keys, indicative of potential unauthorized software execution or persistence mechanisms. Analysis confirmed the activity stemmed from a user-initiated download outside the organization’s approved software deployment channels. The user reported issues with the version of Notepad++ available via Software Center and Coupa, prompting them to download an alternative version from the internet. While the behavior was not malicious, it constitutes a policy violation. The downloaded software was identified as grayware (PUP), and a removal request was submitted. The user was educated on proper software installation procedures. Closing this alert as <strong>Resolved | Bad BAU</strong>. (Location: Corp – South Africa)</p>
+</div>
+</details>
+<details>
+<summary>Alert Details</summary>
+<p>This detection rule identifies suspicious modifications to AutoRun registry keys via Microsoft Defender for Endpoint (MDE), often leveraged by threat actors or unauthorized tools for persistence.</p>
+<p>This alert was triggered on host JD-MKT-001 for user CORP\jdoe, following the detection of a registry key modification associated with the installation of Notepad++ software.</p>
+<p>Raw command line string observed:<br/>
+<span class="code">n/a in this case</span>
+</p>
+</details>
+<details>
+<summary>Initial Enrichment</summary>
+<ul>
+<li><strong>Source User:</strong> CORP\jdoe | John Doe | Marketing Analyst | Marketing Department | Cape Town</li>
+<li><strong>Source Host:</strong> JD-MKT-001.domain.local | IP: 192.168.10.45 | OS: Windows 10 Enterprise | AV Status: 1 alert in MDE</li>
+</ul>
+</details>
+<details>
+<summary>Endpoint &amp; Network Analysis (Splunk + MDE Insights)</summary>
+<ul>
+<li>No abnormal login or process behavior detected in the past 24 hours.</li>
+<li>Process Tree: <code>explorer.exe &gt; chrome.exe &gt; notepadplus_setup.exe</code></li>
+<li>Execution chain confirms user-initiated download via Chrome browser.</li>
+<li>Download Source: <code>http://freefiles.download/notepadplus_setup.exe</code></li>
+<li>Registry Modification:
           <ul>
-            <li><strong>Key Hive:</strong> HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</li>
-            <li><strong>Value Name:</strong> NotepadPlus</li>
-            <li><strong>Set Data:</strong> C:\Users\jdoe\AppData\Roaming\NotepadPlus\notepad++.exe</li>
-            <li><strong>Original Value:</strong> [None]</li>
-          </ul>
-        </li>
-        <li>No suspicious child processes, lateral movement, or persistence artifacts post-installation.</li>
-        <li>Based on current findings and user response, this is categorized as bad BAU.</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h3>IOC & Threat Intelligence</h3>
-      <ul>
-        <li><strong>VirusTotal:</strong> SHA256 hash flagged by 7 vendors as potentially unwanted (PUP)</li>
-        <li><strong>VirusTotal Analysis:</strong> <a href="https://www.virustotal.com/gui/file/e4f6c9f2d3/detection" target="_blank">View on VirusTotal</a></li>
-        <li><strong>urlscan.io:</strong> Domain <code>freefiles.download</code> is blacklisted — <a href="https://urlscan.io/domain/freefiles.download" target="_blank">Scan Results</a></li>
-        <li><strong>AbuseIPDB:</strong> N/A</li>
-        <li><strong>Joe Sandbox:</strong> No suspicious or malicious indicators observed in the behavioral analysis.</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h3>Documentation & Business Justification</h3>
-      <ul>
-        <li>Notepad++ is approved and available via Software Center and Coupa under normal procedures.</li>
-        <li>No ticket was logged in Remedy for this installation.</li>
-        <li>User acknowledged that they bypassed policy due to issues with the version of Notepad++ in Software Center and were unaware of the implications.</li>
-        <li>Work order submitted for software removal: <a href="#" target="_blank"><code>WO0026738637388</code></a></li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h3>Resolution</h3>
-      <ul>
-        <li><strong>Status:</strong> Resolved | Bad BAU</li>
-        <li>Advised user on policy-compliant software installation paths.</li>
-        <li>Confirmed software removal request was initiated.</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h3>Conclusion</h3>
-      <ul>
-        <li>
-          Investigation determined the activity was user-driven, involving unauthorized software download and execution from a suspicious domain. While no immediate post-execution compromise or persistence was identified, this represents a policy violation and unnecessary exposure. Appropriate user education and remediation were applied. Case closed as Resolved | Bad BAU.
-        </li>
-      </ul>
-    </div>
-
-    <div class="section" style="text-align: center;">
-      <a href="https://your-pdf-template-link.com/view-only" target="_blank" class="pdf-button">View PDF Report Template</a>
-    </div>
-
-    <div class="section">
-      <h3>Screenshots</h3>
-      <p>Below are included screenshots for communication logs or supporting visuals:</p>
-      <img src="https://via.placeholder.com/800x400?text=Teams+Chat+User+Justification" alt="Screenshot of Teams justification" class="screenshot">
-      <img src="https://via.placeholder.com/800x400?text=Email+Response+Confirmation" alt="Screenshot of user email justification" class="screenshot">
-      <img src="https://via.placeholder.com/800x400?text=MDE+Alert+View" alt="MDE Alert view" class="screenshot">
-    </div>
-  </div>
+<li><strong>Key Hive:</strong> HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</li>
+<li><strong>Value Name:</strong> NotepadPlus</li>
+<li><strong>Set Data:</strong> C:\Users\jdoe\AppData\Roaming\NotepadPlus\notepad++.exe</li>
+<li><strong>Original Value:</strong> [None]</li>
+</ul>
+</li>
+<li>No evidence of suspicious child processes, lateral movement, or additional persistence mechanisms post-installation.</li>
+<li>Based on current findings, this is categorized as bad BAU.</li>
+</ul>
+</details>
+<details>
+<summary>IOC &amp; Threat Intelligence</summary>
+<ul>
+<li><strong>VirusTotal:</strong> SHA256 hash flagged by 7 vendors as potentially unwanted (PUP)</li>
+<li><strong>VirusTotal Analysis:</strong> <a href="https://www.virustotal.com/gui/file/e4f6c9f2d3/detection" target="_blank">View on VirusTotal</a></li>
+<li><strong>urlscan.io:</strong> Domain <code>freefiles.download</code> is blacklisted — <a href="https://urlscan.io/domain/freefiles.download" target="_blank">Scan Results</a></li>
+<li><strong>AbuseIPDB:</strong> n/a in this case unless there is an IP observed</li>
+<li><strong>Joe Sandbox:</strong> No malicious indicators observed in behavioral analysis</li>
+</ul>
+</details>
+<details>
+<summary>Documentation &amp; Business Justification</summary>
+<ul>
+<li>Notepad++ is officially approved and available via Software Center and Coupa.</li>
+<li>No Remedy ticket was logged for this installation.</li>
+<li>User acknowledged bypassing policy due to issues with the approved version and was unaware of the associated risks.</li>
+</ul>
+</details>
+<details>
+<summary>Conclusion</summary>
+<ul>
+<li>User was advised on policy-compliant software installation procedures.</li>
+<li>Work order submitted for software removal: <a href="#"><code>WO0026738637388</code></a></li>
+<li>Investigation concluded that the activity was user-driven and not malicious in nature.</li>
+<li>No evidence of compromise or persistence beyond the initial execution.</li>
+<li><strong>Closing this alert as:</strong> Resolved | Bad BAU</li>
+</ul>
+</details>
+<details open="True"><summary>Critical Artifacts Checklist (DO NOT FORGET TO COLLECT)</summary><ul><li><strong>Hostname (FQDN):</strong> JD-MKT-001.domain.local</li><li><strong>Devicename:</strong> JD-MKT-001</li><li><strong>Source IP:</strong> 192.01.16.10</li><li><strong>Account Domain:</strong> CORP\jdoe</li><li><strong>EID:</strong> jdoe</li><li><strong>Email ID:</strong> john.doe@company.com</li><li><strong>Filename:</strong> notepadplus_setup.exe</li><li><strong>File Hashes:</strong><ul><li><strong>SHA256:</strong> e4f6c9...f2d3</li><li><strong>SHA1:</strong> [to be collected]</li><li><strong>MD5:</strong> [to be collected]</li></ul></li><li><strong>File Source:</strong> http://freefiles.download/notepadplus_setup.exe</li><li><strong>File Path:</strong> C:\Users\jdoe\Downloads\notepadplus_setup.exe</li><li><strong>Command Line:</strong> N/A</li><li><strong>Parent Process Path:</strong> N/A</li><li><strong>User Location:</strong> Cape Town, ZA</li><li><strong>Communication Evidence:</strong><ul><li>Email or Teams screenshots documenting user justification</li><li>Example: Screenshot provided showing user explanation for Notepad++ installation</li></ul></li></ul></details></div>
+<script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute("data-theme");
+      html.setAttribute("data-theme", currentTheme === "dark" ? "light" : "dark");
+    }
+  </script>
 </body>
 </html>
-<!-- End of template/index.html -->
-<!-- Note: Replace placeholder image URLs with actual screenshots or relevant images as needed. -->

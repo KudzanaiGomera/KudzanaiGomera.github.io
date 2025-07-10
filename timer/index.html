@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepFlow</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      color: #f0f0f0;
+    }
+
+    .container {
+      max-width: 100%;
+      margin: auto;
+      background: #1e1e1e;
+      border-radius: 20px;
+      padding: 30px 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    #status {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    #timer {
+      font-size: 3rem;
+      margin: 20px 0;
+      animation: pulse 1s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    #progressBar {
+      width: 100%;
+      height: 10px;
+      background: #333;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    #progressFill {
+      height: 100%;
+      background: #00c853;
+      width: 0%;
+      transition: width 1s linear;
+    }
+
+    button {
+      background: #0077ff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background: #005fcc;
+    }
+
+    #musicToggle {
+      background: #5c5c5c;
+    }
+
+    #musicToggle:hover {
+      background: #3a3a3a;
+    }
+
+    #log {
+      margin-top: 30px;
+      text-align: left;
+      background: #2c2c2c;
+      padding: 15px;
+      border-radius: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    #log h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    #log ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #log li {
+      padding: 5px 0;
+      border-bottom: 1px solid #444;
+    }
+
+    @media (max-width: 600px) {
+      #timer {
+        font-size: 2.5rem;
+      }
+      button {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>✨ DeepFlow</h1>
+    <div id="status">Ready</div>
+    <div id="timer">30:00</div>
+    <div id="progressBar"><div id="progressFill"></div></div>
+
+    <button onclick="startTimer()">Start</button>
+    <button onclick="pauseTimer()">Pause</button>
+    <button onclick="resetTimer()">Reset</button>
+    <button id="musicToggle" onclick="toggleMusic()">Mute Music</button>
+
+    <div id="log">
+      <h2>Session Log</h2>
+      <ul id="sessionLog"></ul>
+    </div>
+  </div>
+
+  <audio id="focusMusic" loop autoplay playsinline>
+    <source src="https://cdn.pixabay.com/audio/2022/07/27/audio_78d3a4c7f0.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    let timerDisplay = document.getElementById('timer');
+    let statusDisplay = document.getElementById('status');
+    let sessionLog = document.getElementById('sessionLog');
+    let music = document.getElementById('focusMusic');
+    let musicToggle = document.getElementById('musicToggle');
+    let progressFill = document.getElementById('progressFill');
+
+    let interval;
+    let isRunning = false;
+    let totalTime = 30 * 60;
+    let timeLeft = totalTime;
+    let sessionCount = 0;
+    let currentMode = 'focus';
+
+    let wakeLock = null;
+    async function requestWakeLock() {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => console.log('Wake Lock was released'));
+        console.log('Wake Lock is active');
+      } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+      }
+    }
+
+    function logSession(message) {
+      const entry = document.createElement('li');
+      entry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+      sessionLog.prepend(entry);
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+      isRunning = true;
+
+      requestWakeLock();
+      music.play().catch(e => console.warn('Music autoplay blocked.'));
+
+      interval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          isRunning = false;
+          logSession(getModeLabel(currentMode) + ' ended');
+          notifyUser(getModeLabel(currentMode) + ' ended');
+          handleSessionEnd();
+        } else {
+          timeLeft--;
+          updateDisplay();
+        }
+      }, 1000);
+
+      statusDisplay.textContent = getModeLabel(currentMode);
+      logSession(getModeLabel(currentMode) + ' started');
+      notifyUser(getModeLabel(currentMode) + ' started');
+    }
+
+    function pauseTimer() {
+      clearInterval(interval);
+      isRunning = false;
+      logSession(getModeLabel(currentMode) + ' paused');
+    }
+
+    function resetTimer() {
+      clearInterval(interval);
+      isRunning = false;
+      setModeDurations(currentMode);
+      updateDisplay();
+      logSession(getModeLabel(currentMode) + ' reset');
+    }
+
+    function handleSessionEnd() {
+      if (currentMode === 'focus') {
+        sessionCount++;
+        if (sessionCount % 8 === 0) {
+          switchToMode('long', 60);
+        } else if (sessionCount % 4 === 0) {
+          switchToMode('medium', 15);
+        } else if (sessionCount % 2 === 0) {
+          switchToMode('short', 10);
+        } else {
+          switchToMode('focus', 30);
+        }
+      } else {
+        switchToMode('focus', 30);
+      }
+      startTimer();
+    }
+
+    function switchToMode(mode, minutes) {
+      currentMode = mode;
+      totalTime = minutes * 60;
+      timeLeft = totalTime;
+      updateDisplay();
+      statusDisplay.textContent = getModeLabel(mode);
+    }
+
+    function setModeDurations(mode) {
+      const durations = { focus: 30, short: 10, medium: 15, long: 60 };
+      totalTime = durations[mode] * 60;
+      timeLeft = totalTime;
+    }
+
+    function updateDisplay() {
+      let mins = Math.floor(timeLeft / 60);
+      let secs = timeLeft % 60;
+      timerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      const progress = ((totalTime - timeLeft) / totalTime) * 100;
+      progressFill.style.width = `${progress}%`;
+    }
+
+    function getModeLabel(mode) {
+      switch (mode) {
+        case 'focus': return '🧠 Focus Time';
+        case 'short': return '☕ Short Break';
+        case 'medium': return '☕️ Medium Break';
+        case 'long': return '🛌 Long Break';
+        default: return 'Ready';
+      }
+    }
+
+    function toggleMusic() {
+      music.muted = !music.muted;
+      musicToggle.textContent = music.muted ? "Unmute Music" : "Mute Music";
+    }
+
+    function notifyUser(message) {
+      if (Notification.permission === 'granted') {
+        new Notification('DeepFlow Timer', { body: message });
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission();
+      }
+    }
+
+    // Initialize
+    updateDisplay();
+    if ('Notification' in window) {
+      Notification.requestPermission();
+    }
+  </script>
+</body>
+</html>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DeepFlow</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
   <style>
     * {
       box-sizing: border-box;
@@ -26,8 +27,8 @@
     }
 
     .container {
-      max-width: 500px;
-      width: 100%;
+      width: 95%;
+      max-width: 1200px;
       margin: auto;
       background: rgba(30, 30, 30, 0.8);
       border-radius: 20px;
@@ -87,6 +88,7 @@
       font-family: 'Poppins', monospace;
       text-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
       position: relative;
+      transition: all 0.3s ease;
     }
 
     .timer-container {
@@ -166,6 +168,16 @@
       transform: translateY(0);
     }
 
+    button.secondary {
+      background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+      box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    button.danger {
+      background: linear-gradient(135deg, #dc3545 0%, #a71d2a 100%);
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+    }
+
     #log {
       margin-top: 30px;
       text-align: left;
@@ -228,29 +240,6 @@
       font-weight: 600;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        padding: 25px 15px;
-      }
-      
-      h1 {
-        font-size: 2rem;
-      }
-      
-      #timer {
-        font-size: 4rem;
-        margin: 20px 0;
-      }
-      
-      .buttons {
-        flex-direction: column;
-      }
-      
-      button {
-        width: 100%;
-      }
-    }
-
     /* Music Player Styles */
     .music-selector {
       margin: 20px 0;
@@ -290,7 +279,7 @@
     
     .playlist {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 12px;
       margin-top: 15px;
     }
@@ -397,11 +386,216 @@
       font-size: 0.8rem;
       color: #aaa;
     }
+
+    /* Settings Panel */
+    .settings-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 380px;
+      height: 100vh;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      overflow-y: auto;
+      transition: right 0.3s ease;
+      z-index: 1000;
+      border-left: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .settings-panel.active {
+      right: 0;
+    }
+
+    .settings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .settings-group {
+      margin-bottom: 25px;
+    }
+
+    .settings-group h3 {
+      margin-bottom: 15px;
+      color: #64dd17;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .settings-group h3::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: #64dd17;
+      border-radius: 50%;
+    }
+
+    .setting-item {
+      margin-bottom: 15px;
+    }
+
+    .setting-item label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .setting-item input[type="number"],
+    .setting-item input[type="text"],
+    .setting-item select {
+      width: 100%;
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 5px;
+      color: white;
+    }
+
+    .setting-item input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Toast Notifications */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 200, 83, 0.9);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 1001;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    /* Favorite Button */
+    .favorite-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: none;
+      border: none;
+      color: #aaa;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .favorite-btn.active {
+      color: #ff4081;
+    }
+
+    .favorite-btn:hover {
+      transform: scale(1.2);
+    }
+
+    /* Stats Panel */
+    .stats-panel {
+      background: rgba(44, 44, 44, 0.5);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #64dd17;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px 15px;
+        width: 100%;
+        border-radius: 0;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      #timer {
+        font-size: 3.5rem;
+        margin: 20px 0;
+      }
+      
+      .buttons {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+      
+      .playlist {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      }
+
+      .settings-panel {
+        width: 100%;
+        right: -100%;
+      }
+
+      .stats-panel {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="session-count" id="sessionCount">Session 1</div>
+    <button id="settingsBtn" style="position: absolute; top: 20px; left: 20px; min-width: auto; padding: 8px; border-radius: 50%;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19.4 15C19.2669 15.3016 19.227 15.6362 19.285 15.9606C19.343 16.285 19.4966 16.5844 19.725 16.8187C19.9553 17.0549 20.2502 17.2155 20.5676 17.2789C20.885 17.3423 21.2096 17.3056 21.5 17.1737C21.8998 17.0001 22.3433 16.9564 22.7683 17.0484C23.1933 17.1404 23.5785 17.3636 23.866 17.685C24.1553 18.0089 24.3303 18.4144 24.3657 18.8408C24.4011 19.2672 24.2953 19.6915 24.065 20.05C23.8346 20.4085 23.4923 20.6818 23.09 20.8275C22.6877 20.9732 22.2476 20.9834 21.8384 20.8565C21.4292 20.7296 21.0736 20.4729 20.825 20.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4.60002 15C4.73312 15.3016 4.77299 15.6362 4.715 15.9606C4.657 16.285 4.50344 16.5844 4.27502 16.8187C4.04475 17.0549 3.74978 17.2155 3.43238 17.2789C3.11499 17.3423 2.79041 17.3056 2.50002 17.1737C2.10024 17.0001 1.65671 16.9564 1.23172 17.0484C0.806731 17.1404 0.421487 17.3636 0.134019 17.685C-0.155252 18.0089 -0.330281 18.4144 -0.365685 18.8408C-0.401089 19.2672 -0.295304 19.6915 -0.065018 20.05C0.165268 20.4085 0.507627 20.6818 0.909895 20.8275C1.31216 20.9732 1.75226 20.9834 2.16146 20.8565C2.57066 20.7296 2.92625 20.4729 3.17502 20.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4.60002 9C4.73312 8.69842 4.77299 8.36379 4.715 8.03937C4.657 7.71495 4.50344 7.41557 4.27502 7.18134C4.04475 6.9451 3.74978 6.78452 3.43238 6.72112C3.11499 6.65772 2.79041 6.69439 2.50002 6.8263C2.10024 6.99989 1.65671 7.04359 1.23172 6.9516C0.806731 6.85961 0.421487 6.63637 0.134019 6.315C-0.155252 5.99111 -0.330281 5.58557 -0.365685 5.15918C-0.401089 4.73279 -0.295304 4.30854 -0.065018 3.95C0.165268 3.59146 0.507627 3.31816 0.909895 3.17248C1.31216 3.0268 1.75226 3.01664 2.16146 3.1435C2.57066 3.27036 2.92625 3.52714 3.17502 3.875" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19.4 9C19.2669 8.69842 19.227 8.36379 19.285 8.03937C19.343 7.71495 19.4966 7.41557 19.725 7.18134C19.9553 6.9451 20.2502 6.78452 20.5676 6.72112C20.885 6.65772 21.2096 6.69439 21.5 6.8263C21.8998 6.99989 22.3433 7.04359 22.7683 6.9516C23.1933 6.85961 23.5785 6.63637 23.866 6.315C24.1553 5.99111 24.3303 5.58557 24.3657 5.15918C24.4011 4.73279 24.2953 4.30854 24.065 3.95C23.8346 3.59146 23.4923 3.31816 23.09 3.17248C22.6877 3.0268 22.2476 3.01664 21.8384 3.1435C21.4292 3.27036 21.0736 3.52714 20.825 3.875" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
     <h1>✨ DeepFlow</h1>
     <div id="status">Ready to Focus</div>
     <div class="timer-container">
@@ -410,25 +604,31 @@
     <div id="progressBar"><div id="progressFill"></div></div>
 
     <div class="buttons">
-      <button onclick="startTimer()">
+      <button onclick="startTimer()" id="startBtn">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 2L13 8L3 14V2Z" fill="white"/>
         </svg>
         Start
       </button>
-      <button onclick="pauseTimer()">
+      <button onclick="pauseTimer()" id="pauseBtn">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="4" y="2" width="4" height="12" fill="white"/>
           <rect x="10" y="2" width="4" height="12" fill="white"/>
         </svg>
         Pause
       </button>
-      <button onclick="resetTimer()">
+      <button onclick="resetTimer()" class="secondary">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M13.5 8C13.5 9.15761 13.1293 10.2837 12.4388 11.2095C11.7482 12.1352 10.7717 12.8118 9.65165 13.1384C8.53161 13.465 7.32569 13.4248 6.22847 13.0236C5.13125 12.6224 4.20095 11.8826 3.57403 10.9137C2.94711 9.94482 2.65808 8.80061 2.75372 7.65366C2.84935 6.50671 3.32399 5.42234 4.11091 4.55544C4.89783 3.68855 5.95472 3.08669 7.12218 2.83866C8.28964 2.59063 9.50384 2.71046 10.5938 3.18063" stroke="white" stroke-width="2" stroke-linecap="round"/>
           <path d="M13.5 3V7H9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Reset
+      </button>
+      <button onclick="skipBreak()" id="skipBreakBtn" class="secondary" style="display: none;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 3L3 13M3 3L13 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Skip Break
       </button>
     </div>
 
@@ -445,11 +645,12 @@
       </div>
       
       <div class="genre-tabs">
-        <div class="genre-tab active" onclick="changeGenre('all')">All</div>
-        <div class="genre-tab" onclick="changeGenre('lofi')">Lofi</div>
-        <div class="genre-tab" onclick="changeGenre('classical')">Classical</div>
-        <div class="genre-tab" onclick="changeGenre('ambient')">Ambient</div>
-        <div class="genre-tab" onclick="changeGenre('nature')">Nature</div>
+        <div class="genre-tab active" onclick="changeGenre(event, 'all')">All</div>
+        <div class="genre-tab" onclick="changeGenre(event, 'lofi')">Lofi</div>
+        <div class="genre-tab" onclick="changeGenre(event, 'classical')">Classical</div>
+        <div class="genre-tab" onclick="changeGenre(event, 'ambient')">Ambient</div>
+        <div class="genre-tab" onclick="changeGenre(event, 'nature')">Nature</div>
+        <div class="genre-tab" onclick="changeGenre(event, 'favorites')">❤️ Favorites</div>
       </div>
       
       <div class="now-playing" id="nowPlaying" style="display: none;">
@@ -468,6 +669,7 @@
         <button onclick="playPreviousTrack()">⏮ Previous</button>
         <button onclick="togglePlayback()" id="playPauseBtn">⏸ Pause</button>
         <button onclick="playNextTrack()">⏭ Next</button>
+        <button onclick="toggleMute()" id="muteBtn" class="secondary">🔊 Mute</button>
       </div>
       
       <div class="volume-control">
@@ -477,11 +679,120 @@
       </div>
     </div>
 
+    <!-- Stats Panel -->
+    <div class="stats-panel">
+      <div class="stat-item">
+        <div class="stat-value" id="sessionsCompleted">0</div>
+        <div class="stat-label">Sessions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="focusTime">0h 0m</div>
+        <div class="stat-label">Focus Time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="breaksTaken">0</div>
+        <div class="stat-label">Breaks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalTime">0h 0m</div>
+        <div class="stat-label">Total Time</div>
+      </div>
+    </div>
+
     <div id="log">
       <h2>Session Log</h2>
       <ul id="sessionLog"></ul>
     </div>
   </div>
+
+  <!-- Settings Panel -->
+  <div class="overlay" id="settingsOverlay"></div>
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+      <h2>Settings</h2>
+      <button onclick="closeSettings()" style="min-width: auto; padding: 8px; border-radius: 50%;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="settings-group">
+      <h3>Timer Settings</h3>
+      <div class="setting-item">
+        <label for="focusDuration">Focus Duration (minutes)</label>
+        <input type="number" id="focusDuration" min="1" max="120" value="30">
+      </div>
+      <div class="setting-item">
+        <label for="shortBreakDuration">Short Break Duration (minutes)</label>
+        <input type="number" id="shortBreakDuration" min="1" max="30" value="5">
+      </div>
+      <div class="setting-item">
+        <label for="longBreakDuration">Long Break Duration (minutes)</label>
+        <input type="number" id="longBreakDuration" min="1" max="60" value="15">
+      </div>
+      <div class="setting-item">
+        <label for="lunchBreakDuration">Lunch Break Duration (minutes)</label>
+        <input type="number" id="lunchBreakDuration" min="1" max="120" value="60">
+      </div>
+      <div class="setting-item">
+        <label for="sessionsBeforeLongBreak">Sessions before Long Break</label>
+        <input type="number" id="sessionsBeforeLongBreak" min="1" max="10" value="4">
+      </div>
+      <div class="setting-item">
+        <label for="sessionsBeforeLunch">Sessions before Lunch</label>
+        <input type="number" id="sessionsBeforeLunch" min="1" max="20" value="8">
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h3>Appearance</h3>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="darkModeToggle" checked>
+          Dark Mode
+        </label>
+      </div>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="pulseTimerToggle" checked>
+          Pulse Timer Animation
+        </label>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h3>Notifications</h3>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="soundNotificationsToggle" checked>
+          Sound Notifications
+        </label>
+      </div>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="desktopNotificationsToggle">
+          Desktop Notifications
+        </label>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h3>Data</h3>
+      <div class="setting-item">
+        <button onclick="exportData()" class="secondary" style="width: 100%;">Export Data</button>
+      </div>
+      <div class="setting-item">
+        <button onclick="importData()" class="secondary" style="width: 100%;">Import Data</button>
+      </div>
+      <div class="setting-item">
+        <button onclick="resetData()" class="danger" style="width: 100%;">Reset All Data</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
 
   <!-- YouTube iframe player -->
   <div id="youtubePlayer" style="display: none;"></div>
@@ -494,24 +805,46 @@
     let timeLeft = totalTime;
     let currentSession = 1;
     let currentMode = 'focus';
+    let lastVolume = 50;
+    let isMuted = false;
+    let stats = {
+      sessionsCompleted: 0,
+      focusTime: 0,
+      breaksTaken: 0,
+      totalTime: 0
+    };
+
+    // Settings defaults
+    let settings = {
+      focusDuration: 30,
+      shortBreakDuration: 5,
+      longBreakDuration: 15,
+      lunchBreakDuration: 60,
+      sessionsBeforeLongBreak: 4,
+      sessionsBeforeLunch: 8,
+      darkMode: true,
+      pulseTimer: true,
+      soundNotifications: true,
+      desktopNotifications: false
+    };
 
     // Break patterns based on session number
     const breakPattern = {
-      1: 5,    // 5 min break after session 1
-      2: 10,   // 10 min break after session 2
-      3: 5,    // 5 min break after session 3
-      4: 15,   // 15 min break after session 4
-      5: 5,    // 5 min break after session 5
-      6: 10,   // 10 min break after session 6
-      7: 5,    // 5 min break after session 7
-      8: 60,   // 60 min lunch after session 8
-      9: 5,    // 5 min break after session 9
-      10: 10,  // 10 min break after session 10
-      11: 5,   // 5 min break after session 11
-      12: 15,  // 15 min break after session 12
-      13: 5,   // 5 min break after session 13
-      14: 10,  // 10 min break after session 14
-      15: 5,   // 5 min break after session 15
+      1: 'short',
+      2: 'short',
+      3: 'short',
+      4: 'long',
+      5: 'short',
+      6: 'short',
+      7: 'short',
+      8: 'lunch',
+      9: 'short',
+      10: 'short',
+      11: 'short',
+      12: 'long',
+      13: 'short',
+      14: 'short',
+      15: 'short'
     };
 
     // Music Player Variables
@@ -531,12 +864,13 @@
       lofi: [],
       classical: [],
       ambient: [],
-      nature: []
+      nature: [],
+      favorites: []
     };
 
     // Initialize genre-specific playlists
     for (const genre in musicLibrary) {
-      if (genre !== 'all') {
+      if (genre !== 'all' && genre !== 'favorites') {
         musicLibrary[genre] = musicLibrary.all.filter(track => track.genre === genre);
       }
     }
@@ -548,6 +882,7 @@
     let isShuffleOn = false;
     let originalPlaylistOrder = [...musicLibrary.all];
     let currentGenre = 'all';
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let audioContextInitialized = false;
 
     // Timer Functions
@@ -558,7 +893,7 @@
       requestWakeLock();
       
       // Start music if not already playing
-      if (!isMusicPlaying) {
+      if (!isMusicPlaying && settings.soundNotifications) {
         playTrack(currentTrackIndex);
       }
 
@@ -572,11 +907,18 @@
         } else {
           timeLeft--;
           updateDisplay();
+          updateStats();
+          
+          // Pulse animation when time is running out
+          if (timeLeft <= 60 && settings.pulseTimer) {
+            document.getElementById('timer').style.animation = 'pulse 1s infinite';
+          }
         }
       }, 1000);
 
-      statusDisplay.textContent = getModeLabel(currentMode);
+      document.getElementById('status').textContent = getModeLabel(currentMode);
       logSession(`${getModeLabel(currentMode)} started`);
+      updateSkipBreakButton();
     }
 
     function pauseTimer() {
@@ -584,7 +926,8 @@
       
       clearInterval(timerInterval);
       isTimerRunning = false;
-      statusDisplay.textContent = 'Paused';
+      document.getElementById('status').textContent = 'Paused';
+      document.getElementById('timer').style.animation = 'none';
       
       // Pause music
       if (isMusicPlaying) {
@@ -597,19 +940,55 @@
     function resetTimer() {
       clearInterval(timerInterval);
       isTimerRunning = false;
+      document.getElementById('timer').style.animation = 'none';
       
       // Reset to current mode's duration
       if (currentMode === 'focus') {
-        totalTime = 30 * 60;
+        totalTime = settings.focusDuration * 60;
       } else {
-        totalTime = breakPattern[currentSession] * 60;
+        const breakType = getCurrentBreakType();
+        switch(breakType) {
+          case 'short':
+            totalTime = settings.shortBreakDuration * 60;
+            break;
+          case 'long':
+            totalTime = settings.longBreakDuration * 60;
+            break;
+          case 'lunch':
+            totalTime = settings.lunchBreakDuration * 60;
+            break;
+        }
       }
       
       timeLeft = totalTime;
       updateDisplay();
-      statusDisplay.textContent = 'Ready';
+      document.getElementById('status').textContent = 'Ready';
+      updateSkipBreakButton();
       
       logSession('Timer reset');
+    }
+
+    function skipBreak() {
+      if (currentMode !== 'break') return;
+      
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      handleSessionEnd();
+      logSession('Break skipped');
+      showToast('Break skipped');
+    }
+
+    function updateSkipBreakButton() {
+      const skipBtn = document.getElementById('skipBreakBtn');
+      if (currentMode === 'break') {
+        skipBtn.style.display = 'block';
+      } else {
+        skipBtn.style.display = 'none';
+      }
+    }
+
+    function getCurrentBreakType() {
+      return breakPattern[currentSession] || 'short';
     }
 
     function updateDisplay() {
@@ -630,7 +1009,22 @@
     function handleSessionEnd() {
       if (currentMode === 'focus') {
         currentMode = 'break';
-        totalTime = breakPattern[currentSession] * 60;
+        const breakType = getCurrentBreakType();
+        
+        switch(breakType) {
+          case 'short':
+            totalTime = settings.shortBreakDuration * 60;
+            break;
+          case 'long':
+            totalTime = settings.longBreakDuration * 60;
+            break;
+          case 'lunch':
+            totalTime = settings.lunchBreakDuration * 60;
+            break;
+        }
+        
+        stats.sessionsCompleted++;
+        stats.breaksTaken++;
         
         if (currentSession < 16) {
           document.getElementById('sessionCount').textContent = `Session ${currentSession + 1}`;
@@ -639,7 +1033,7 @@
         }
       } else {
         currentMode = 'focus';
-        totalTime = 30 * 60;
+        totalTime = settings.focusDuration * 60;
         
         if (currentSession < 16) {
           currentSession++;
@@ -650,6 +1044,8 @@
       
       timeLeft = totalTime;
       updateDisplay();
+      updateStats();
+      saveState();
       
       setTimeout(() => {
         startTimer();
@@ -660,23 +1056,42 @@
       if (mode === 'focus') {
         return '🧠 Focus Time';
       } else {
-        const breakMins = breakPattern[currentSession];
-        if (breakMins >= 30) return `🍱 Lunch Break (${breakMins} min)`;
-        if (breakMins >= 15) return `🛌 Long Break (${breakMins} min)`;
-        if (breakMins >= 10) return `☕️ Medium Break (${breakMins} min)`;
-        return `☕ Short Break (${breakMins} min)`;
+        const breakType = getCurrentBreakType();
+        switch(breakType) {
+          case 'short':
+            return `☕ Short Break (${settings.shortBreakDuration} min)`;
+          case 'long':
+            return `🛌 Long Break (${settings.longBreakDuration} min)`;
+          case 'lunch':
+            return `🍱 Lunch Break (${settings.lunchBreakDuration} min)`;
+          default:
+            return `☕ Break (${settings.shortBreakDuration} min)`;
+        }
       }
     }
 
     // Music Player Functions
     function loadYouTubeAPI() {
-      const tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      return new Promise((resolve) => {
+        // Check if already loaded
+        if (window.YT && window.YT.Player) {
+          resolve();
+          return;
+        }
+
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // This global function is called by YouTube API when ready
+        window.onYouTubeIframeAPIReady = function() {
+          resolve();
+        };
+      });
     }
 
-    function onYouTubeIframeAPIReady() {
+    function initializePlayer() {
       player = new YT.Player('youtubePlayer', {
         height: '0',
         width: '0',
@@ -697,6 +1112,7 @@
     function onPlayerReady(event) {
       changeVolume(50);
       renderPlaylist();
+      updateFavorites();
     }
 
     function onPlayerStateChange(event) {
@@ -717,6 +1133,8 @@
         const trackElement = document.createElement('div');
         trackElement.className = `track ${index === currentTrackIndex && isMusicPlaying ? 'active' : ''}`;
         trackElement.innerHTML = `
+          <button class="favorite-btn ${favorites.includes(track.id) ? 'active' : ''}" 
+                  onclick="toggleFavorite(event, '${track.id}')">❤️</button>
           <div class="track-title">${track.title}</div>
           <div class="track-artist">${track.artist}</div>
         `;
@@ -728,19 +1146,50 @@
       });
     }
 
-    function playTrack(index) {
-      currentTrackIndex = index;
-      player.loadVideoById(currentPlaylist[index].id);
-      player.playVideo();
-      isMusicPlaying = true;
-      document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-      
-      if (!currentPlaylist[index].duration) {
-        currentPlaylist[index].duration = 180;
+    async function playTrack(index) {
+      try {
+        if (!window.YT) {
+          await loadYouTubeAPI();
+        }
+        if (!player) {
+          initializePlayer();
+          // Wait for player to be ready
+          await new Promise(resolve => {
+            const checkPlayer = setInterval(() => {
+              if (player && player.getPlayerState) {
+                clearInterval(checkPlayer);
+                resolve();
+              }
+            }, 100);
+          });
+        }
+
+        currentTrackIndex = index;
+        player.loadVideoById(currentPlaylist[index].id);
+        
+        // Try to play (may fail due to autoplay restrictions)
+        try {
+          player.playVideo();
+          isMusicPlaying = true;
+          document.getElementById('playPauseBtn').textContent = '⏸ Pause';
+        } catch (error) {
+          console.log('Autoplay blocked, waiting for user interaction');
+          document.getElementById('status').textContent = 'Click play button to start music';
+          isMusicPlaying = false;
+          return;
+        }
+
+        if (!currentPlaylist[index].duration) {
+          currentPlaylist[index].duration = 180;
+        }
+        
+        renderPlaylist();
+        updateNowPlaying();
+      } catch (error) {
+        console.error('Error playing track:', error);
+        document.getElementById('status').textContent = 'Error loading music';
+        showToast('Error loading music');
       }
-      
-      renderPlaylist();
-      updateNowPlaying();
     }
 
     function updateNowPlaying() {
@@ -783,6 +1232,11 @@
     }
 
     function togglePlayback() {
+      if (!player) {
+        playTrack(currentTrackIndex);
+        return;
+      }
+      
       if (isMusicPlaying) {
         player.pauseVideo();
         document.getElementById('playPauseBtn').textContent = '▶ Play';
@@ -799,8 +1253,33 @@
       isMusicPlaying = !isMusicPlaying;
     }
 
+    function toggleMute() {
+      if (!player) return;
+      
+      if (isMuted) {
+        player.unMute();
+        player.setVolume(lastVolume);
+        document.getElementById('muteBtn').textContent = '🔊 Mute';
+        document.getElementById('volumeSlider').value = lastVolume;
+      } else {
+        lastVolume = player.getVolume();
+        player.setVolume(0);
+        player.mute();
+        document.getElementById('muteBtn').textContent = '🔇 Unmute';
+        document.getElementById('volumeSlider').value = 0;
+      }
+      isMuted = !isMuted;
+    }
+
     function changeVolume(volume) {
-      player.setVolume(volume);
+      if (player) {
+        player.setVolume(volume);
+        if (volume > 0) {
+          isMuted = false;
+          lastVolume = volume;
+          document.getElementById('muteBtn').textContent = '🔊 Mute';
+        }
+      }
     }
 
     function toggleShuffle() {
@@ -814,9 +1293,13 @@
       renderPlaylist();
     }
 
-    function changeGenre(genre) {
+    function changeGenre(event, genre) {
       currentGenre = genre;
-      currentPlaylist = [...musicLibrary[genre]];
+      if (genre === 'favorites') {
+        currentPlaylist = musicLibrary.all.filter(track => favorites.includes(track.id));
+      } else {
+        currentPlaylist = [...musicLibrary[genre]];
+      }
       originalPlaylistOrder = [...currentPlaylist];
       
       document.querySelectorAll('.genre-tab').forEach(tab => {
@@ -835,11 +1318,236 @@
       }
     }
 
+    function toggleFavorite(event, trackId) {
+      event.stopPropagation();
+      const index = favorites.indexOf(trackId);
+      if (index === -1) {
+        favorites.push(trackId);
+      } else {
+        favorites.splice(index, 1);
+      }
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      updateFavorites();
+      renderPlaylist();
+      
+      if (currentGenre === 'favorites') {
+        currentPlaylist = musicLibrary.all.filter(track => favorites.includes(track.id));
+        renderPlaylist();
+      }
+    }
+
+    function updateFavorites() {
+      musicLibrary.favorites = musicLibrary.all.filter(track => favorites.includes(track.id));
+    }
+
+    // Settings Functions
+    function openSettings() {
+      document.getElementById('settingsPanel').classList.add('active');
+      document.getElementById('settingsOverlay').classList.add('active');
+      loadSettings();
+    }
+
+    function closeSettings() {
+      saveSettings();
+      document.getElementById('settingsPanel').classList.remove('active');
+      document.getElementById('settingsOverlay').classList.remove('active');
+    }
+
+    function loadSettings() {
+      const savedSettings = localStorage.getItem('deepFlowSettings');
+      if (savedSettings) {
+        settings = JSON.parse(savedSettings);
+      }
+      
+      document.getElementById('focusDuration').value = settings.focusDuration;
+      document.getElementById('shortBreakDuration').value = settings.shortBreakDuration;
+      document.getElementById('longBreakDuration').value = settings.longBreakDuration;
+      document.getElementById('lunchBreakDuration').value = settings.lunchBreakDuration;
+      document.getElementById('sessionsBeforeLongBreak').value = settings.sessionsBeforeLongBreak;
+      document.getElementById('sessionsBeforeLunch').value = settings.sessionsBeforeLunch;
+      document.getElementById('darkModeToggle').checked = settings.darkMode;
+      document.getElementById('pulseTimerToggle').checked = settings.pulseTimer;
+      document.getElementById('soundNotificationsToggle').checked = settings.soundNotifications;
+      document.getElementById('desktopNotificationsToggle').checked = settings.desktopNotifications;
+    }
+
+    function saveSettings() {
+      settings.focusDuration = parseInt(document.getElementById('focusDuration').value) || 30;
+      settings.shortBreakDuration = parseInt(document.getElementById('shortBreakDuration').value) || 5;
+      settings.longBreakDuration = parseInt(document.getElementById('longBreakDuration').value) || 15;
+      settings.lunchBreakDuration = parseInt(document.getElementById('lunchBreakDuration').value) || 60;
+      settings.sessionsBeforeLongBreak = parseInt(document.getElementById('sessionsBeforeLongBreak').value) || 4;
+      settings.sessionsBeforeLunch = parseInt(document.getElementById('sessionsBeforeLunch').value) || 8;
+      settings.darkMode = document.getElementById('darkModeToggle').checked;
+      settings.pulseTimer = document.getElementById('pulseTimerToggle').checked;
+      settings.soundNotifications = document.getElementById('soundNotificationsToggle').checked;
+      settings.desktopNotifications = document.getElementById('desktopNotificationsToggle').checked;
+      
+      localStorage.setItem('deepFlowSettings', JSON.stringify(settings));
+      
+      // Apply settings that need immediate effect
+      if (!settings.pulseTimer) {
+        document.getElementById('timer').style.animation = 'none';
+      }
+      
+      showToast('Settings saved');
+    }
+
+    function exportData() {
+      const data = {
+        state: {
+          timeLeft,
+          currentSession,
+          currentMode,
+          currentTrackIndex,
+          currentGenre,
+          isShuffleOn,
+          isMusicPlaying,
+          isMuted,
+          lastVolume
+        },
+        stats,
+        settings,
+        favorites
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `deepflow-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showToast('Data exported');
+    }
+
+    function importData() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      
+      input.onchange = e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = event => {
+          try {
+            const data = JSON.parse(event.target.result);
+            
+            // Import state
+            if (data.state) {
+              timeLeft = data.state.timeLeft || timeLeft;
+              currentSession = data.state.currentSession || currentSession;
+              currentMode = data.state.currentMode || currentMode;
+              currentTrackIndex = data.state.currentTrackIndex || currentTrackIndex;
+              currentGenre = data.state.currentGenre || currentGenre;
+              isShuffleOn = data.state.isShuffleOn || isShuffleOn;
+              isMusicPlaying = data.state.isMusicPlaying || false;
+              isMuted = data.state.isMuted || false;
+              lastVolume = data.state.lastVolume || 50;
+              
+              document.getElementById('shuffleToggle').checked = isShuffleOn;
+              document.getElementById('volumeSlider').value = isMuted ? 0 : lastVolume;
+              document.getElementById('muteBtn').textContent = isMuted ? '🔇 Unmute' : '🔊 Mute';
+            }
+            
+            // Import stats
+            if (data.stats) {
+              stats = data.stats;
+              updateStats();
+            }
+            
+            // Import settings
+            if (data.settings) {
+              settings = data.settings;
+              localStorage.setItem('deepFlowSettings', JSON.stringify(settings));
+            }
+            
+            // Import favorites
+            if (data.favorites) {
+              favorites = data.favorites;
+              localStorage.setItem('favorites', JSON.stringify(favorites));
+              updateFavorites();
+            }
+            
+            updateDisplay();
+            renderPlaylist();
+            showToast('Data imported successfully');
+          } catch (error) {
+            console.error('Error importing data:', error);
+            showToast('Error importing data');
+          }
+        };
+        
+        reader.readAsText(file);
+      };
+      
+      input.click();
+    }
+
+    function resetData() {
+      if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+        localStorage.removeItem('deepFlowState');
+        localStorage.removeItem('deepFlowSettings');
+        localStorage.removeItem('favorites');
+        
+        // Reset to defaults
+        timeLeft = 30 * 60;
+        totalTime = 30 * 60;
+        currentSession = 1;
+        currentMode = 'focus';
+        currentTrackIndex = 0;
+        currentGenre = 'all';
+        isShuffleOn = false;
+        isMusicPlaying = false;
+        isMuted = false;
+        lastVolume = 50;
+        
+        stats = {
+          sessionsCompleted: 0,
+          focusTime: 0,
+          breaksTaken: 0,
+          totalTime: 0
+        };
+        
+        settings = {
+          focusDuration: 30,
+          shortBreakDuration: 5,
+          longBreakDuration: 15,
+          lunchBreakDuration: 60,
+          sessionsBeforeLongBreak: 4,
+          sessionsBeforeLunch: 8,
+          darkMode: true,
+          pulseTimer: true,
+          soundNotifications: true,
+          desktopNotifications: false
+        };
+        
+        favorites = [];
+        
+        updateDisplay();
+        updateStats();
+        renderPlaylist();
+        document.getElementById('sessionLog').innerHTML = '';
+        document.getElementById('shuffleToggle').checked = false;
+        document.getElementById('volumeSlider').value = 50;
+        document.getElementById('muteBtn').textContent = '🔊 Mute';
+        
+        showToast('All data reset');
+      }
+    }
+
     // Common Functions
     async function requestWakeLock() {
       try {
         if ('wakeLock' in navigator) {
-          wakeLock = await navigator.wakeLock.request('screen');
+          const wakeLock = await navigator.wakeLock.request('screen');
+          wakeLock.addEventListener('release', () => {
+            console.log('Screen Wake Lock was released');
+          });
         }
       } catch (err) {
         console.error(`${err.name}, ${err.message}`);
@@ -857,37 +1565,195 @@
     }
 
     function notifyUser(message) {
-      if ('Notification' in window && Notification.permission === 'granted') {
+      if (settings.desktopNotifications && 'Notification' in window && Notification.permission === 'granted') {
         new Notification('DeepFlow Timer', { 
           body: message,
           icon: 'https://cdn-icons-png.flaticon.com/512/3069/3069172.png'
         });
       } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission();
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted' && settings.desktopNotifications) {
+            new Notification('DeepFlow Timer', { 
+              body: message,
+              icon: 'https://cdn-icons-png.flaticon.com/512/3069/3069172.png'
+            });
+          }
+        });
+      }
+      
+      if (settings.soundNotifications) {
+        playNotificationSound();
       }
     }
 
-    // Initialize
-    updateDisplay();
-    loadYouTubeAPI();
-    changeGenre('all');
-    
-    if ('Notification' in window) {
-      Notification.requestPermission();
+    function playNotificationSound() {
+      const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...');
+      audio.volume = 0.3;
+      audio.play().catch(e => console.log('Audio playback failed:', e));
     }
-    
-    document.body.addEventListener('click', function initAudio() {
-      // Initialize audio context on first user interaction
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        const audioContext = new AudioContext();
-        if (audioContext.state === 'suspended') {
-          audioContext.resume();
-        }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function updateStats() {
+      document.getElementById('sessionsCompleted').textContent = stats.sessionsCompleted;
+      
+      const focusHours = Math.floor(stats.focusTime / 3600);
+      const focusMins = Math.floor((stats.focusTime % 3600) / 60);
+      document.getElementById('focusTime').textContent = `${focusHours}h ${focusMins}m`;
+      
+      document.getElementById('breaksTaken').textContent = stats.breaksTaken;
+      
+      const totalHours = Math.floor(stats.totalTime / 3600);
+      const totalMins = Math.floor((stats.totalTime % 3600) / 60);
+      document.getElementById('totalTime').textContent = `${totalHours}h ${totalMins}m`;
+    }
+
+    function saveState() {
+      const state = {
+        timeLeft,
+        currentSession,
+        currentMode,
+        currentTrackIndex,
+        currentGenre,
+        isShuffleOn,
+        isMusicPlaying,
+        isMuted,
+        lastVolume,
+        stats
+      };
+      
+      localStorage.setItem('deepFlowState', JSON.stringify(state));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem('deepFlowState');
+      if (saved) {
+        const state = JSON.parse(saved);
+        timeLeft = state.timeLeft;
+        currentSession = state.currentSession;
+        currentMode = state.currentMode;
+        currentTrackIndex = state.currentTrackIndex;
+        currentGenre = state.currentGenre;
+        isShuffleOn = state.isShuffleOn;
+        isMusicPlaying = state.isMusicPlaying;
+        isMuted = state.isMuted;
+        lastVolume = state.lastVolume;
+        stats = state.stats || stats;
+        
+        document.getElementById('shuffleToggle').checked = isShuffleOn;
+        document.getElementById('volumeSlider').value = isMuted ? 0 : lastVolume;
+        document.getElementById('muteBtn').textContent = isMuted ? '🔇 Unmute' : '🔊 Mute';
+        
+        updateDisplay();
+        updateStats();
+        updateSkipBreakButton();
       }
-      audioContextInitialized = true;
-      document.body.removeEventListener('click', initAudio);
-    }, { once: true });
+    }
+
+    // Keyboard Shortcuts
+    function setupKeyboardShortcuts() {
+      document.addEventListener('keydown', (e) => {
+        // Ignore if typing in an input field
+        if (e.target.tagName === 'INPUT') return;
+        
+        switch(e.key) {
+          case ' ':
+            e.preventDefault();
+            if (isTimerRunning) {
+              pauseTimer();
+            } else {
+              startTimer();
+            }
+            break;
+          case 'r':
+            e.preventDefault();
+            resetTimer();
+            break;
+          case 'n':
+            e.preventDefault();
+            playNextTrack();
+            break;
+          case 'p':
+            e.preventDefault();
+            playPreviousTrack();
+            break;
+          case 'm':
+            e.preventDefault();
+            toggleMute();
+            break;
+          case 's':
+            e.preventDefault();
+            openSettings();
+            break;
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Load settings first
+      loadSettings();
+      
+      // Then load state
+      loadState();
+      
+      // Update UI based on loaded state
+      updateDisplay();
+      updateStats();
+      
+      try {
+        await loadYouTubeAPI();
+        initializePlayer();
+        changeGenre({ target: document.querySelector('.genre-tab.active') }, currentGenre);
+        
+        if ('Notification' in window) {
+          Notification.requestPermission();
+        }
+        
+        // Initialize audio context on first interaction
+        document.body.addEventListener('click', function initAudio() {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            const audioContext = new AudioContext();
+            if (audioContext.state === 'suspended') {
+              audioContext.resume();
+            }
+          }
+          document.body.removeEventListener('click', initAudio);
+        }, { once: true });
+      } catch (error) {
+        console.error('Initialization error:', error);
+        document.getElementById('status').textContent = 'Error initializing player';
+        showToast('Error initializing player');
+      }
+      
+      // Setup event listeners
+      document.getElementById('settingsBtn').addEventListener('click', openSettings);
+      document.getElementById('settingsOverlay').addEventListener('click', closeSettings);
+      
+      // Setup keyboard shortcuts
+      setupKeyboardShortcuts();
+      
+      // Update stats every minute
+      setInterval(() => {
+        if (isTimerRunning) {
+          if (currentMode === 'focus') {
+            stats.focusTime++;
+          }
+          stats.totalTime++;
+          updateStats();
+          saveState();
+        }
+      }, 1000);
+    });
   </script>
 </body>
 </html>

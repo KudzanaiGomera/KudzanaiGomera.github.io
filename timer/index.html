@@ -545,6 +545,16 @@
       color: #aaa;
     }
 
+    /* Error Message */
+    .error-message {
+      color: #ff4444;
+      background: rgba(255, 68, 68, 0.1);
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 25px 15px;
@@ -661,14 +671,18 @@
         </div>
       </div>
       
+      <div class="error-message" id="musicError">
+        Music player failed to initialize. Please disable ad blockers or try refreshing the page.
+      </div>
+      
       <div class="playlist" id="playlist">
         <!-- Tracks will be added here by JavaScript -->
       </div>
       
       <div class="track-controls">
-        <button onclick="playPreviousTrack()">⏮ Previous</button>
-        <button onclick="togglePlayback()" id="playPauseBtn">⏸ Pause</button>
-        <button onclick="playNextTrack()">⏭ Next</button>
+        <button onclick="playPreviousTrack()" id="prevBtn">⏮ Previous</button>
+        <button onclick="togglePlayback()" id="playPauseBtn">▶ Play</button>
+        <button onclick="playNextTrack()" id="nextBtn">⏭ Next</button>
         <button onclick="toggleMute()" id="muteBtn" class="secondary">🔊 Mute</button>
       </div>
       
@@ -884,6 +898,8 @@
     let currentGenre = 'all';
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let audioContextInitialized = false;
+    let youtubeAPIReady = false;
+    let playerInitialized = false;
 
     // Timer Functions
     function startTimer() {
@@ -1071,51 +1087,90 @@
     }
 
     // Music Player Functions
-    function loadYouTubeAPI() {
-      return new Promise((resolve) => {
-        // Check if already loaded
+    async function loadYouTubeAPI() {
+      return new Promise((resolve, reject) => {
         if (window.YT && window.YT.Player) {
+          youtubeAPIReady = true;
           resolve();
           return;
         }
 
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
+        tag.onerror = () => {
+          console.error('Failed to load YouTube API');
+          showMusicError();
+          reject(new Error('Failed to load YouTube API'));
+        };
+        
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // This global function is called by YouTube API when ready
+        // Set timeout in case the API never loads
+        const timeout = setTimeout(() => {
+          console.error('YouTube API loading timed out');
+          showMusicError();
+          reject(new Error('YouTube API loading timed out'));
+        }, 10000);
+
         window.onYouTubeIframeAPIReady = function() {
+          clearTimeout(timeout);
+          youtubeAPIReady = true;
+          console.log('YouTube API ready');
           resolve();
         };
       });
     }
 
-    function initializePlayer() {
-      player = new YT.Player('youtubePlayer', {
-        height: '0',
-        width: '0',
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          rel: 0
-        },
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        }
+    function showMusicError() {
+      document.getElementById('musicError').style.display = 'block';
+      document.querySelectorAll('.track-controls button').forEach(btn => {
+        btn.disabled = true;
       });
     }
 
+    async function initializePlayer() {
+      try {
+        if (!youtubeAPIReady) {
+          await loadYouTubeAPI();
+        }
+        
+        player = new YT.Player('youtubePlayer', {
+          height: '0',
+          width: '0',
+          playerVars: {
+            autoplay: 0,
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
+            rel: 0,
+            enablejsapi: 1,
+            origin: window.location.origin
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange,
+            'onError': onPlayerError
+          }
+        });
+        
+        playerInitialized = true;
+      } catch (error) {
+        console.error('YouTube Player initialization failed:', error);
+        showMusicError();
+        throw error;
+      }
+    }
+
     function onPlayerReady(event) {
+      console.log('YouTube Player ready');
       changeVolume(50);
       renderPlaylist();
       updateFavorites();
     }
 
     function onPlayerStateChange(event) {
+      console.log('Player state changed:', event.data);
       if (event.data === YT.PlayerState.ENDED) {
         playNextTrack();
       }
@@ -1123,6 +1178,13 @@
         updateNowPlaying();
         startTrackProgress();
       }
+    }
+
+    function onPlayerError(event) {
+      console.error('YouTube Player error:', event.data);
+      showToast('Music playback error');
+      // Optionally try the next track
+      setTimeout(playNextTrack, 2000);
     }
 
     function renderPlaylist() {
@@ -1148,34 +1210,26 @@
 
     async function playTrack(index) {
       try {
-        if (!window.YT) {
+        if (!youtubeAPIReady) {
           await loadYouTubeAPI();
         }
-        if (!player) {
-          initializePlayer();
-          // Wait for player to be ready
-          await new Promise(resolve => {
-            const checkPlayer = setInterval(() => {
-              if (player && player.getPlayerState) {
-                clearInterval(checkPlayer);
-                resolve();
-              }
-            }, 100);
-          });
+        
+        if (!playerInitialized) {
+          await initializePlayer();
         }
 
         currentTrackIndex = index;
         player.loadVideoById(currentPlaylist[index].id);
         
-        // Try to play (may fail due to autoplay restrictions)
         try {
           player.playVideo();
           isMusicPlaying = true;
           document.getElementById('playPauseBtn').textContent = '⏸ Pause';
         } catch (error) {
-          console.log('Autoplay blocked, waiting for user interaction');
+          console.log('Autoplay blocked:', error);
           document.getElementById('status').textContent = 'Click play button to start music';
           isMusicPlaying = false;
+          showToast('Click play button to start music');
           return;
         }
 
@@ -1188,7 +1242,8 @@
       } catch (error) {
         console.error('Error playing track:', error);
         document.getElementById('status').textContent = 'Error loading music';
-        showToast('Error loading music');
+        showToast('Error loading music - try disabling ad blockers');
+        showMusicError();
       }
     }
 
@@ -1232,7 +1287,7 @@
     }
 
     function togglePlayback() {
-      if (!player) {
+      if (!playerInitialized) {
         playTrack(currentTrackIndex);
         return;
       }
@@ -1254,7 +1309,7 @@
     }
 
     function toggleMute() {
-      if (!player) return;
+      if (!playerInitialized) return;
       
       if (isMuted) {
         player.unMute();
@@ -1272,7 +1327,7 @@
     }
 
     function changeVolume(volume) {
-      if (player) {
+      if (playerInitialized) {
         player.setVolume(volume);
         if (volume > 0) {
           isMuted = false;
@@ -1710,8 +1765,12 @@
       updateStats();
       
       try {
-        await loadYouTubeAPI();
-        initializePlayer();
+        // Preload YouTube API
+        loadYouTubeAPI().catch(error => {
+          console.error('YouTube API loading failed:', error);
+          showMusicError();
+        });
+        
         changeGenre({ target: document.querySelector('.genre-tab.active') }, currentGenre);
         
         if ('Notification' in window) {

@@ -1,12 +1,14 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DeepFlow</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:,">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DeepFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="data:," rel="icon"/>
+<style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -595,223 +597,205 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="session-count" id="sessionCount">Session 1</div>
-    <button id="settingsBtn" style="position: absolute; top: 20px; left: 20px; min-width: auto; padding: 8px; border-radius: 50%;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M19.4 15C19.2669 15.3016 19.227 15.6362 19.285 15.9606C19.343 16.285 19.4966 16.5844 19.725 16.8187C19.9553 17.0549 20.2502 17.2155 20.5676 17.2789C20.885 17.3423 21.2096 17.3056 21.5 17.1737C21.8998 17.0001 22.3433 16.9564 22.7683 17.0484C23.1933 17.1404 23.5785 17.3636 23.866 17.685C24.1553 18.0089 24.3303 18.4144 24.3657 18.8408C24.4011 19.2672 24.2953 19.6915 24.065 20.05C23.8346 20.4085 23.4923 20.6818 23.09 20.8275C22.6877 20.9732 22.2476 20.9834 21.8384 20.8565C21.4292 20.7296 21.0736 20.4729 20.825 20.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M4.60002 15C4.73312 15.3016 4.77299 15.6362 4.715 15.9606C4.657 16.285 4.50344 16.5844 4.27502 16.8187C4.04475 17.0549 3.74978 17.2155 3.43238 17.2789C3.11499 17.3423 2.79041 17.3056 2.50002 17.1737C2.10024 17.0001 1.65671 16.9564 1.23172 17.0484C0.806731 17.1404 0.421487 17.3636 0.134019 17.685C-0.155252 18.0089 -0.330281 18.4144 -0.365685 18.8408C-0.401089 19.2672 -0.295304 19.6915 -0.065018 20.05C0.165268 20.4085 0.507627 20.6818 0.909895 20.8275C1.31216 20.9732 1.75226 20.9834 2.16146 20.8565C2.57066 20.7296 2.92625 20.4729 3.17502 20.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M4.60002 9C4.73312 8.69842 4.77299 8.36379 4.715 8.03937C4.657 7.71495 4.50344 7.41557 4.27502 7.18134C4.04475 6.9451 3.74978 6.78452 3.43238 6.72112C3.11499 6.65772 2.79041 6.69439 2.50002 6.8263C2.10024 6.99989 1.65671 7.04359 1.23172 6.9516C0.806731 6.85961 0.421487 6.63637 0.134019 6.315C-0.155252 5.99111 -0.330281 5.58557 -0.365685 5.15918C-0.401089 4.73279 -0.295304 4.30854 -0.065018 3.95C0.165268 3.59146 0.507627 3.31816 0.909895 3.17248C1.31216 3.0268 1.75226 3.01664 2.16146 3.1435C2.57066 3.27036 2.92625 3.52714 3.17502 3.875" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M19.4 9C19.2669 8.69842 19.227 8.36379 19.285 8.03937C19.343 7.71495 19.4966 7.41557 19.725 7.18134C19.9553 6.9451 20.2502 6.78452 20.5676 6.72112C20.885 6.65772 21.2096 6.69439 21.5 6.8263C21.8998 6.99989 22.3433 7.04359 22.7683 6.9516C23.1933 6.85961 23.5785 6.63637 23.866 6.315C24.1553 5.99111 24.3303 5.58557 24.3657 5.15918C24.4011 4.73279 24.2953 4.30854 24.065 3.95C23.8346 3.59146 23.4923 3.31816 23.09 3.17248C22.6877 3.0268 22.2476 3.01664 21.8384 3.1435C21.4292 3.27036 21.0736 3.52714 20.825 3.875" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <h1>✨ DeepFlow</h1>
-    <div id="status">Ready to Focus</div>
-    <div class="timer-container">
-      <div id="timer">30:00</div>
-    </div>
-    <div id="progressBar"><div id="progressFill"></div></div>
-
-    <div class="buttons">
-      <button onclick="startTimer()" id="startBtn">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 2L13 8L3 14V2Z" fill="white"/>
-        </svg>
+<div class="container">
+<div class="session-count" id="sessionCount">Session 1</div>
+<button id="settingsBtn" style="position: absolute; top: 20px; left: 20px; min-width: auto; padding: 8px; border-radius: 50%;">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M19.4 15C19.2669 15.3016 19.227 15.6362 19.285 15.9606C19.343 16.285 19.4966 16.5844 19.725 16.8187C19.9553 17.0549 20.2502 17.2155 20.5676 17.2789C20.885 17.3423 21.2096 17.3056 21.5 17.1737C21.8998 17.0001 22.3433 16.9564 22.7683 17.0484C23.1933 17.1404 23.5785 17.3636 23.866 17.685C24.1553 18.0089 24.3303 18.4144 24.3657 18.8408C24.4011 19.2672 24.2953 19.6915 24.065 20.05C23.8346 20.4085 23.4923 20.6818 23.09 20.8275C22.6877 20.9732 22.2476 20.9834 21.8384 20.8565C21.4292 20.7296 21.0736 20.4729 20.825 20.125" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M4.60002 15C4.73312 15.3016 4.77299 15.6362 4.715 15.9606C4.657 16.285 4.50344 16.5844 4.27502 16.8187C4.04475 17.0549 3.74978 17.2155 3.43238 17.2789C3.11499 17.3423 2.79041 17.3056 2.50002 17.1737C2.10024 17.0001 1.65671 16.9564 1.23172 17.0484C0.806731 17.1404 0.421487 17.3636 0.134019 17.685C-0.155252 18.0089 -0.330281 18.4144 -0.365685 18.8408C-0.401089 19.2672 -0.295304 19.6915 -0.065018 20.05C0.165268 20.4085 0.507627 20.6818 0.909895 20.8275C1.31216 20.9732 1.75226 20.9834 2.16146 20.8565C2.57066 20.7296 2.92625 20.4729 3.17502 20.125" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M4.60002 9C4.73312 8.69842 4.77299 8.36379 4.715 8.03937C4.657 7.71495 4.50344 7.41557 4.27502 7.18134C4.04475 6.9451 3.74978 6.78452 3.43238 6.72112C3.11499 6.65772 2.79041 6.69439 2.50002 6.8263C2.10024 6.99989 1.65671 7.04359 1.23172 6.9516C0.806731 6.85961 0.421487 6.63637 0.134019 6.315C-0.155252 5.99111 -0.330281 5.58557 -0.365685 5.15918C-0.401089 4.73279 -0.295304 4.30854 -0.065018 3.95C0.165268 3.59146 0.507627 3.31816 0.909895 3.17248C1.31216 3.0268 1.75226 3.01664 2.16146 3.1435C2.57066 3.27036 2.92625 3.52714 3.17502 3.875" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M19.4 9C19.2669 8.69842 19.227 8.36379 19.285 8.03937C19.343 7.71495 19.4966 7.41557 19.725 7.18134C19.9553 6.9451 20.2502 6.78452 20.5676 6.72112C20.885 6.65772 21.2096 6.69439 21.5 6.8263C21.8998 6.99989 22.3433 7.04359 22.7683 6.9516C23.1933 6.85961 23.5785 6.63637 23.866 6.315C24.1553 5.99111 24.3303 5.58557 24.3657 5.15918C24.4011 4.73279 24.2953 4.30854 24.065 3.95C23.8346 3.59146 23.4923 3.31816 23.09 3.17248C22.6877 3.0268 22.2476 3.01664 21.8384 3.1435C21.4292 3.27036 21.0736 3.52714 20.825 3.875" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<h1>✨ DeepFlow</h1>
+<div id="status">Ready to Focus</div>
+<div class="timer-container">
+<div id="timer">30:00</div>
+</div>
+<div id="progressBar"><div id="progressFill"></div></div>
+<div class="buttons">
+<button id="startBtn" onclick="startTimer()">
+<svg fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 2L13 8L3 14V2Z" fill="white"></path>
+</svg>
         Start
       </button>
-      <button onclick="pauseTimer()" id="pauseBtn">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="2" width="4" height="12" fill="white"/>
-          <rect x="10" y="2" width="4" height="12" fill="white"/>
-        </svg>
+<button id="pauseBtn" onclick="pauseTimer()">
+<svg fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<rect fill="white" height="12" width="4" x="4" y="2"></rect>
+<rect fill="white" height="12" width="4" x="10" y="2"></rect>
+</svg>
         Pause
       </button>
-      <button onclick="resetTimer()" class="secondary">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13.5 8C13.5 9.15761 13.1293 10.2837 12.4388 11.2095C11.7482 12.1352 10.7717 12.8118 9.65165 13.1384C8.53161 13.465 7.32569 13.4248 6.22847 13.0236C5.13125 12.6224 4.20095 11.8826 3.57403 10.9137C2.94711 9.94482 2.65808 8.80061 2.75372 7.65366C2.84935 6.50671 3.32399 5.42234 4.11091 4.55544C4.89783 3.68855 5.95472 3.08669 7.12218 2.83866C8.28964 2.59063 9.50384 2.71046 10.5938 3.18063" stroke="white" stroke-width="2" stroke-linecap="round"/>
-          <path d="M13.5 3V7H9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+<button class="secondary" onclick="resetTimer()">
+<svg fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.5 8C13.5 9.15761 13.1293 10.2837 12.4388 11.2095C11.7482 12.1352 10.7717 12.8118 9.65165 13.1384C8.53161 13.465 7.32569 13.4248 6.22847 13.0236C5.13125 12.6224 4.20095 11.8826 3.57403 10.9137C2.94711 9.94482 2.65808 8.80061 2.75372 7.65366C2.84935 6.50671 3.32399 5.42234 4.11091 4.55544C4.89783 3.68855 5.95472 3.08669 7.12218 2.83866C8.28964 2.59063 9.50384 2.71046 10.5938 3.18063" stroke="white" stroke-linecap="round" stroke-width="2"></path>
+<path d="M13.5 3V7H9.5" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
         Reset
       </button>
-      <button onclick="skipBreak()" id="skipBreakBtn" class="secondary" style="display: none;">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13 3L3 13M3 3L13 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+<button class="secondary" id="skipBreakBtn" onclick="skipBreak()" style="display: none;">
+<svg fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 3L3 13M3 3L13 13" stroke="white" stroke-linecap="round" stroke-width="2"></path>
+</svg>
         Skip Break
       </button>
-    </div>
-
-    <!-- Music Player Section -->
-    <div class="music-selector">
-      <div class="playlist-header">
-        <h3>Focus Music</h3>
-        <div>
-          <label>
-            <input type="checkbox" id="shuffleToggle" onchange="toggleShuffle()">
+</div>
+<!-- Music Player Section -->
+<div class="music-selector">
+<div class="playlist-header">
+<h3>Focus Music</h3>
+<div>
+<label>
+<input id="shuffleToggle" onchange="toggleShuffle()" type="checkbox"/>
             Shuffle
           </label>
-        </div>
-      </div>
-      
-      <div class="genre-tabs">
-        <div class="genre-tab active" onclick="changeGenre(event, 'all')">All</div>
-        <div class="genre-tab" onclick="changeGenre(event, 'lofi')">Lofi</div>
-        <div class="genre-tab" onclick="changeGenre(event, 'classical')">Classical</div>
-        <div class="genre-tab" onclick="changeGenre(event, 'ambient')">Ambient</div>
-        <div class="genre-tab" onclick="changeGenre(event, 'nature')">Nature</div>
-        <div class="genre-tab" onclick="changeGenre(event, 'favorites')">❤️ Favorites</div>
-      </div>
-      
-      <div class="now-playing" id="nowPlaying" style="display: none;">
-        <div style="font-size: 1.5rem;">🎵</div>
-        <div class="now-playing-info">
-          <div class="now-playing-title" id="nowPlayingTitle"></div>
-          <div class="now-playing-artist" id="nowPlayingArtist"></div>
-        </div>
-      </div>
-      
-      <div class="error-message" id="musicError">
+</div>
+</div>
+<div class="genre-tabs">
+<div class="genre-tab active" onclick="changeGenre(event, 'all')">All</div>
+<div class="genre-tab" onclick="changeGenre(event, 'lofi')">Lofi</div>
+<div class="genre-tab" onclick="changeGenre(event, 'classical')">Classical</div>
+<div class="genre-tab" onclick="changeGenre(event, 'ambient')">Ambient</div>
+<div class="genre-tab" onclick="changeGenre(event, 'nature')">Nature</div>
+<div class="genre-tab" onclick="changeGenre(event, 'favorites')">❤️ Favorites</div>
+</div>
+<div class="now-playing" id="nowPlaying" style="display: none;">
+<div style="font-size: 1.5rem;">🎵</div>
+<div class="now-playing-info">
+<div class="now-playing-title" id="nowPlayingTitle"></div>
+<div class="now-playing-artist" id="nowPlayingArtist"></div>
+</div>
+</div>
+<div class="error-message" id="musicError">
         Music player failed to initialize. Please disable ad blockers or try refreshing the page.
       </div>
-      
-      <div class="playlist" id="playlist">
-        <!-- Tracks will be added here by JavaScript -->
-      </div>
-      
-      <div class="track-controls">
-        <button onclick="playPreviousTrack()" id="prevBtn">⏮ Previous</button>
-        <button onclick="togglePlayback()" id="playPauseBtn">▶ Play</button>
-        <button onclick="playNextTrack()" id="nextBtn">⏭ Next</button>
-        <button onclick="toggleMute()" id="muteBtn" class="secondary">🔊 Mute</button>
-      </div>
-      
-      <div class="volume-control">
-        <span>🔈</span>
-        <input type="range" id="volumeSlider" min="0" max="100" value="50" oninput="changeVolume(this.value)">
-        <span>🔊</span>
-      </div>
-    </div>
-
-    <!-- Stats Panel -->
-    <div class="stats-panel">
-      <div class="stat-item">
-        <div class="stat-value" id="sessionsCompleted">0</div>
-        <div class="stat-label">Sessions</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value" id="focusTime">0h 0m</div>
-        <div class="stat-label">Focus Time</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value" id="breaksTaken">0</div>
-        <div class="stat-label">Breaks</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value" id="totalTime">0h 0m</div>
-        <div class="stat-label">Total Time</div>
-      </div>
-    </div>
-
-    <div id="log">
-      <h2>Session Log</h2>
-      <ul id="sessionLog"></ul>
-    </div>
-  </div>
-
-  <!-- Settings Panel -->
-  <div class="overlay" id="settingsOverlay"></div>
-  <div class="settings-panel" id="settingsPanel">
-    <div class="settings-header">
-      <h2>Settings</h2>
-      <button onclick="closeSettings()" style="min-width: auto; padding: 8px; border-radius: 50%;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-    
-    <div class="settings-group">
-      <h3>Timer Settings</h3>
-      <div class="setting-item">
-        <label for="focusDuration">Focus Duration (minutes)</label>
-        <input type="number" id="focusDuration" min="1" max="120" value="30">
-      </div>
-      <div class="setting-item">
-        <label for="shortBreakDuration">Short Break Duration (minutes)</label>
-        <input type="number" id="shortBreakDuration" min="1" max="30" value="5">
-      </div>
-      <div class="setting-item">
-        <label for="longBreakDuration">Long Break Duration (minutes)</label>
-        <input type="number" id="longBreakDuration" min="1" max="60" value="15">
-      </div>
-      <div class="setting-item">
-        <label for="lunchBreakDuration">Lunch Break Duration (minutes)</label>
-        <input type="number" id="lunchBreakDuration" min="1" max="120" value="60">
-      </div>
-      <div class="setting-item">
-        <label for="sessionsBeforeLongBreak">Sessions before Long Break</label>
-        <input type="number" id="sessionsBeforeLongBreak" min="1" max="10" value="4">
-      </div>
-      <div class="setting-item">
-        <label for="sessionsBeforeLunch">Sessions before Lunch</label>
-        <input type="number" id="sessionsBeforeLunch" min="1" max="20" value="8">
-      </div>
-    </div>
-    
-    <div class="settings-group">
-      <h3>Appearance</h3>
-      <div class="setting-item">
-        <label>
-          <input type="checkbox" id="darkModeToggle" checked>
+<div class="playlist" id="playlist">
+<!-- Tracks will be added here by JavaScript -->
+</div>
+<div class="track-controls">
+<button id="prevBtn" onclick="playPreviousTrack()">⏮ Previous</button>
+<button id="playPauseBtn" onclick="togglePlayback()">▶ Play</button>
+<button id="nextBtn" onclick="playNextTrack()">⏭ Next</button>
+<button class="secondary" id="muteBtn" onclick="toggleMute()">🔊 Mute</button>
+</div>
+<div class="volume-control">
+<span>🔈</span>
+<input id="volumeSlider" max="100" min="0" oninput="changeVolume(this.value)" type="range" value="50"/>
+<span>🔊</span>
+</div>
+</div>
+<!-- Stats Panel -->
+<div class="stats-panel">
+<div class="stat-item">
+<div class="stat-value" id="sessionsCompleted">0</div>
+<div class="stat-label">Sessions</div>
+</div>
+<div class="stat-item">
+<div class="stat-value" id="focusTime">0h 0m</div>
+<div class="stat-label">Focus Time</div>
+</div>
+<div class="stat-item">
+<div class="stat-value" id="breaksTaken">0</div>
+<div class="stat-label">Breaks</div>
+</div>
+<div class="stat-item">
+<div class="stat-value" id="totalTime">0h 0m</div>
+<div class="stat-label">Total Time</div>
+</div>
+</div>
+<div id="log">
+<h2>Session Log</h2>
+<ul id="sessionLog"></ul>
+</div>
+</div>
+<!-- Settings Panel -->
+<div class="overlay" id="settingsOverlay"></div>
+<div class="settings-panel" id="settingsPanel">
+<div class="settings-header">
+<h2>Settings</h2>
+<button onclick="closeSettings()" style="min-width: auto; padding: 8px; border-radius: 50%;">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<div class="settings-group">
+<h3>Timer Settings</h3>
+<div class="setting-item">
+<label for="focusDuration">Focus Duration (minutes)</label>
+<input id="focusDuration" max="120" min="1" type="number" value="30"/>
+</div>
+<div class="setting-item">
+<label for="shortBreakDuration">Short Break Duration (minutes)</label>
+<input id="shortBreakDuration" max="30" min="1" type="number" value="5"/>
+</div>
+<div class="setting-item">
+<label for="longBreakDuration">Long Break Duration (minutes)</label>
+<input id="longBreakDuration" max="60" min="1" type="number" value="15"/>
+</div>
+<div class="setting-item">
+<label for="lunchBreakDuration">Lunch Break Duration (minutes)</label>
+<input id="lunchBreakDuration" max="120" min="1" type="number" value="60"/>
+</div>
+<div class="setting-item">
+<label for="sessionsBeforeLongBreak">Sessions before Long Break</label>
+<input id="sessionsBeforeLongBreak" max="10" min="1" type="number" value="4"/>
+</div>
+<div class="setting-item">
+<label for="sessionsBeforeLunch">Sessions before Lunch</label>
+<input id="sessionsBeforeLunch" max="20" min="1" type="number" value="8"/>
+</div>
+</div>
+<div class="settings-group">
+<h3>Appearance</h3>
+<div class="setting-item">
+<label>
+<input checked="" id="darkModeToggle" type="checkbox"/>
           Dark Mode
         </label>
-      </div>
-      <div class="setting-item">
-        <label>
-          <input type="checkbox" id="pulseTimerToggle" checked>
+</div>
+<div class="setting-item">
+<label>
+<input checked="" id="pulseTimerToggle" type="checkbox"/>
           Pulse Timer Animation
         </label>
-      </div>
-    </div>
-    
-    <div class="settings-group">
-      <h3>Notifications</h3>
-      <div class="setting-item">
-        <label>
-          <input type="checkbox" id="soundNotificationsToggle" checked>
+</div>
+</div>
+<div class="settings-group">
+<h3>Notifications</h3>
+<div class="setting-item">
+<label>
+<input checked="" id="soundNotificationsToggle" type="checkbox"/>
           Sound Notifications
         </label>
-      </div>
-      <div class="setting-item">
-        <label>
-          <input type="checkbox" id="desktopNotificationsToggle">
+</div>
+<div class="setting-item">
+<label>
+<input id="desktopNotificationsToggle" type="checkbox"/>
           Desktop Notifications
         </label>
-      </div>
-    </div>
-    
-    <div class="settings-group">
-      <h3>Data</h3>
-      <div class="setting-item">
-        <button onclick="exportData()" class="secondary" style="width: 100%;">Export Data</button>
-      </div>
-      <div class="setting-item">
-        <button onclick="importData()" class="secondary" style="width: 100%;">Import Data</button>
-      </div>
-      <div class="setting-item">
-        <button onclick="resetData()" class="danger" style="width: 100%;">Reset All Data</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification -->
-  <div class="toast" id="toast"></div>
-
-  <!-- YouTube iframe player -->
-  <div id="youtubePlayer" style="display: none;"></div>
-
-  <script>
+</div>
+</div>
+<div class="settings-group">
+<h3>Data</h3>
+<div class="setting-item">
+<button class="secondary" onclick="exportData()" style="width: 100%;">Export Data</button>
+</div>
+<div class="setting-item">
+<button class="secondary" onclick="importData()" style="width: 100%;">Import Data</button>
+</div>
+<div class="setting-item">
+<button class="danger" onclick="resetData()" style="width: 100%;">Reset All Data</button>
+</div>
+</div>
+</div>
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+<!-- YouTube iframe player -->
+<div id="youtubePlayer" style="display: none;"></div>
+<script>
     // Timer Variables
     let timerInterval;
     let isTimerRunning = false;
@@ -1814,5 +1798,27 @@
       }, 1000);
     });
   </script>
-</body>
+<script>
+const audio = new Audio();
+const playlist = [
+  { title: "Lofi Track 1", src: "lofi1.mp3" },
+  { title: "Lofi Track 2", src: "lofi2.mp3" }
+];
+let currentTrack = 0;
+
+function playTrack(index) {
+  if (index >= playlist.length) {
+    document.getElementById("music-error").style.display = "block";
+    return;
+  }
+  audio.src = playlist[index].src;
+  audio.play().catch(() => {
+    playTrack(index + 1);
+  });
+}
+
+document.getElementById("play").addEventListener("click", () => playTrack(currentTrack));
+document.getElementById("next").addEventListener("click", () => playTrack(++currentTrack));
+document.getElementById("prev").addEventListener("click", () => playTrack(--currentTrack));
+</script></body>
 </html>

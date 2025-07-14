@@ -1,6 +1,4 @@
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -242,153 +240,6 @@
       font-weight: 600;
     }
 
-    /* Music Player Styles */
-    .music-selector {
-      margin: 20px 0;
-      background: rgba(44, 44, 44, 0.5);
-      padding: 20px;
-      border-radius: 15px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    .playlist-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    
-    .genre-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
-    }
-    
-    .genre-tab {
-      padding: 8px 15px;
-      background: rgba(0, 119, 255, 0.1);
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: all 0.3s ease;
-    }
-    
-    .genre-tab.active {
-      background: rgba(0, 200, 83, 0.3);
-      color: #64dd17;
-    }
-    
-    .playlist {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 15px;
-    }
-    
-    .track {
-      background: rgba(0, 119, 255, 0.1);
-      padding: 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.8rem;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .track:hover {
-      background: rgba(0, 119, 255, 0.2);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 119, 255, 0.1);
-    }
-    
-    .track.active {
-      background: rgba(0, 200, 83, 0.15);
-      border: 1px solid rgba(0, 200, 83, 0.5);
-    }
-    
-    .track.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, #00c853, #64dd17);
-      animation: progressBar linear forwards;
-      animation-duration: inherit;
-    }
-    
-    @keyframes progressBar {
-      from { width: 0% }
-      to { width: 100% }
-    }
-    
-    .track-title {
-      font-weight: 600;
-      margin-bottom: 5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    
-    .track-artist {
-      font-size: 0.7rem;
-      color: #aaa;
-    }
-    
-    .track-controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-    
-    .track-controls button {
-      min-width: 100px;
-      padding: 10px 15px;
-      font-size: 0.9rem;
-    }
-    
-    .volume-control {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 15px;
-      width: 100%;
-    }
-    
-    .volume-control input {
-      flex-grow: 1;
-      accent-color: #00c853;
-    }
-    
-    .now-playing {
-      background: rgba(0, 200, 83, 0.1);
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 15px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-    
-    .now-playing-info {
-      flex-grow: 1;
-    }
-    
-    .now-playing-title {
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-    
-    .now-playing-artist {
-      font-size: 0.8rem;
-      color: #aaa;
-    }
-
     /* Settings Panel */
     .settings-panel {
       position: fixed;
@@ -500,27 +351,6 @@
       opacity: 1;
     }
 
-    /* Favorite Button */
-    .favorite-btn {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: none;
-      border: none;
-      color: #aaa;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .favorite-btn.active {
-      color: #ff4081;
-    }
-
-    .favorite-btn:hover {
-      transform: scale(1.2);
-    }
-
     /* Stats Panel */
     .stats-panel {
       background: rgba(44, 44, 44, 0.5);
@@ -580,10 +410,6 @@
       button {
         width: 100%;
       }
-      
-      .playlist {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      }
 
       .settings-panel {
         width: 100%;
@@ -605,7 +431,7 @@
 <path d="M19.4 15C19.2669 15.3016 19.227 15.6362 19.285 15.9606C19.343 16.285 19.4966 16.5844 19.725 16.8187C19.9553 17.0549 20.2502 17.2155 20.5676 17.2789C20.885 17.3423 21.2096 17.3056 21.5 17.1737C21.8998 17.0001 22.3433 16.9564 22.7683 17.0484C23.1933 17.1404 23.5785 17.3636 23.866 17.685C24.1553 18.0089 24.3303 18.4144 24.3657 18.8408C24.4011 19.2672 24.2953 19.6915 24.065 20.05C23.8346 20.4085 23.4923 20.6818 23.09 20.8275C22.6877 20.9732 22.2476 20.9834 21.8384 20.8565C21.4292 20.7296 21.0736 20.4729 20.825 20.125" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 <path d="M4.60002 15C4.73312 15.3016 4.77299 15.6362 4.715 15.9606C4.657 16.285 4.50344 16.5844 4.27502 16.8187C4.04475 17.0549 3.74978 17.2155 3.43238 17.2789C3.11499 17.3423 2.79041 17.3056 2.50002 17.1737C2.10024 17.0001 1.65671 16.9564 1.23172 17.0484C0.806731 17.1404 0.421487 17.3636 0.134019 17.685C-0.155252 18.0089 -0.330281 18.4144 -0.365685 18.8408C-0.401089 19.2672 -0.295304 19.6915 -0.065018 20.05C0.165268 20.4085 0.507627 20.6818 0.909895 20.8275C1.31216 20.9732 1.75226 20.9834 2.16146 20.8565C2.57066 20.7296 2.92625 20.4729 3.17502 20.125" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 <path d="M4.60002 9C4.73312 8.69842 4.77299 8.36379 4.715 8.03937C4.657 7.71495 4.50344 7.41557 4.27502 7.18134C4.04475 6.9451 3.74978 6.78452 3.43238 6.72112C3.11499 6.65772 2.79041 6.69439 2.50002 6.8263C2.10024 6.99989 1.65671 7.04359 1.23172 6.9516C0.806731 6.85961 0.421487 6.63637 0.134019 6.315C-0.155252 5.99111 -0.330281 5.58557 -0.365685 5.15918C-0.401089 4.73279 -0.295304 4.30854 -0.065018 3.95C0.165268 3.59146 0.507627 3.31816 0.909895 3.17248C1.31216 3.0268 1.75226 3.01664 2.16146 3.1435C2.57066 3.27036 2.92625 3.52714 3.17502 3.875" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-<path d="M19.4 9C19.2669 8.69842 19.227 8.36379 19.285 8.03937C19.343 7.71495 19.4966 7.41557 19.725 7.18134C19.9553 6.9451 20.2502 6.78452 20.5676 6.72112C20.885 6.65772 21.2096 6.69439 21.5 6.8263C21.8998 6.99989 22.3433 7.04359 22.7683 6.9516C23.1933 6.85961 23.5785 6.63637 23.866 6.315C24.1553 5.99111 24.3303 5.58557 24.3657 5.15918C24.4011 4.73279 24.2953 4.30854 24.065 3.95C23.8346 3.59146 23.4923 3.31816 23.09 3.17248C22.6877 3.0268 22.2476 3.01664 21.8384 3.1435C21.4292 3.27036 21.0736 3.52714 20.825 3.875" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M19.4 9C19.2669 8.69842 19.227 8.36379 19.285 8.03937C19.343 7.71495 19.4966 7.41557 19.725 7.18134C19.9553 6.9451 20.2502 6.78452 20.5676 6.72112C20.885 6.65772 21.2096 6.69439 21.5 6.8263C21.8998 6.99989 22.3433 7.04359 22.7683 6.9516C23.1933 6.85961 23.5785 6.63637 23.866 6.315C24.1553 18.0089 24.3303 18.4144 24.3657 18.8408C24.4011 19.2672 24.2953 19.6915 24.065 20.05C23.8346 20.4085 23.4923 20.6818 23.09 20.8275C22.6877 20.9732 22.2476 20.9834 21.8384 20.8565C21.4292 20.7296 21.0736 20.4729 20.825 20.125" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 </svg>
 </button>
 <h1>✨ DeepFlow</h1>
@@ -641,50 +467,6 @@
 </svg>
         Skip Break
       </button>
-</div>
-<!-- Music Player Section -->
-<div class="music-selector">
-<div class="playlist-header">
-<h3>Focus Music</h3>
-<div>
-<label>
-<input id="shuffleToggle" onchange="toggleShuffle()" type="checkbox"/>
-            Shuffle
-          </label>
-</div>
-</div>
-<div class="genre-tabs">
-<div class="genre-tab active" onclick="changeGenre(event, 'all')">All</div>
-<div class="genre-tab" onclick="changeGenre(event, 'lofi')">Lofi</div>
-<div class="genre-tab" onclick="changeGenre(event, 'classical')">Classical</div>
-<div class="genre-tab" onclick="changeGenre(event, 'ambient')">Ambient</div>
-<div class="genre-tab" onclick="changeGenre(event, 'nature')">Nature</div>
-<div class="genre-tab" onclick="changeGenre(event, 'favorites')">❤️ Favorites</div>
-</div>
-<div class="now-playing" id="nowPlaying" style="display: none;">
-<div style="font-size: 1.5rem;">🎵</div>
-<div class="now-playing-info">
-<div class="now-playing-title" id="nowPlayingTitle"></div>
-<div class="now-playing-artist" id="nowPlayingArtist"></div>
-</div>
-</div>
-<div class="error-message" id="musicError">
-        Music player failed to initialize. Please disable ad blockers or try refreshing the page.
-      </div>
-<div class="playlist" id="playlist">
-<!-- Tracks will be added here by JavaScript -->
-</div>
-<div class="track-controls">
-<button id="prevBtn" onclick="playPreviousTrack()">⏮ Previous</button>
-<button id="playPauseBtn" onclick="togglePlayback()">▶ Play</button>
-<button id="nextBtn" onclick="playNextTrack()">⏭ Next</button>
-<button class="secondary" id="muteBtn" onclick="toggleMute()">🔊 Mute</button>
-</div>
-<div class="volume-control">
-<span>🔈</span>
-<input id="volumeSlider" max="100" min="0" oninput="changeVolume(this.value)" type="range" value="50"/>
-<span>🔊</span>
-</div>
 </div>
 <!-- Stats Panel -->
 <div class="stats-panel">
@@ -793,8 +575,6 @@
 </div>
 <!-- Toast Notification -->
 <div class="toast" id="toast"></div>
-<!-- YouTube iframe player -->
-<div id="youtubePlayer" style="display: none;"></div>
 <script>
     // Timer Variables
     let timerInterval;
@@ -803,8 +583,6 @@
     let timeLeft = totalTime;
     let currentSession = 1;
     let currentMode = 'focus';
-    let lastVolume = 50;
-    let isMuted = false;
     let stats = {
       sessionsCompleted: 0,
       focusTime: 0,
@@ -845,46 +623,6 @@
       15: 'short'
     };
 
-    // Music Player Variables
-    const musicLibrary = {
-      all: [
-        { id: '5qap5aO4i9A', title: 'Lofi Hip Hop', artist: 'YouTube Audio', genre: 'lofi', duration: 0 },
-        { id: 'jfKfPfyJRdk', title: 'Chill Lofi', artist: 'YouTube Audio', genre: 'lofi', duration: 0 },
-        { id: 'rUxyKA_-grg', title: 'Calm Focus', artist: 'YouTube Audio', genre: 'ambient', duration: 0 },
-        { id: 'MCkTebktHVc', title: 'Study Concentration', artist: 'YouTube Audio', genre: 'ambient', duration: 0 },
-        { id: '4xDzrJKXOOY', title: 'Ambient Study', artist: 'YouTube Audio', genre: 'ambient', duration: 0 },
-        { id: 'wfWx2KZw7zQ', title: 'Classical Study', artist: 'YouTube Audio', genre: 'classical', duration: 0 },
-        { id: 'xEQPyoVg8lI', title: 'Piano Concentration', artist: 'YouTube Audio', genre: 'classical', duration: 0 },
-        { id: 'yJw4vaZPt0k', title: 'Forest Sounds', artist: 'YouTube Audio', genre: 'nature', duration: 0 },
-        { id: 'q76bMs-NwRk', title: 'Rainfall', artist: 'YouTube Audio', genre: 'nature', duration: 0 },
-        { id: 'kgJt6QeFmZk', title: 'Ocean Waves', artist: 'YouTube Audio', genre: 'nature', duration: 0 }
-      ],
-      lofi: [],
-      classical: [],
-      ambient: [],
-      nature: [],
-      favorites: []
-    };
-
-    // Initialize genre-specific playlists
-    for (const genre in musicLibrary) {
-      if (genre !== 'all' && genre !== 'favorites') {
-        musicLibrary[genre] = musicLibrary.all.filter(track => track.genre === genre);
-      }
-    }
-
-    let player;
-    let currentTrackIndex = 0;
-    let isMusicPlaying = false;
-    let currentPlaylist = [...musicLibrary.all];
-    let isShuffleOn = false;
-    let originalPlaylistOrder = [...musicLibrary.all];
-    let currentGenre = 'all';
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    let audioContextInitialized = false;
-    let youtubeAPIReady = false;
-    let playerInitialized = false;
-
     // Timer Functions
     function startTimer() {
       if (isTimerRunning) return;
@@ -892,9 +630,11 @@
       isTimerRunning = true;
       requestWakeLock();
       
-      // Start music if not already playing
-      if (!isMusicPlaying && settings.soundNotifications) {
-        playTrack(currentTrackIndex);
+      // Show alert when timer starts
+      if (currentMode === 'focus') {
+        showAlert('Focus session started!');
+      } else {
+        showAlert('Break started!');
       }
 
       timerInterval = setInterval(() => {
@@ -903,6 +643,14 @@
           isTimerRunning = false;
           logSession(`${getModeLabel(currentMode)} completed`);
           notifyUser(`${getModeLabel(currentMode)} completed`);
+          
+          // Show alert when timer ends
+          if (currentMode === 'focus') {
+            showAlert('Focus session completed! Time for a break.');
+          } else {
+            showAlert('Break completed! Time to focus.');
+          }
+          
           handleSessionEnd();
         } else {
           timeLeft--;
@@ -921,6 +669,13 @@
       updateSkipBreakButton();
     }
 
+    function showAlert(message) {
+      alert(message);
+      if (settings.soundNotifications) {
+        playNotificationSound();
+      }
+    }
+
     function pauseTimer() {
       if (!isTimerRunning) return;
       
@@ -928,11 +683,6 @@
       isTimerRunning = false;
       document.getElementById('status').textContent = 'Paused';
       document.getElementById('timer').style.animation = 'none';
-      
-      // Pause music
-      if (isMusicPlaying) {
-        togglePlayback();
-      }
       
       logSession('Timer paused');
     }
@@ -1070,515 +820,6 @@
       }
     }
 
-    // Music Player Functions
-    async function loadYouTubeAPI() {
-      return new Promise((resolve, reject) => {
-        if (window.YT && window.YT.Player) {
-          youtubeAPIReady = true;
-          resolve();
-          return;
-        }
-
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        tag.onerror = () => {
-          console.error('Failed to load YouTube API');
-          showMusicError();
-          reject(new Error('Failed to load YouTube API'));
-        };
-        
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // Set timeout in case the API never loads
-        const timeout = setTimeout(() => {
-          console.error('YouTube API loading timed out');
-          showMusicError();
-          reject(new Error('YouTube API loading timed out'));
-        }, 10000);
-
-        window.onYouTubeIframeAPIReady = function() {
-          clearTimeout(timeout);
-          youtubeAPIReady = true;
-          console.log('YouTube API ready');
-          resolve();
-        };
-      });
-    }
-
-    function showMusicError() {
-      document.getElementById('musicError').style.display = 'block';
-      document.querySelectorAll('.track-controls button').forEach(btn => {
-        btn.disabled = true;
-      });
-    }
-
-    async function initializePlayer() {
-      try {
-        if (!youtubeAPIReady) {
-          await loadYouTubeAPI();
-        }
-        
-        player = new YT.Player('youtubePlayer', {
-          height: '0',
-          width: '0',
-          playerVars: {
-            autoplay: 0,
-            controls: 0,
-            disablekb: 1,
-            fs: 0,
-            rel: 0,
-            enablejsapi: 1,
-            origin: window.location.origin
-          },
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange,
-            'onError': onPlayerError
-          }
-        });
-        
-        playerInitialized = true;
-      } catch (error) {
-        console.error('YouTube Player initialization failed:', error);
-        showMusicError();
-        throw error;
-      }
-    }
-
-    function onPlayerReady(event) {
-      console.log('YouTube Player ready');
-      changeVolume(50);
-      renderPlaylist();
-      updateFavorites();
-    }
-
-    function onPlayerStateChange(event) {
-      console.log('Player state changed:', event.data);
-      if (event.data === YT.PlayerState.ENDED) {
-        playNextTrack();
-      }
-      if (event.data === YT.PlayerState.PLAYING) {
-        updateNowPlaying();
-        startTrackProgress();
-      }
-    }
-
-    function onPlayerError(event) {
-      console.error('YouTube Player error:', event.data);
-      showToast('Music playback error');
-      // Optionally try the next track
-      setTimeout(playNextTrack, 2000);
-    }
-
-    function renderPlaylist() {
-      const playlistElement = document.getElementById('playlist');
-      playlistElement.innerHTML = '';
-      
-      currentPlaylist.forEach((track, index) => {
-        const trackElement = document.createElement('div');
-        trackElement.className = `track ${index === currentTrackIndex && isMusicPlaying ? 'active' : ''}`;
-        trackElement.innerHTML = `
-          <button class="favorite-btn ${favorites.includes(track.id) ? 'active' : ''}" 
-                  onclick="toggleFavorite(event, '${track.id}')">❤️</button>
-          <div class="track-title">${track.title}</div>
-          <div class="track-artist">${track.artist}</div>
-        `;
-        if (index === currentTrackIndex && isMusicPlaying) {
-          trackElement.style.animationDuration = `${track.duration || 180}s`;
-        }
-        trackElement.onclick = () => playTrack(index);
-        playlistElement.appendChild(trackElement);
-      });
-    }
-
-    async function playTrack(index) {
-      try {
-        if (!youtubeAPIReady) {
-          await loadYouTubeAPI();
-        }
-        
-        if (!playerInitialized) {
-          await initializePlayer();
-        }
-
-        currentTrackIndex = index;
-        player.loadVideoById(currentPlaylist[index].id);
-        
-        try {
-          player.playVideo();
-          isMusicPlaying = true;
-          document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-        } catch (error) {
-          console.log('Autoplay blocked:', error);
-          document.getElementById('status').textContent = 'Click play button to start music';
-          isMusicPlaying = false;
-          showToast('Click play button to start music');
-          return;
-        }
-
-        if (!currentPlaylist[index].duration) {
-          currentPlaylist[index].duration = 180;
-        }
-        
-        renderPlaylist();
-        updateNowPlaying();
-      } catch (error) {
-        console.error('Error playing track:', error);
-        document.getElementById('status').textContent = 'Error loading music';
-        showToast('Error loading music - try disabling ad blockers');
-        showMusicError();
-      }
-    }
-
-    function updateNowPlaying() {
-      const nowPlaying = document.getElementById('nowPlaying');
-      const nowPlayingTitle = document.getElementById('nowPlayingTitle');
-      const nowPlayingArtist = document.getElementById('nowPlayingArtist');
-      
-      if (currentPlaylist[currentTrackIndex]) {
-        nowPlaying.style.display = 'flex';
-        nowPlayingTitle.textContent = currentPlaylist[currentTrackIndex].title;
-        nowPlayingArtist.textContent = currentPlaylist[currentTrackIndex].artist;
-      }
-    }
-
-    function startTrackProgress() {
-      const activeTracks = document.querySelectorAll('.track.active');
-      activeTracks.forEach(track => {
-        track.style.animation = 'none';
-        void track.offsetWidth;
-        track.style.animation = `progressBar ${currentPlaylist[currentTrackIndex].duration}s linear forwards`;
-      });
-    }
-
-    function playNextTrack() {
-      if (isShuffleOn) {
-        currentTrackIndex = Math.floor(Math.random() * currentPlaylist.length);
-      } else {
-        currentTrackIndex = (currentTrackIndex + 1) % currentPlaylist.length;
-      }
-      playTrack(currentTrackIndex);
-    }
-
-    function playPreviousTrack() {
-      if (isShuffleOn) {
-        currentTrackIndex = Math.floor(Math.random() * currentPlaylist.length);
-      } else {
-        currentTrackIndex = (currentTrackIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
-      }
-      playTrack(currentTrackIndex);
-    }
-
-    function togglePlayback() {
-      if (!playerInitialized) {
-        playTrack(currentTrackIndex);
-        return;
-      }
-      
-      if (isMusicPlaying) {
-        player.pauseVideo();
-        document.getElementById('playPauseBtn').textContent = '▶ Play';
-        document.querySelectorAll('.track.active').forEach(track => {
-          track.style.animationPlayState = 'paused';
-        });
-      } else {
-        player.playVideo();
-        document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-        document.querySelectorAll('.track.active').forEach(track => {
-          track.style.animationPlayState = 'running';
-        });
-      }
-      isMusicPlaying = !isMusicPlaying;
-    }
-
-    function toggleMute() {
-      if (!playerInitialized) return;
-      
-      if (isMuted) {
-        player.unMute();
-        player.setVolume(lastVolume);
-        document.getElementById('muteBtn').textContent = '🔊 Mute';
-        document.getElementById('volumeSlider').value = lastVolume;
-      } else {
-        lastVolume = player.getVolume();
-        player.setVolume(0);
-        player.mute();
-        document.getElementById('muteBtn').textContent = '🔇 Unmute';
-        document.getElementById('volumeSlider').value = 0;
-      }
-      isMuted = !isMuted;
-    }
-
-    function changeVolume(volume) {
-      if (playerInitialized) {
-        player.setVolume(volume);
-        if (volume > 0) {
-          isMuted = false;
-          lastVolume = volume;
-          document.getElementById('muteBtn').textContent = '🔊 Mute';
-        }
-      }
-    }
-
-    function toggleShuffle() {
-      isShuffleOn = document.getElementById('shuffleToggle').checked;
-      if (isShuffleOn) {
-        originalPlaylistOrder = [...currentPlaylist];
-        currentPlaylist = [...currentPlaylist].sort(() => Math.random() - 0.5);
-      } else {
-        currentPlaylist = [...originalPlaylistOrder];
-      }
-      renderPlaylist();
-    }
-
-    function changeGenre(event, genre) {
-      currentGenre = genre;
-      if (genre === 'favorites') {
-        currentPlaylist = musicLibrary.all.filter(track => favorites.includes(track.id));
-      } else {
-        currentPlaylist = [...musicLibrary[genre]];
-      }
-      originalPlaylistOrder = [...currentPlaylist];
-      
-      document.querySelectorAll('.genre-tab').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      event.target.classList.add('active');
-      
-      document.getElementById('shuffleToggle').checked = false;
-      isShuffleOn = false;
-      
-      if (isMusicPlaying) {
-        currentTrackIndex = 0;
-        playTrack(0);
-      } else {
-        renderPlaylist();
-      }
-    }
-
-    function toggleFavorite(event, trackId) {
-      event.stopPropagation();
-      const index = favorites.indexOf(trackId);
-      if (index === -1) {
-        favorites.push(trackId);
-      } else {
-        favorites.splice(index, 1);
-      }
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-      updateFavorites();
-      renderPlaylist();
-      
-      if (currentGenre === 'favorites') {
-        currentPlaylist = musicLibrary.all.filter(track => favorites.includes(track.id));
-        renderPlaylist();
-      }
-    }
-
-    function updateFavorites() {
-      musicLibrary.favorites = musicLibrary.all.filter(track => favorites.includes(track.id));
-    }
-
-    // Settings Functions
-    function openSettings() {
-      document.getElementById('settingsPanel').classList.add('active');
-      document.getElementById('settingsOverlay').classList.add('active');
-      loadSettings();
-    }
-
-    function closeSettings() {
-      saveSettings();
-      document.getElementById('settingsPanel').classList.remove('active');
-      document.getElementById('settingsOverlay').classList.remove('active');
-    }
-
-    function loadSettings() {
-      const savedSettings = localStorage.getItem('deepFlowSettings');
-      if (savedSettings) {
-        settings = JSON.parse(savedSettings);
-      }
-      
-      document.getElementById('focusDuration').value = settings.focusDuration;
-      document.getElementById('shortBreakDuration').value = settings.shortBreakDuration;
-      document.getElementById('longBreakDuration').value = settings.longBreakDuration;
-      document.getElementById('lunchBreakDuration').value = settings.lunchBreakDuration;
-      document.getElementById('sessionsBeforeLongBreak').value = settings.sessionsBeforeLongBreak;
-      document.getElementById('sessionsBeforeLunch').value = settings.sessionsBeforeLunch;
-      document.getElementById('darkModeToggle').checked = settings.darkMode;
-      document.getElementById('pulseTimerToggle').checked = settings.pulseTimer;
-      document.getElementById('soundNotificationsToggle').checked = settings.soundNotifications;
-      document.getElementById('desktopNotificationsToggle').checked = settings.desktopNotifications;
-    }
-
-    function saveSettings() {
-      settings.focusDuration = parseInt(document.getElementById('focusDuration').value) || 30;
-      settings.shortBreakDuration = parseInt(document.getElementById('shortBreakDuration').value) || 5;
-      settings.longBreakDuration = parseInt(document.getElementById('longBreakDuration').value) || 15;
-      settings.lunchBreakDuration = parseInt(document.getElementById('lunchBreakDuration').value) || 60;
-      settings.sessionsBeforeLongBreak = parseInt(document.getElementById('sessionsBeforeLongBreak').value) || 4;
-      settings.sessionsBeforeLunch = parseInt(document.getElementById('sessionsBeforeLunch').value) || 8;
-      settings.darkMode = document.getElementById('darkModeToggle').checked;
-      settings.pulseTimer = document.getElementById('pulseTimerToggle').checked;
-      settings.soundNotifications = document.getElementById('soundNotificationsToggle').checked;
-      settings.desktopNotifications = document.getElementById('desktopNotificationsToggle').checked;
-      
-      localStorage.setItem('deepFlowSettings', JSON.stringify(settings));
-      
-      // Apply settings that need immediate effect
-      if (!settings.pulseTimer) {
-        document.getElementById('timer').style.animation = 'none';
-      }
-      
-      showToast('Settings saved');
-    }
-
-    function exportData() {
-      const data = {
-        state: {
-          timeLeft,
-          currentSession,
-          currentMode,
-          currentTrackIndex,
-          currentGenre,
-          isShuffleOn,
-          isMusicPlaying,
-          isMuted,
-          lastVolume
-        },
-        stats,
-        settings,
-        favorites
-      };
-      
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `deepflow-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      showToast('Data exported');
-    }
-
-    function importData() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = '.json';
-      
-      input.onchange = e => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        
-        reader.onload = event => {
-          try {
-            const data = JSON.parse(event.target.result);
-            
-            // Import state
-            if (data.state) {
-              timeLeft = data.state.timeLeft || timeLeft;
-              currentSession = data.state.currentSession || currentSession;
-              currentMode = data.state.currentMode || currentMode;
-              currentTrackIndex = data.state.currentTrackIndex || currentTrackIndex;
-              currentGenre = data.state.currentGenre || currentGenre;
-              isShuffleOn = data.state.isShuffleOn || isShuffleOn;
-              isMusicPlaying = data.state.isMusicPlaying || false;
-              isMuted = data.state.isMuted || false;
-              lastVolume = data.state.lastVolume || 50;
-              
-              document.getElementById('shuffleToggle').checked = isShuffleOn;
-              document.getElementById('volumeSlider').value = isMuted ? 0 : lastVolume;
-              document.getElementById('muteBtn').textContent = isMuted ? '🔇 Unmute' : '🔊 Mute';
-            }
-            
-            // Import stats
-            if (data.stats) {
-              stats = data.stats;
-              updateStats();
-            }
-            
-            // Import settings
-            if (data.settings) {
-              settings = data.settings;
-              localStorage.setItem('deepFlowSettings', JSON.stringify(settings));
-            }
-            
-            // Import favorites
-            if (data.favorites) {
-              favorites = data.favorites;
-              localStorage.setItem('favorites', JSON.stringify(favorites));
-              updateFavorites();
-            }
-            
-            updateDisplay();
-            renderPlaylist();
-            showToast('Data imported successfully');
-          } catch (error) {
-            console.error('Error importing data:', error);
-            showToast('Error importing data');
-          }
-        };
-        
-        reader.readAsText(file);
-      };
-      
-      input.click();
-    }
-
-    function resetData() {
-      if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
-        localStorage.removeItem('deepFlowState');
-        localStorage.removeItem('deepFlowSettings');
-        localStorage.removeItem('favorites');
-        
-        // Reset to defaults
-        timeLeft = 30 * 60;
-        totalTime = 30 * 60;
-        currentSession = 1;
-        currentMode = 'focus';
-        currentTrackIndex = 0;
-        currentGenre = 'all';
-        isShuffleOn = false;
-        isMusicPlaying = false;
-        isMuted = false;
-        lastVolume = 50;
-        
-        stats = {
-          sessionsCompleted: 0,
-          focusTime: 0,
-          breaksTaken: 0,
-          totalTime: 0
-        };
-        
-        settings = {
-          focusDuration: 30,
-          shortBreakDuration: 5,
-          longBreakDuration: 15,
-          lunchBreakDuration: 60,
-          sessionsBeforeLongBreak: 4,
-          sessionsBeforeLunch: 8,
-          darkMode: true,
-          pulseTimer: true,
-          soundNotifications: true,
-          desktopNotifications: false
-        };
-        
-        favorites = [];
-        
-        updateDisplay();
-        updateStats();
-        renderPlaylist();
-        document.getElementById('sessionLog').innerHTML = '';
-        document.getElementById('shuffleToggle').checked = false;
-        document.getElementById('volumeSlider').value = 50;
-        document.getElementById('muteBtn').textContent = '🔊 Mute';
-        
-        showToast('All data reset');
-      }
-    }
-
     // Common Functions
     async function requestWakeLock() {
       try {
@@ -1660,12 +901,6 @@
         timeLeft,
         currentSession,
         currentMode,
-        currentTrackIndex,
-        currentGenre,
-        isShuffleOn,
-        isMusicPlaying,
-        isMuted,
-        lastVolume,
         stats
       };
       
@@ -1679,21 +914,173 @@
         timeLeft = state.timeLeft;
         currentSession = state.currentSession;
         currentMode = state.currentMode;
-        currentTrackIndex = state.currentTrackIndex;
-        currentGenre = state.currentGenre;
-        isShuffleOn = state.isShuffleOn;
-        isMusicPlaying = state.isMusicPlaying;
-        isMuted = state.isMuted;
-        lastVolume = state.lastVolume;
         stats = state.stats || stats;
-        
-        document.getElementById('shuffleToggle').checked = isShuffleOn;
-        document.getElementById('volumeSlider').value = isMuted ? 0 : lastVolume;
-        document.getElementById('muteBtn').textContent = isMuted ? '🔇 Unmute' : '🔊 Mute';
         
         updateDisplay();
         updateStats();
         updateSkipBreakButton();
+      }
+    }
+
+    // Settings Functions
+    function openSettings() {
+      document.getElementById('settingsPanel').classList.add('active');
+      document.getElementById('settingsOverlay').classList.add('active');
+      loadSettings();
+    }
+
+    function closeSettings() {
+      saveSettings();
+      document.getElementById('settingsPanel').classList.remove('active');
+      document.getElementById('settingsOverlay').classList.remove('active');
+    }
+
+    function loadSettings() {
+      const savedSettings = localStorage.getItem('deepFlowSettings');
+      if (savedSettings) {
+        settings = JSON.parse(savedSettings);
+      }
+      
+      document.getElementById('focusDuration').value = settings.focusDuration;
+      document.getElementById('shortBreakDuration').value = settings.shortBreakDuration;
+      document.getElementById('longBreakDuration').value = settings.longBreakDuration;
+      document.getElementById('lunchBreakDuration').value = settings.lunchBreakDuration;
+      document.getElementById('sessionsBeforeLongBreak').value = settings.sessionsBeforeLongBreak;
+      document.getElementById('sessionsBeforeLunch').value = settings.sessionsBeforeLunch;
+      document.getElementById('darkModeToggle').checked = settings.darkMode;
+      document.getElementById('pulseTimerToggle').checked = settings.pulseTimer;
+      document.getElementById('soundNotificationsToggle').checked = settings.soundNotifications;
+      document.getElementById('desktopNotificationsToggle').checked = settings.desktopNotifications;
+    }
+
+    function saveSettings() {
+      settings.focusDuration = parseInt(document.getElementById('focusDuration').value) || 30;
+      settings.shortBreakDuration = parseInt(document.getElementById('shortBreakDuration').value) || 5;
+      settings.longBreakDuration = parseInt(document.getElementById('longBreakDuration').value) || 15;
+      settings.lunchBreakDuration = parseInt(document.getElementById('lunchBreakDuration').value) || 60;
+      settings.sessionsBeforeLongBreak = parseInt(document.getElementById('sessionsBeforeLongBreak').value) || 4;
+      settings.sessionsBeforeLunch = parseInt(document.getElementById('sessionsBeforeLunch').value) || 8;
+      settings.darkMode = document.getElementById('darkModeToggle').checked;
+      settings.pulseTimer = document.getElementById('pulseTimerToggle').checked;
+      settings.soundNotifications = document.getElementById('soundNotificationsToggle').checked;
+      settings.desktopNotifications = document.getElementById('desktopNotificationsToggle').checked;
+      
+      localStorage.setItem('deepFlowSettings', JSON.stringify(settings));
+      
+      // Apply settings that need immediate effect
+      if (!settings.pulseTimer) {
+        document.getElementById('timer').style.animation = 'none';
+      }
+      
+      showToast('Settings saved');
+    }
+
+    function exportData() {
+      const data = {
+        state: {
+          timeLeft,
+          currentSession,
+          currentMode,
+        },
+        stats,
+        settings
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `deepflow-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showToast('Data exported');
+    }
+
+    function importData() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      
+      input.onchange = e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = event => {
+          try {
+            const data = JSON.parse(event.target.result);
+            
+            // Import state
+            if (data.state) {
+              timeLeft = data.state.timeLeft || timeLeft;
+              currentSession = data.state.currentSession || currentSession;
+              currentMode = data.state.currentMode || currentMode;
+            }
+            
+            // Import stats
+            if (data.stats) {
+              stats = data.stats;
+              updateStats();
+            }
+            
+            // Import settings
+            if (data.settings) {
+              settings = data.settings;
+              localStorage.setItem('deepFlowSettings', JSON.stringify(settings));
+            }
+            
+            updateDisplay();
+            showToast('Data imported successfully');
+          } catch (error) {
+            console.error('Error importing data:', error);
+            showToast('Error importing data');
+          }
+        };
+        
+        reader.readAsText(file);
+      };
+      
+      input.click();
+    }
+
+    function resetData() {
+      if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+        localStorage.removeItem('deepFlowState');
+        localStorage.removeItem('deepFlowSettings');
+        
+        // Reset to defaults
+        timeLeft = 30 * 60;
+        totalTime = 30 * 60;
+        currentSession = 1;
+        currentMode = 'focus';
+        
+        stats = {
+          sessionsCompleted: 0,
+          focusTime: 0,
+          breaksTaken: 0,
+          totalTime: 0
+        };
+        
+        settings = {
+          focusDuration: 30,
+          shortBreakDuration: 5,
+          longBreakDuration: 15,
+          lunchBreakDuration: 60,
+          sessionsBeforeLongBreak: 4,
+          sessionsBeforeLunch: 8,
+          darkMode: true,
+          pulseTimer: true,
+          soundNotifications: true,
+          desktopNotifications: false
+        };
+        
+        updateDisplay();
+        updateStats();
+        document.getElementById('sessionLog').innerHTML = '';
+        
+        showToast('All data reset');
       }
     }
 
@@ -1716,18 +1103,6 @@
             e.preventDefault();
             resetTimer();
             break;
-          case 'n':
-            e.preventDefault();
-            playNextTrack();
-            break;
-          case 'p':
-            e.preventDefault();
-            playPreviousTrack();
-            break;
-          case 'm':
-            e.preventDefault();
-            toggleMute();
-            break;
           case 's':
             e.preventDefault();
             openSettings();
@@ -1749,33 +1124,13 @@
       updateStats();
       
       try {
-        // Preload YouTube API
-        loadYouTubeAPI().catch(error => {
-          console.error('YouTube API loading failed:', error);
-          showMusicError();
-        });
-        
-        changeGenre({ target: document.querySelector('.genre-tab.active') }, currentGenre);
-        
         if ('Notification' in window) {
           Notification.requestPermission();
         }
-        
-        // Initialize audio context on first interaction
-        document.body.addEventListener('click', function initAudio() {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) {
-            const audioContext = new AudioContext();
-            if (audioContext.state === 'suspended') {
-              audioContext.resume();
-            }
-          }
-          document.body.removeEventListener('click', initAudio);
-        }, { once: true });
       } catch (error) {
         console.error('Initialization error:', error);
-        document.getElementById('status').textContent = 'Error initializing player';
-        showToast('Error initializing player');
+        document.getElementById('status').textContent = 'Error initializing';
+        showToast('Error initializing');
       }
       
       // Setup event listeners
@@ -1798,27 +1153,5 @@
       }, 1000);
     });
   </script>
-<script>
-const audio = new Audio();
-const playlist = [
-  { title: "Lofi Track 1", src: "lofi1.mp3" },
-  { title: "Lofi Track 2", src: "lofi2.mp3" }
-];
-let currentTrack = 0;
-
-function playTrack(index) {
-  if (index >= playlist.length) {
-    document.getElementById("music-error").style.display = "block";
-    return;
-  }
-  audio.src = playlist[index].src;
-  audio.play().catch(() => {
-    playTrack(index + 1);
-  });
-}
-
-document.getElementById("play").addEventListener("click", () => playTrack(currentTrack));
-document.getElementById("next").addEventListener("click", () => playTrack(++currentTrack));
-document.getElementById("prev").addEventListener("click", () => playTrack(--currentTrack));
-</script></body>
+</body>
 </html>

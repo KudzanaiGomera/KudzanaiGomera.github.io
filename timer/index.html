@@ -1,206 +1,1330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Focus Timer ☕</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DeepFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="data:," rel="icon"/>
+<style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background: radial-gradient(circle at top, #1e1e2f, #121212);
-      color: white;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      color: #f0f0f0;
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1200px;
+      margin: auto;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 20px;
+      padding: 30px 25px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+      animation: fadeIn 1s ease;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,200,83,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00c853, #64dd17);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(100, 221, 23, 0.3);
+    }
+
+    #status {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    #timer {
+      font-size: 5rem;
+      margin: 30px 0;
+      font-weight: 300;
+      font-family: 'Poppins', monospace;
+      text-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
+      position: relative;
+      transition: all 0.3s ease;
     }
 
     .timer-container {
-      margin: 40px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* === COFFEE CUP === */
-    .coffee-cup {
       position: relative;
-      width: 150px;
-      height: 160px;
-      background: linear-gradient(145deg, #f5f5f5, #dcdcdc);
-      border-radius: 0 0 60px 60px;
-      overflow: hidden;
-      box-shadow: inset 0 -10px 10px rgba(0, 0, 0, 0.2), 0 4px 15px rgba(0, 0, 0, 0.4);
-      border: 4px solid #fff;
+      display: inline-block;
     }
 
-    /* Handle */
-    .cup-handle {
+    .timer-container::after {
+      content: '';
       position: absolute;
-      right: -35px;
-      top: 45px;
-      width: 60px;
-      height: 70px;
-      border: 6px solid #fff;
-      border-left: none;
-      border-radius: 0 50px 50px 0;
-      background: transparent;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    /* Coffee Liquid */
-    .coffee-liquid {
-      position: absolute;
-      bottom: 0;
+      bottom: -10px;
       left: 0;
       width: 100%;
-      background: linear-gradient(to bottom, #6f4e37, #3e2723);
+      height: 3px;
+      background: linear-gradient(90deg, #00c853, #64dd17);
+      border-radius: 3px;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scaleX(0.95); opacity: 0.7; }
+      50% { transform: scaleX(1.05); opacity: 1; }
+      100% { transform: scaleX(0.95); opacity: 0.7; }
+    }
+
+    #progressBar {
+      width: 100%;
+      height: 12px;
+      background: rgba(51, 51, 51, 0.5);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 30px 0;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    #progressFill {
       height: 100%;
-      transition: height 1s linear;
-      border-bottom-left-radius: 60px;
-      border-bottom-right-radius: 60px;
+      background: linear-gradient(90deg, #00c853, #64dd17);
+      width: 0%;
+      transition: width 1s linear;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 200, 83, 0.5);
     }
 
-    /* Steam */
-    .steam {
-      position: absolute;
-      top: -50px;
-      left: 50%;
-      width: 12px;
-      height: 70px;
-      border-radius: 50%;
-      opacity: 0.5;
-      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, transparent 70%);
-      animation: steamRise 3s infinite ease-in-out;
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
     }
 
-    .steam:nth-child(2) {
-      left: 60%;
-      animation-delay: 1s;
-    }
-
-    .steam:nth-child(3) {
-      left: 40%;
-      animation-delay: 2s;
-    }
-
-    @keyframes steamRise {
-      0% { transform: translateY(0) scale(0.6); opacity: 0.3; }
-      50% { transform: translateY(-25px) scale(1); opacity: 0.7; }
-      100% { transform: translateY(-50px) scale(0.6); opacity: 0; }
-    }
-
-    /* Controls */
-    .controls button {
-      background: #00c853;
+    button {
+      background: linear-gradient(135deg, #0077ff 0%, #00b0ff 100%);
       color: white;
       border: none;
-      padding: 12px 24px;
-      border-radius: 30px;
-      cursor: pointer;
+      padding: 12px 20px;
       font-size: 1rem;
-      margin: 10px;
-      transition: background 0.3s;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0, 119, 255, 0.3);
+      min-width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .controls button:hover {
-      background: #00e676;
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 119, 255, 0.4);
     }
 
-    iframe {
-      margin-top: 25px;
+    button:active {
+      transform: translateY(0);
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+      box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    button.danger {
+      background: linear-gradient(135deg, #dc3545 0%, #a71d2a 100%);
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+    }
+
+    #log {
+      margin-top: 30px;
+      text-align: left;
+      background: rgba(44, 44, 44, 0.5);
+      padding: 20px;
+      border-radius: 15px;
+      max-height: 200px;
+      overflow-y: auto;
+      color: #ccc;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    #log h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #log h2::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: #00c853;
+      border-radius: 50%;
+    }
+
+    #log ul {
+      list-style: none;
+    }
+
+    #log li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(68, 68, 68, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #log li::before {
+      content: '•';
+      color: #00c853;
+      font-size: 1.2rem;
+    }
+
+    .session-count {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 119, 255, 0.2);
+      color: #0077ff;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 380px;
+      height: 100vh;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      overflow-y: auto;
+      transition: right 0.3s ease;
+      z-index: 1000;
+      border-left: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .settings-panel.active {
+      right: 0;
+    }
+
+    .settings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .settings-group {
+      margin-bottom: 25px;
+    }
+
+    .settings-group h3 {
+      margin-bottom: 15px;
+      color: #64dd17;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .settings-group h3::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: #64dd17;
+      border-radius: 50%;
+    }
+
+    .setting-item {
+      margin-bottom: 15px;
+    }
+
+    .setting-item label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .setting-item input[type="number"],
+    .setting-item input[type="text"],
+    .setting-item select {
+      width: 100%;
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 5px;
+      color: white;
+    }
+
+    .setting-item input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Toast Notifications */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 200, 83, 0.9);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 1001;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    /* Stats Panel */
+    .stats-panel {
+      background: rgba(44, 44, 44, 0.5);
+      padding: 15px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #64dd17;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: #aaa;
+    }
+
+    /* Error Message */
+    .error-message {
+      color: #ff4444;
+      background: rgba(255, 68, 68, 0.1);
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* New Notification System */
+    .notification {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(40, 40, 40, 0.95);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 1002;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 90%;
+      width: max-content;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
+    .notification.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .notification.hide {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-30px);
+    }
+
+    .notification-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .notification-content {
+      flex-grow: 1;
+    }
+
+    .notification-title {
+      font-weight: 600;
+      margin-bottom: 3px;
+      font-size: 1rem;
+    }
+
+    .notification-message {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .notification-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0;
+      margin-left: 10px;
+      transition: color 0.2s;
+    }
+
+    .notification-close:hover {
+      color: white;
+    }
+
+    .notification-focus {
+      background: linear-gradient(135deg, rgba(0, 200, 83, 0.9) 0%, rgba(100, 221, 23, 0.9) 100%);
+      border-left: 4px solid #64dd17;
+    }
+
+    .notification-break {
+      background: linear-gradient(135deg, rgba(255, 145, 0, 0.9) 0%, rgba(255, 196, 0, 0.9) 100%);
+      border-left: 4px solid #ffc400;
+    }
+
+    .notification-info {
+      background: linear-gradient(135deg, rgba(0, 119, 255, 0.9) 0%, rgba(0, 176, 255, 0.9) 100%);
+      border-left: 4px solid #00b0ff;
+    }
+
+    .notification-warning {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 152, 0, 0.9) 100%);
+      border-left: 4px solid #ff9800;
+    }
+
+    .notification-error {
+      background: linear-gradient(135deg, rgba(220, 53, 69, 0.9) 0%, rgba(167, 29, 42, 0.9) 100%);
+      border-left: 4px solid #a71d2a;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px 15px;
+        width: 100%;
+        border-radius: 0;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      #timer {
+        font-size: 3.5rem;
+        margin: 20px 0;
+      }
+      
+      .buttons {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+
+      .settings-panel {
+        width: 100%;
+        right: -100%;
+      }
+
+      .stats-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .notification {
+        width: 90%;
+        padding: 12px 15px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Focus Timer ☕</h1>
-  <p>Stay focused — watch your coffee slowly empty during your session.</p>
-
-  <div class="timer-container">
-    <div class="coffee-cup">
-      <div class="steam"></div>
-      <div class="steam"></div>
-      <div class="steam"></div>
-      <div class="coffee-liquid" id="coffeeLiquid"></div>
-      <div class="cup-handle"></div>
-    </div>
+<div class="container">
+<div class="session-count" id="sessionCount">Session 1</div>
+<button id="settingsBtn" style="position: absolute; top: 20px; left: 20px; min-width: auto; padding: 8px; border-radius: 50%;">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M19.4 15C19.2669 15.3016 19.227 15.6362 19.285 15.9606C19.343 16.285 19.4966 16.5844 19.725 16.8187C19.9553 17.0549 20.2502 17.2155 20.5676 17.2789C20.885 17.3423 21.2096 17.3056 21.5 17.1737C21.8998 17.0001 22.3433 16.9564 22.7683 17.0484C23.1933 17.1404 23.5785 17.3636 23.866 17.685C24.1553 18.0089 24.3303 18.4144 24.3657 18.8408C24.4011 19.2672 24.2953 19.6915 24.065 20.05C23.8346 20.4085 23.4923 20.6818 23.09 20.8275C22.6877 20.9732 22.2476 20.9834 21.8384 20.8565C21.4292 20.7296 21.0736 20.4729 20.825 20.125" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M4.60002 15C4.73312 15.3016 4.77299 15.6362 4.715 15.9606C4.657 16.285 4.50344 16.5844 4.27502 16.8187C4.04475 17.0549 3.74978 17.2155 3.43238 17.2789C3.11499 17.3423 2.79041 17.3056 2.50002 17.1737C2.10024 17.0001 1.65671 16.9564 1.23172 17.0484C0.806731 17.1404 0.421487 17.3636 0.134019 17.685C-0.155252 18.0089 -0.330281 18.4144 -0.365685 18.8408C-0.401089 19.2672 -0.295304 19.6915 -0.065018 20.05C0.165268 20.4085 0.507627 20.6818 0.909895 20.8275C1.31216 20.9732 1.75226 20.9834 2.16146 20.8565C2.57066 20.7296 2.92625 20.4729 3.17502 20.125" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M4.60002 9C4.73312 8.69842 4.77299 8.36379 4.715 8.03937C4.657 7.71495 4.50344 7.41557 4.27502 7.18134C4.04475 6.9451 3.74978 6.78452 3.43238 6.72112C3.11499 6.65772 2.79041 6.69439 2.50002 6.8263C2.10024 6.99989 1.65671 7.04359 1.23172 6.9516C0.806731 6.85961 0.421487 6.63637 0.134019 6.315C-0.155252 5.99111 -0.330281 5.58557 -0.365685 5.15918C-0.401089 4.73279 -0.295304 4.30854 -0.065018 3.95C0.165268 3.59146 0.507627 3.31816 0.909895 3.17248C1.31216 3.0268 1.75226 3.01664 2.16146 3.1435C2.57066 3.27036 2.92625 3.52714 3.17502 3.875" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M19.4 9C19.2669 8.69842 19.227 8.36379 19.285 8.03937C19.343 7.71495 19.4966 7.41557 19.725 7.18134C19.9553 6.9451 20.2502 6.78452 20.5676 6.72112C20.885 6.65772 21.2096 6.69439 21.5 6.8263C21.8998 6.99989 22.3433 7.04359 22.7683 6.9516C23.1933 6.85961 23.5785 6.63637 23.866 6.315C24.1553 18.0089 24.3303 18.4144 24.3657 18.8408C24.4011 19.2672 24.2953 19.6915 24.065 20.05C23.8346 20.4085 23.4923 20.6818 23.09 20.8275C22.6877 20.9732 22.2476 20.9834 21.8384 20.8565C21.4292 20.7296 21.0736 20.4729 20.825 20.125" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<h1>✨ DeepFlow</h1>
+<div id="status">Ready to Focus</div>
+<div class="timer-container">
+<div id="timer">30:00</div>
+</div>
+<div id="progressBar"><div id="progressFill"></div></div>
+<div class="buttons">
+<button id="startBtn" onclick="startTimer()">
+<svg fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 2L13 8L3 14V2Z" fill="white"></path>
+</svg>
+        Start
+      </button>
+<button id="pauseBtn" onclick="pauseTimer()">
+<svg fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<rect fill="white" height="12" width="4" x="4" y="2"></rect>
+<rect fill="white" height="12" width="4" x="10" y="2"></rect>
+</svg>
+        Pause
+      </button>
+<button class="secondary" onclick="resetTimer()">
+<svg fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.5 8C13.5 9.15761 13.1293 10.2837 12.4388 11.2095C11.7482 12.1352 10.7717 12.8118 9.65165 13.1384C8.53161 13.465 7.32569 13.4248 6.22847 13.0236C5.13125 12.6224 4.20095 11.8826 3.57403 10.9137C2.94711 9.94482 2.65808 8.80061 2.75372 7.65366C2.84935 6.50671 3.32399 5.42234 4.11091 4.55544C4.89783 3.68855 5.95472 3.08669 7.12218 2.83866C8.28964 2.59063 9.50384 2.71046 10.5938 3.18063" stroke="white" stroke-linecap="round" stroke-width="2"></path>
+<path d="M13.5 3V7H9.5" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Reset
+      </button>
+<button class="secondary" id="skipBreakBtn" onclick="skipBreak()" style="display: none;">
+<svg fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 3L3 13M3 3L13 13" stroke="white" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+        Skip Break
+      </button>
+</div>
+<!-- Stats Panel -->
+<div class="stats-panel">
+<div class="stat-item">
+<div class="stat-value" id="sessionsCompleted">0</div>
+<div class="stat-label">Sessions</div>
+</div>
+<div class="stat-item">
+<div class="stat-value" id="focusTime">0h 0m</div>
+<div class="stat-label">Focus Time</div>
+</div>
+<div class="stat-item">
+<div class="stat-value" id="breaksTaken">0</div>
+<div class="stat-label">Breaks</div>
+</div>
+<div class="stat-item">
+<div class="stat-value" id="totalTime">0h 0m</div>
+<div class="stat-label">Total Time</div>
+</div>
+</div>
+<div id="log">
+<h2>Session Log</h2>
+<ul id="sessionLog"></ul>
+</div>
+</div>
+<!-- Settings Panel -->
+<div class="overlay" id="settingsOverlay"></div>
+<div class="settings-panel" id="settingsPanel">
+<div class="settings-header">
+<h2>Settings</h2>
+<button onclick="closeSettings()" style="min-width: auto; padding: 8px; border-radius: 50%;">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<div class="settings-group">
+<h3>Timer Settings</h3>
+<div class="setting-item">
+<label for="focusDuration">Focus Duration (minutes)</label>
+<input id="focusDuration" max="120" min="1" type="number" value="30"/>
+</div>
+<div class="setting-item">
+<label for="shortBreakDuration">Short Break Duration (minutes)</label>
+<input id="shortBreakDuration" max="30" min="1" type="number" value="5"/>
+</div>
+<div class="setting-item">
+<label for="longBreakDuration">Long Break Duration (minutes)</label>
+<input id="longBreakDuration" max="60" min="1" type="number" value="15"/>
+</div>
+<div class="setting-item">
+<label for="lunchBreakDuration">Lunch Break Duration (minutes)</label>
+<input id="lunchBreakDuration" max="120" min="1" type="number" value="60"/>
+</div>
+<div class="setting-item">
+<label for="sessionsBeforeLongBreak">Sessions before Long Break</label>
+<input id="sessionsBeforeLongBreak" max="10" min="1" type="number" value="4"/>
+</div>
+<div class="setting-item">
+<label for="sessionsBeforeLunch">Sessions before Lunch</label>
+<input id="sessionsBeforeLunch" max="20" min="1" type="number" value="8"/>
+</div>
+</div>
+<div class="settings-group">
+<h3>Appearance</h3>
+<div class="setting-item">
+<label>
+<input checked="" id="darkModeToggle" type="checkbox"/>
+          Dark Mode
+        </label>
+</div>
+<div class="setting-item">
+<label>
+<input checked="" id="pulseTimerToggle" type="checkbox"/>
+          Pulse Timer Animation
+        </label>
+</div>
+</div>
+<div class="settings-group">
+<h3>Notifications</h3>
+<div class="setting-item">
+<label>
+<input checked="" id="soundNotificationsToggle" type="checkbox"/>
+          Sound Notifications
+        </label>
+</div>
+<div class="setting-item">
+<label>
+<input id="desktopNotificationsToggle" type="checkbox"/>
+          Desktop Notifications
+        </label>
+</div>
+</div>
+<div class="settings-group">
+<h3>Data</h3>
+<div class="setting-item">
+<button class="secondary" onclick="exportData()" style="width: 100%;">Export Data</button>
+</div>
+<div class="setting-item">
+<button class="secondary" onclick="importData()" style="width: 100%;">Import Data</button>
+</div>
+<div class="setting-item">
+<button class="danger" onclick="resetData()" style="width: 100%;">Reset All Data</button>
+</div>
+</div>
+</div>
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+<!-- Notification System -->
+<div class="notification" id="notification">
+  <div class="notification-icon" id="notificationIcon">ℹ️</div>
+  <div class="notification-content">
+    <div class="notification-title" id="notificationTitle">Notification</div>
+    <div class="notification-message" id="notificationMessage">This is a notification message</div>
   </div>
-
-  <div class="controls">
-    <button id="startBtn">Start</button>
-    <button id="pauseBtn">Pause</button>
-    <button id="resetBtn">Reset</button>
-  </div>
-
-  <!-- Optional background music -->
-  <iframe
-    width="300"
-    height="200"
-    src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=0&mute=1&loop=1"
-    title="Lo-fi Focus Music"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-  ></iframe>
-
-  <script>
-    // Timer variables
-    let totalTime = 30 * 60; // 30 minutes
+  <button class="notification-close" id="notificationClose">×</button>
+</div>
+<script>
+    // Timer Variables
+    let timerInterval;
+    let isTimerRunning = false;
+    let totalTime = 30 * 60; // 30 minutes in seconds
     let timeLeft = totalTime;
-    let timer;
-    let isRunning = false;
+    let currentSession = 1;
+    let currentMode = 'focus';
+    let stats = {
+      sessionsCompleted: 0,
+      focusTime: 0,
+      breaksTaken: 0,
+      totalTime: 0
+    };
 
-    const coffeeLiquid = document.getElementById('coffeeLiquid');
-    const startBtn = document.getElementById('startBtn');
-    const pauseBtn = document.getElementById('pauseBtn');
-    const resetBtn = document.getElementById('resetBtn');
+    // Settings defaults
+    let settings = {
+      focusDuration: 30,
+      shortBreakDuration: 5,
+      longBreakDuration: 15,
+      lunchBreakDuration: 60,
+      sessionsBeforeLongBreak: 4,
+      sessionsBeforeLunch: 8,
+      darkMode: true,
+      pulseTimer: true,
+      soundNotifications: true,
+      desktopNotifications: false
+    };
 
-    function updateCoffeeLevel() {
-      const progressPercent = (timeLeft / totalTime) * 100;
-      coffeeLiquid.style.height = progressPercent + '%';
+    // Break patterns based on session number
+    const breakPattern = {
+      1: 'short',
+      2: 'short',
+      3: 'short',
+      4: 'long',
+      5: 'short',
+      6: 'short',
+      7: 'short',
+      8: 'lunch',
+      9: 'short',
+      10: 'short',
+      11: 'short',
+      12: 'long',
+      13: 'short',
+      14: 'short',
+      15: 'short'
+    };
+
+    // Notification System
+    function showNotification(title, message, type = 'info', duration = 3000) {
+      const notification = document.getElementById('notification');
+      const notificationIcon = document.getElementById('notificationIcon');
+      const notificationTitle = document.getElementById('notificationTitle');
+      const notificationMessage = document.getElementById('notificationMessage');
+      
+      // Set content
+      notificationTitle.textContent = title;
+      notificationMessage.textContent = message;
+      
+      // Set icon based on type
+      let icon = 'ℹ️';
+      switch(type) {
+        case 'focus':
+          icon = '🧠';
+          break;
+        case 'break':
+          icon = '☕';
+          break;
+        case 'warning':
+          icon = '⚠️';
+          break;
+        case 'error':
+          icon = '❌';
+          break;
+        case 'success':
+          icon = '✅';
+          break;
+      }
+      notificationIcon.textContent = icon;
+      
+      // Set styling based on type
+      notification.className = 'notification';
+      notification.classList.add(`notification-${type}`);
+      
+      // Show notification
+      notification.classList.remove('hide');
+      notification.classList.add('show');
+      
+      // Auto-hide after duration
+      if (duration > 0) {
+        setTimeout(() => {
+          hideNotification();
+        }, duration);
+      }
+      
+      // Play sound if enabled
+      if (settings.soundNotifications) {
+        playNotificationSound();
+      }
     }
+    
+    function hideNotification() {
+      const notification = document.getElementById('notification');
+      notification.classList.remove('show');
+      notification.classList.add('hide');
+    }
+    
+    // Setup notification close button
+    document.getElementById('notificationClose').addEventListener('click', hideNotification);
 
+    // Timer Functions
     function startTimer() {
-      if (isRunning) return;
-      isRunning = true;
-      timer = setInterval(() => {
-        if (timeLeft > 0) {
-          timeLeft--;
-          updateCoffeeLevel();
+      if (isTimerRunning) return;
+      
+      isTimerRunning = true;
+      requestWakeLock();
+      
+      // Show notification when timer starts
+      if (currentMode === 'focus') {
+        showNotification('Focus Session Started', 'Time to focus! Get productive!', 'focus', 3000);
+      } else {
+        const breakType = getCurrentBreakType();
+        let breakMessage = 'Time for a break! Relax and recharge.';
+        if (breakType === 'long') {
+          breakMessage = 'Time for a long break! Rest well.';
+        } else if (breakType === 'lunch') {
+          breakMessage = 'Time for lunch! Enjoy your meal.';
+        }
+        showNotification('Break Started', breakMessage, 'break', 3000);
+      }
+
+      timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+          logSession(`${getModeLabel(currentMode)} completed`);
+          notifyUser(`${getModeLabel(currentMode)} completed`);
+          
+          // Show notification when timer ends
+          if (currentMode === 'focus') {
+            showNotification('Focus Session Completed', 'Great job! Time for a break.', 'success', 3000);
+          } else {
+            showNotification('Break Completed', 'Break time is over. Ready to focus again?', 'info', 3000);
+          }
+          
+          handleSessionEnd();
         } else {
-          clearInterval(timer);
-          isRunning = false;
-          alert(`Time's up! ☕ Take a break.`);
+          timeLeft--;
+          updateDisplay();
+          updateStats();
+          
+          // Pulse animation when time is running out
+          if (timeLeft <= 60 && settings.pulseTimer) {
+            document.getElementById('timer').style.animation = 'pulse 1s infinite';
+          }
         }
       }, 1000);
+
+      document.getElementById('status').textContent = getModeLabel(currentMode);
+      logSession(`${getModeLabel(currentMode)} started`);
+      updateSkipBreakButton();
     }
 
     function pauseTimer() {
-      clearInterval(timer);
-      isRunning = false;
+      if (!isTimerRunning) return;
+      
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      document.getElementById('status').textContent = 'Paused';
+      document.getElementById('timer').style.animation = 'none';
+      
+      logSession('Timer paused');
+      showNotification('Timer Paused', 'Your session has been paused.', 'warning', 2000);
     }
 
     function resetTimer() {
-      clearInterval(timer);
-      isRunning = false;
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      document.getElementById('timer').style.animation = 'none';
+      
+      // Reset to current mode's duration
+      if (currentMode === 'focus') {
+        totalTime = settings.focusDuration * 60;
+      } else {
+        const breakType = getCurrentBreakType();
+        switch(breakType) {
+          case 'short':
+            totalTime = settings.shortBreakDuration * 60;
+            break;
+          case 'long':
+            totalTime = settings.longBreakDuration * 60;
+            break;
+          case 'lunch':
+            totalTime = settings.lunchBreakDuration * 60;
+            break;
+        }
+      }
+      
       timeLeft = totalTime;
-      updateCoffeeLevel();
+      updateDisplay();
+      document.getElementById('status').textContent = 'Ready';
+      updateSkipBreakButton();
+      
+      logSession('Timer reset');
+      showNotification('Timer Reset', 'The timer has been reset.', 'info', 2000);
     }
 
-    startBtn.addEventListener('click', startTimer);
-    pauseBtn.addEventListener('click', pauseTimer);
-    resetBtn.addEventListener('click', resetTimer);
+    function skipBreak() {
+      if (currentMode !== 'break') return;
+      
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      handleSessionEnd();
+      logSession('Break skipped');
+      showNotification('Break Skipped', 'You skipped your break time.', 'warning', 2000);
+    }
 
-    updateCoffeeLevel(); // initialize
+    function updateSkipBreakButton() {
+      const skipBtn = document.getElementById('skipBreakBtn');
+      if (currentMode === 'break') {
+        skipBtn.style.display = 'block';
+      } else {
+        skipBtn.style.display = 'none';
+      }
+    }
+
+    function getCurrentBreakType() {
+      return breakPattern[currentSession] || 'short';
+    }
+
+    function updateDisplay() {
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      document.getElementById('timer').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      
+      const progress = ((totalTime - timeLeft) / totalTime) * 100;
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      
+      if (currentMode === 'focus') {
+        document.getElementById('progressFill').style.background = 'linear-gradient(90deg, #00c853, #64dd17)';
+      } else {
+        document.getElementById('progressFill').style.background = 'linear-gradient(90deg, #ff9100, #ffc400)';
+      }
+    }
+
+    function handleSessionEnd() {
+      if (currentMode === 'focus') {
+        currentMode = 'break';
+        const breakType = getCurrentBreakType();
+        
+        switch(breakType) {
+          case 'short':
+            totalTime = settings.shortBreakDuration * 60;
+            break;
+          case 'long':
+            totalTime = settings.longBreakDuration * 60;
+            break;
+          case 'lunch':
+            totalTime = settings.lunchBreakDuration * 60;
+            break;
+        }
+        
+        stats.sessionsCompleted++;
+        stats.breaksTaken++;
+        
+        if (currentSession < 16) {
+          document.getElementById('sessionCount').textContent = `Session ${currentSession + 1}`;
+        } else {
+          document.getElementById('sessionCount').textContent = 'Session 1';
+        }
+      } else {
+        currentMode = 'focus';
+        totalTime = settings.focusDuration * 60;
+        
+        if (currentSession < 16) {
+          currentSession++;
+        } else {
+          currentSession = 1;
+        }
+      }
+      
+      timeLeft = totalTime;
+      updateDisplay();
+      updateStats();
+      saveState();
+      
+      setTimeout(() => {
+        startTimer();
+      }, 1000);
+    }
+
+    function getModeLabel(mode) {
+      if (mode === 'focus') {
+        return '🧠 Focus Time';
+      } else {
+        const breakType = getCurrentBreakType();
+        switch(breakType) {
+          case 'short':
+            return `☕ Short Break (${settings.shortBreakDuration} min)`;
+          case 'long':
+            return `🛌 Long Break (${settings.longBreakDuration} min)`;
+          case 'lunch':
+            return `🍱 Lunch Break (${settings.lunchBreakDuration} min)`;
+          default:
+            return `☕ Break (${settings.shortBreakDuration} min)`;
+        }
+      }
+    }
+
+    // Common Functions
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          const wakeLock = await navigator.wakeLock.request('screen');
+          wakeLock.addEventListener('release', () => {
+            console.log('Screen Wake Lock was released');
+          });
+        }
+      } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+      }
+    }
+
+    function logSession(message) {
+      const entry = document.createElement('li');
+      entry.textContent = `${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}: ${message}`;
+      document.getElementById('sessionLog').prepend(entry);
+      
+      if (document.getElementById('sessionLog').children.length > 20) {
+        document.getElementById('sessionLog').removeChild(document.getElementById('sessionLog').lastChild);
+      }
+    }
+
+    function notifyUser(message) {
+      if (settings.desktopNotifications && 'Notification' in window && Notification.permission === 'granted') {
+        new Notification('DeepFlow Timer', { 
+          body: message,
+          icon: 'https://cdn-icons-png.flaticon.com/512/3069/3069172.png'
+        });
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted' && settings.desktopNotifications) {
+            new Notification('DeepFlow Timer', { 
+              body: message,
+              icon: 'https://cdn-icons-png.flaticon.com/512/3069/3069172.png'
+            });
+          }
+        });
+      }
+      
+      if (settings.soundNotifications) {
+        playNotificationSound();
+      }
+    }
+
+    function playNotificationSound() {
+      const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...');
+      audio.volume = 0.3;
+      audio.play().catch(e => console.log('Audio playback failed:', e));
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function updateStats() {
+      document.getElementById('sessionsCompleted').textContent = stats.sessionsCompleted;
+      
+      const focusHours = Math.floor(stats.focusTime / 3600);
+      const focusMins = Math.floor((stats.focusTime % 3600) / 60);
+      document.getElementById('focusTime').textContent = `${focusHours}h ${focusMins}m`;
+      
+      document.getElementById('breaksTaken').textContent = stats.breaksTaken;
+      
+      const totalHours = Math.floor(stats.totalTime / 3600);
+      const totalMins = Math.floor((stats.totalTime % 3600) / 60);
+      document.getElementById('totalTime').textContent = `${totalHours}h ${totalMins}m`;
+    }
+
+    function saveState() {
+      const state = {
+        timeLeft,
+        currentSession,
+        currentMode,
+        stats
+      };
+      
+      localStorage.setItem('deepFlowState', JSON.stringify(state));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem('deepFlowState');
+      if (saved) {
+        const state = JSON.parse(saved);
+        timeLeft = state.timeLeft;
+        currentSession = state.currentSession;
+        currentMode = state.currentMode;
+        stats = state.stats || stats;
+        
+        updateDisplay();
+        updateStats();
+        updateSkipBreakButton();
+      }
+    }
+
+    // Settings Functions
+    function openSettings() {
+      document.getElementById('settingsPanel').classList.add('active');
+      document.getElementById('settingsOverlay').classList.add('active');
+      loadSettings();
+    }
+
+    function closeSettings() {
+      saveSettings();
+      document.getElementById('settingsPanel').classList.remove('active');
+      document.getElementById('settingsOverlay').classList.remove('active');
+    }
+
+    function loadSettings() {
+      const savedSettings = localStorage.getItem('deepFlowSettings');
+      if (savedSettings) {
+        settings = JSON.parse(savedSettings);
+      }
+      
+      document.getElementById('focusDuration').value = settings.focusDuration;
+      document.getElementById('shortBreakDuration').value = settings.shortBreakDuration;
+      document.getElementById('longBreakDuration').value = settings.longBreakDuration;
+      document.getElementById('lunchBreakDuration').value = settings.lunchBreakDuration;
+      document.getElementById('sessionsBeforeLongBreak').value = settings.sessionsBeforeLongBreak;
+      document.getElementById('sessionsBeforeLunch').value = settings.sessionsBeforeLunch;
+      document.getElementById('darkModeToggle').checked = settings.darkMode;
+      document.getElementById('pulseTimerToggle').checked = settings.pulseTimer;
+      document.getElementById('soundNotificationsToggle').checked = settings.soundNotifications;
+      document.getElementById('desktopNotificationsToggle').checked = settings.desktopNotifications;
+    }
+
+    function saveSettings() {
+      settings.focusDuration = parseInt(document.getElementById('focusDuration').value) || 30;
+      settings.shortBreakDuration = parseInt(document.getElementById('shortBreakDuration').value) || 5;
+      settings.longBreakDuration = parseInt(document.getElementById('longBreakDuration').value) || 15;
+      settings.lunchBreakDuration = parseInt(document.getElementById('lunchBreakDuration').value) || 60;
+      settings.sessionsBeforeLongBreak = parseInt(document.getElementById('sessionsBeforeLongBreak').value) || 4;
+      settings.sessionsBeforeLunch = parseInt(document.getElementById('sessionsBeforeLunch').value) || 8;
+      settings.darkMode = document.getElementById('darkModeToggle').checked;
+      settings.pulseTimer = document.getElementById('pulseTimerToggle').checked;
+      settings.soundNotifications = document.getElementById('soundNotificationsToggle').checked;
+      settings.desktopNotifications = document.getElementById('desktopNotificationsToggle').checked;
+      
+      localStorage.setItem('deepFlowSettings', JSON.stringify(settings));
+      
+      // Apply settings that need immediate effect
+      if (!settings.pulseTimer) {
+        document.getElementById('timer').style.animation = 'none';
+      }
+      
+      showNotification('Settings Saved', 'Your settings have been updated.', 'success', 2000);
+    }
+
+    function exportData() {
+      const data = {
+        state: {
+          timeLeft,
+          currentSession,
+          currentMode,
+        },
+        stats,
+        settings
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `deepflow-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showNotification('Data Exported', 'Your data has been exported successfully.', 'success', 2000);
+    }
+
+    function importData() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      
+      input.onchange = e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = event => {
+          try {
+            const data = JSON.parse(event.target.result);
+            
+            // Import state
+            if (data.state) {
+              timeLeft = data.state.timeLeft || timeLeft;
+              currentSession = data.state.currentSession || currentSession;
+              currentMode = data.state.currentMode || currentMode;
+            }
+            
+            // Import stats
+            if (data.stats) {
+              stats = data.stats;
+              updateStats();
+            }
+            
+            // Import settings
+            if (data.settings) {
+              settings = data.settings;
+              localStorage.setItem('deepFlowSettings', JSON.stringify(settings));
+            }
+            
+            updateDisplay();
+            showNotification('Data Imported', 'Your data has been imported successfully.', 'success', 3000);
+          } catch (error) {
+            console.error('Error importing data:', error);
+            showNotification('Import Error', 'Failed to import data. Please check the file.', 'error', 3000);
+          }
+        };
+        
+        reader.readAsText(file);
+      };
+      
+      input.click();
+    }
+
+    function resetData() {
+      if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+        localStorage.removeItem('deepFlowState');
+        localStorage.removeItem('deepFlowSettings');
+        
+        // Reset to defaults
+        timeLeft = 30 * 60;
+        totalTime = 30 * 60;
+        currentSession = 1;
+        currentMode = 'focus';
+        
+        stats = {
+          sessionsCompleted: 0,
+          focusTime: 0,
+          breaksTaken: 0,
+          totalTime: 0
+        };
+        
+        settings = {
+          focusDuration: 30,
+          shortBreakDuration: 5,
+          longBreakDuration: 15,
+          lunchBreakDuration: 60,
+          sessionsBeforeLongBreak: 4,
+          sessionsBeforeLunch: 8,
+          darkMode: true,
+          pulseTimer: true,
+          soundNotifications: true,
+          desktopNotifications: false
+        };
+        
+        updateDisplay();
+        updateStats();
+        document.getElementById('sessionLog').innerHTML = '';
+        
+        showNotification('Data Reset', 'All data has been reset to defaults.', 'info', 3000);
+      }
+    }
+
+    // Keyboard Shortcuts
+    function setupKeyboardShortcuts() {
+      document.addEventListener('keydown', (e) => {
+        // Ignore if typing in an input field
+        if (e.target.tagName === 'INPUT') return;
+        
+        switch(e.key) {
+          case ' ':
+            e.preventDefault();
+            if (isTimerRunning) {
+              pauseTimer();
+            } else {
+              startTimer();
+            }
+            break;
+          case 'r':
+            e.preventDefault();
+            resetTimer();
+            break;
+          case 's':
+            e.preventDefault();
+            openSettings();
+            break;
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Load settings first
+      loadSettings();
+      
+      // Then load state
+      loadState();
+      
+      // Update UI based on loaded state
+      updateDisplay();
+      updateStats();
+      
+      try {
+        if ('Notification' in window) {
+          Notification.requestPermission();
+        }
+      } catch (error) {
+        console.error('Initialization error:', error);
+        document.getElementById('status').textContent = 'Error initializing';
+        showNotification('Initialization Error', 'Failed to initialize some features.', 'error', 3000);
+      }
+      
+      // Setup event listeners
+      document.getElementById('settingsBtn').addEventListener('click', openSettings);
+      document.getElementById('settingsOverlay').addEventListener('click', closeSettings);
+      
+      // Setup keyboard shortcuts
+      setupKeyboardShortcuts();
+      
+      // Update stats every minute
+      setInterval(() => {
+        if (isTimerRunning) {
+          if (currentMode === 'focus') {
+            stats.focusTime++;
+          }
+          stats.totalTime++;
+          updateStats();
+          saveState();
+        }
+      }, 1000);
+    });
   </script>
 </body>
 </html>

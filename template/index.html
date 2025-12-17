@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
-
 <html data-theme="light" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>SOC Investigation Report</title>
+<title>SOC Incident Triage Template</title>
 <style>
     :root {
       --bg-color: #f4f6f8;
@@ -128,76 +126,114 @@
 <body>
 <div class="container">
 <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+
+<details open="">
+<summary>Analyst Strategic Triage Focus</summary>
+<div class="artifact-panel">
+<p>To triage smarter, an analyst must prioritize <strong>Intent and Origin</strong> over raw logs. When a detection rule fires, focus on these three pillars:</p>
+<ul>
+<li><strong>The "Why":</strong> Is this activity part of a known business process or a deviation? (e.g., Software Center vs. Browser download).</li>
+<li><strong>The "Path":</strong> Trace the execution chain. Malicious activity usually starts from an external vector (web/email) and moves toward persistence.</li>
+<li><strong>The "Precedent":</strong> Has this user or host performed similar actions? Cross-reference with HR/Departmental roles to identify "Shadow IT" vs. actual compromise.</li>
+</ul>
+</div>
+</details>
+
 <h2>Intel: Rule_Monitoring Suspicious Execution of Autorun Registry Keys</h2>
+
 <details open="">
 <summary>Executive Summary</summary>
 <div class="panel">
-<p>This investigation was initiated following the detection of suspicious modifications to AutoRun registry keys, indicative of potential unauthorized software execution or persistence mechanisms. Analysis confirmed the activity stemmed from a user-initiated download outside the organization’s approved software deployment channels. The user reported issues with the version of Notepad++ available via Software Center and Coupa, prompting them to download an alternative version from the internet. While the behavior was not malicious, it constitutes a policy violation. The downloaded software was identified as grayware (PUP), and a removal request was submitted. The user was educated on proper software installation procedures. Closing this alert as <strong>Resolved | Bad BAU</strong>. (Location: Corp – South Africa)</p>
+<p>This P3 incident highlights a case of "Shadow IT" where a user bypassed corporate security controls to resolve a local productivity issue. The event began when our monitoring systems flagged a suspicious modification to the Windows AutoRun registry hive on a Marketing analyst’s workstation. Investigation revealed that the user, facing technical difficulties with the officially sanctioned versions of Notepad++ available in the Software Center and Coupa, sought an alternative solution via a public search engine. This led to the download and installation of a non-standard version of the software from an unverified third-party domain. </p>
+<p>While the analysis confirmed the activity was user-initiated and lacked malicious intent (non-targeted), the installer contained Potentially Unwanted Programs (PUP/Grayware) and established a persistence mechanism via the registry. This constitutes a direct violation of the Corporate Acceptable Use Policy. The risk was mitigated by initiating an automated software removal, and the user has been provided with educational resources regarding the risks of third-party repositories. The incident is classified as <strong>Resolved | Policy Non-Compliance (Bad BAU)</strong>.</p>
 </div>
 </details>
+
 <details>
 <summary>Alert Details</summary>
-<p>This detection rule identifies suspicious modifications to AutoRun registry keys via Microsoft Defender for Endpoint (MDE), often leveraged by threat actors or unauthorized tools for persistence.</p>
-<p>This alert was triggered on host JD-MKT-001 for user CORP\jdoe, following the detection of a registry key modification associated with the installation of Notepad++ software.</p>
+<p>Microsoft Defender for Endpoint (MDE) identified an unauthorized modification to the AutoRun registry keys—a common technique used by persistent threats to ensure software execution upon system startup. In this instance, the alert was triggered on <strong>JD-MKT-001</strong> (User: <strong>CORP\jdoe</strong>) during the installation of a non-standard software package.</p>
 <p>Raw command line string observed:<br/>
-<span class="code">n/a in this case</span>
+<span class="code">Process execution originated via Chrome download; direct registry injection observed from setup binary.</span>
 </p>
 </details>
+
 <details>
 <summary>Initial Enrichment</summary>
 <ul>
 <li><strong>Source User:</strong> CORP\jdoe | John Doe | Marketing Analyst | Marketing Department | Cape Town</li>
-<li><strong>Source Host:</strong> JD-MKT-001.domain.local | IP: 192.168.10.45 | OS: Windows 10 Enterprise | AV Status: 1 alert in MDE</li>
+<li><strong>Source Host:</strong> JD-MKT-001.domain.local | IP: 192.168.10.45 | OS: Windows 10 Enterprise | Status: Managed / Single Alert</li>
 </ul>
 </details>
+
 <details>
 <summary>Endpoint &amp; Network Analysis (Splunk + MDE Insights)</summary>
 <ul>
-<li>No abnormal login or process behavior detected in the past 24 hours.</li>
-<li>Process Tree: <code>explorer.exe &gt; chrome.exe &gt; notepadplus_setup.exe</code></li>
-<li>Execution chain confirms user-initiated download via Chrome browser.</li>
-<li>Download Source: <code>http://freefiles.download/notepadplus_setup.exe</code></li>
-<li>Registry Modification:
+<li><strong>Event Sequence:</strong> The narrative begins with <code>chrome.exe</code> accessing <code>freefiles.download</code>. A 2.4MB executable, <code>notepadplus_setup.exe</code>, was downloaded to the user's local directory.</li>
+<li><strong>Execution Flow:</strong> <code>explorer.exe &gt; notepadplus_setup.exe</code>. Upon execution, the installer immediately attempted to secure persistence to ensure the application remained active across reboots.</li>
+<li><strong>Registry Modification:</strong>
           <ul>
 <li><strong>Key Hive:</strong> HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</li>
 <li><strong>Value Name:</strong> NotepadPlus</li>
 <li><strong>Set Data:</strong> C:\Users\jdoe\AppData\Roaming\NotepadPlus\notepad++.exe</li>
-<li><strong>Original Value:</strong> [None]</li>
 </ul>
 </li>
-<li>No evidence of suspicious child processes, lateral movement, or additional persistence mechanisms post-installation.</li>
-<li>Based on current findings, this is categorized as bad BAU.</li>
+<li><strong>Post-Installation:</strong> No lateral movement, credential dumping, or C2 (Command & Control) beacons were observed. The activity remained localized to the user's profile.</li>
 </ul>
 </details>
+
 <details>
 <summary>IOC &amp; Threat Intelligence</summary>
 <ul>
-<li><strong>VirusTotal:</strong> SHA256 hash flagged by 7 vendors as potentially unwanted (PUP)</li>
-<li><strong>VirusTotal Analysis:</strong> <a href="https://www.virustotal.com/gui/file/e4f6c9f2d3/detection" target="_blank">View on VirusTotal</a></li>
-<li><strong>urlscan.io:</strong> Domain <code>freefiles.download</code> is blacklisted — <a href="https://urlscan.io/domain/freefiles.download" target="_blank">Scan Results</a></li>
-<li><strong>AbuseIPDB:</strong> n/a in this case unless there is an IP observed</li>
-<li><strong>Joe Sandbox:</strong> No malicious indicators observed in behavioral analysis</li>
+<li><strong>VirusTotal:</strong> SHA256 flagged by 7 engines; categorized as <strong>PUP/Grayware</strong> (Adware/Bundler).</li>
+<li><strong>Reputation:</strong> The source domain <code>freefiles.download</code> is currently blacklisted for hosting low-reputation software installers.</li>
+<li><strong>Sandbox Behavior:</strong> Joe Sandbox analysis indicates the file behaves as a generic installer with embedded telemetry, but no high-severity malicious payloads were detected.</li>
 </ul>
 </details>
+
 <details>
 <summary>Documentation &amp; Business Justification</summary>
 <ul>
-<li>Notepad++ is officially approved and available via Software Center and Coupa.</li>
-<li>No Remedy ticket was logged for this installation.</li>
-<li>User acknowledged bypassing policy due to issues with the approved version and was unaware of the associated risks.</li>
+<li><strong>Official Channel:</strong> Notepad++ is a "Standard-Build" application available for one-click install via the Software Center.</li>
+<li><strong>User Rationale:</strong> The user stated the approved version "would not load plugins" required for their specific workflow, leading them to search for a "full version" online.</li>
+<li><strong>Compliance Gap:</strong> No prior ticket was submitted to IT Support to address the plugin issue before the user bypassed security protocols.</li>
 </ul>
 </details>
+
 <details>
 <summary>Conclusion</summary>
 <ul>
-<li>User was advised on policy-compliant software installation procedures.</li>
-<li>Work order submitted for software removal: <a href="#"><code>WO0026738637388</code></a></li>
-<li>Investigation concluded that the activity was user-driven and not malicious in nature.</li>
-<li>No evidence of compromise or persistence beyond the initial execution.</li>
-<li><strong>Closing this alert as:</strong> Resolved | Bad BAU</li>
+<li>The user was debriefed on the inherent risks of downloading executables from unverified sources.</li>
+<li>A high-priority Work Order was executed for the forensic removal of the unauthorized software: <a href="#"><code>WO0026738637388</code></a>.</li>
+<li>The investigation confirms no active compromise; this was a "Bad BAU" scenario driven by a productivity gap.</li>
+<li><strong>Closing Action:</strong> Resolved | Bad BAU</li>
 </ul>
 </details>
-<details open="True"><summary>Critical Artifacts Checklist (DO NOT FORGET TO COLLECT)</summary><ul><li><strong>Hostname (FQDN):</strong> JD-MKT-001.domain.local</li><li><strong>Devicename:</strong> JD-MKT-001</li><li><strong>Source IP:</strong> 192.01.16.10</li><li><strong>Account Domain:</strong> CORP\jdoe</li><li><strong>EID:</strong> jdoe</li><li><strong>Email ID:</strong> john.doe@company.com</li><li><strong>Filename:</strong> notepadplus_setup.exe</li><li><strong>File Hashes:</strong><ul><li><strong>SHA256:</strong> e4f6c9...f2d3</li><li><strong>SHA1:</strong> [to be collected]</li><li><strong>MD5:</strong> [to be collected]</li></ul></li><li><strong>File Source:</strong> http://freefiles.download/notepadplus_setup.exe</li><li><strong>File Path:</strong> C:\Users\jdoe\Downloads\notepadplus_setup.exe</li><li><strong>Command Line:</strong> N/A</li><li><strong>Parent Process Path:</strong> N/A</li><li><strong>User Location:</strong> Cape Town, ZA</li><li><strong>Communication Evidence:</strong><ul><li>Email or Teams screenshots documenting user justification</li><li>Example: Screenshot provided showing user explanation for Notepad++ installation</li></ul></li></ul></details></div>
+
+<details open="True">
+<summary>Critical Artifacts Checklist</summary>
+<ul>
+<li><strong>Hostname (FQDN):</strong> JD-MKT-001.domain.local</li>
+<li><strong>Devicename:</strong> JD-MKT-001</li>
+<li><strong>Source IP:</strong> 192.01.16.10</li>
+<li><strong>Account Domain:</strong> CORP\jdoe</li>
+<li><strong>EID:</strong> jdoe</li>
+<li><strong>Email ID:</strong> john.doe@company.com</li>
+<li><strong>Filename:</strong> notepadplus_setup.exe</li>
+<li><strong>File Hashes:</strong>
+<ul>
+<li><strong>SHA256:</strong> e4f6c9...f2d3</li>
+<li><strong>SHA1:</strong> Pending extraction</li>
+<li><strong>MD5:</strong> Pending extraction</li>
+</ul>
+</li>
+<li><strong>File Source:</strong> http://freefiles.download/notepadplus_setup.exe</li>
+<li><strong>File Path:</strong> C:\Users\jdoe\Downloads\notepadplus_setup.exe</li>
+<li><strong>User Location:</strong> Cape Town, ZA</li>
+<li><strong>Communication Evidence:</strong> Verified via internal IM (Teams) — User acknowledged the bypass.</li>
+</ul>
+</details>
+</div>
+
 <script>
     function toggleTheme() {
       const html = document.documentElement;

@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Redirecting...</title>
-    <script>
-      window.location.replace("/home/");
-    </script>
-  </head>
-  <body>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Zero Signal Security</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <strong>Zero Signal Security</strong>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#triage">Triage Templates</a>
+      <a href="#" class="accent">Download CV</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+
+  <section>
+    <h3>Security Operations | Incident Response</h3>
+    <p class="muted">
+      SOC focused cybersecurity professional specializing in detection engineering,
+      incident triage, and adversary behavior.
+    </p>
+  </section>
+
+  <section class="grid grid-3" style="margin-top:2rem">
+    <div class="card">
+      <h3>Research</h3>
+      <p class="muted">Long-form technical investigations.</p>
+    </div>
+    <div class="card">
+      <h3>Write-ups</h3>
+      <p class="muted">Incident response and detection logic.</p>
+    </div>
+    <div class="card">
+      <h3>Triage Templates</h3>
+      <p class="muted">Reusable SOC playbooks.</p>
+    </div>
+  </section>
+
+  <section style="margin-top:3rem">
+    <h2>Security Activity</h2>
+    <div id="activity" class="grid grid-3"></div>
+  </section>
+
+  <section id="triage" style="margin-top:3rem">
+    <h2>Triage Templates</h2>
+
+    <div id="tags" class="tag-bar"></div>
+    <ul id="content" class="content-list"></ul>
+  </section>
+
+</main>
+
+</body>
 </html>

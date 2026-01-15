@@ -1,0 +1,17 @@
+[
+  {
+    "type": "triage",
+    "title": "Suspicious PowerShell Execution",
+    "tags": [
+      "powershell",
+      "execution"
+    ]
+  },
+  {
+    "type": "triage",
+    "title": "O365 Phishing Investigation",
+    "tags": [
+      "phishing"
+    ]
+  }
+]

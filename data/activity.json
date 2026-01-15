@@ -1,0 +1,24 @@
+{
+  "tryhackme": {
+    "username": "your_thm_username",
+    "rank": "Top 3%",
+    "focus": [
+      "SOC Level 1 & 2",
+      "Detection Engineering",
+      "Threat Hunting"
+    ]
+  },
+  "github": {
+    "username": "your_github_username",
+    "projects": [
+      {
+        "name": "edr-telemetry-lab",
+        "description": "Windows EDR detection experiments"
+      },
+      {
+        "name": "soc-triage-templates",
+        "description": "Reusable SOC playbooks"
+      }
+    ]
+  }
+}
